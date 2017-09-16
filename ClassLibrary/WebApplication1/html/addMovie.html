@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <title>הוספת סרט</title>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <style>
+            .bottomButton{
+               margin:10px;
+            }
+            #imgInp{
+                width:200px;
+            }
+            #projection{
+                width:350px;
+            }
+            #bigTbl td{
+                padding:15px;
+            }
+            
+            #internalTbl td{
+                padding:5px;
+            }
+            #bigTbl {
+                border-collapse: collapse;
+               margin-top:30px;
+            }
+            body {
+                     background-image: url("/images/background.jpg");
+                    background-attachment: fixed;
+            }
+            h4{ text-align:center;
+                margin:5px;
+                padding:5px; /*ממרכז את הכתב*/
+                color:white;
+                position:relative;
+                }  
+
+           #imgshow{
+               width:200px;
+               height:200px;
+           }
+                 
+        </style>
+        <script>
+            var i = 0, max_projection = 5;
+            
+            function addMovie()
+            {
+                ///עדכון בDB
+                if (true) ///עודכן בהצלחה בDB
+                {
+                    alert("הסרט נוסף בהצלחה!");
+                }
+                else {
+                    alert("error");
+                }
+            }
+            function addProjection() {
+
+                
+
+                if (i < 5)
+                {
+                    if (i == 0)
+                    {
+                        $("#projection").empty();
+                    }
+                    
+                    var list = document.getElementById("projection");
+                    
+                   
+                    var d = document.createElement("div");
+                    d.style.margin = "5px";
+                    var spn = document.createElement("span");
+                    i++;
+                    spn.innerHTML = i + ".";
+                   
+                    var btn1 = document.createElement("input");
+                    btn1.type = "date";
+
+                    var btn2 = document.createElement("input");
+                    btn2.setAttribute("type", "time");
+                    d.appendChild(spn);
+                    d.appendChild(btn1);
+                    d.appendChild(btn2);
+                    list.appendChild(d);
+                }
+               
+            }
+            $(document).ready(function ()
+            {
+               if (i==0)
+              { var list = document.getElementById("projection");
+                var d = document.createElement("div");
+                d.style.margin = "5px";
+                var spn = document.createElement("span");
+                spn.innerHTML = "לא הוכנסו הקרנות";
+                d.appendChild(spn);
+                list.appendChild(d);
+               }
+            })
+                
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        document.getElementById('imgshow').src = e.target.result;
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+        </script>
+    </head>
+
+<body dir="rtl" >
+
+    <table id="bigTbl" align="center">
+        <tr>
+            <td colspan=" 3"><h4 class="w3-blue">הוספת סרט חדש</h4></td>
+        </tr>
+        <tr>
+            <td>
+                <img id="imgshow" src="/images/first_img.JPG" />
+            </td>
+
+            <td>
+                <table id="internalTbl" align="center">
+                    <tr><td class="w3-text-white"> שם הסרט </td><td><input type="text" /></td></tr>
+                    <tr><td class="w3-text-white">   מספר מקומות</td><td><input type="text" /></td></tr><!--לעשות סלקט עם האפשרויות  -->
+                    <tr><td class="w3-text-white">    תאריך הוצאה</td><td><input type="date" /></td></tr><!--לעשות סלקט עם האפשרויות  -->
+                    <tr>
+                        <td class="w3-text-white">    ז'אנר</td>
+                        <td>
+                            <select>
+                                <option>פעולה</option>
+                                <option>מתח</option>
+                                <option>קומדיה</option>
+                                <option>דרמה</option>
+                                <option>רומנטי</option>
+                                <option>אימה</option>
+                            </select>
+                        </td>
+                    </tr><!--לעשות סלקט עם האפשרויות  -->
+                    <tr><td class="w3-text-white">  אורך הסרט בדקות</td><td><input type="text" /></td></tr><!--לעשות סלקט עם האפשרויות  -->
+                    <tr><td class="w3-text-white"> תמונה</td><td><input type="file" id="imgInp" onchange="readURL(this);" /></td></tr><!--לעשות סלקט עם האפשרויות  -->
+
+
+                </table>
+
+            </td>
+
+            <td class="w3-display-container">
+                <!--<div class="w3-display-container">-->
+                <table class="w3-display-top">
+                    <tr>
+                        <td class="w3-text-white ">הקרנות:</td>
+                        <td id="projection" align="center"></td>
+                        <td align="center" class=""> <input type="button" value="הוסף הקרנה" onclick="addProjection()" /> </td>
+
+                    </tr>
+
+                </table>
+
+                <!--</div>-->
+
+
+            </td>
+
+
+        </tr>
+
+        <tr >
+            <td class="w3-text-white" align="center" colspan="3">
+                <input type="button" value="הוסף" class="bottomButton" onclick="addMovie()" />
+                <input type="button" value="מחק" class="bottomButton" />
+            </td>
+           
+        </tr>
+
+
+       
+
+
+
+    </table>
+
+       
+        
+</body>
+</html>

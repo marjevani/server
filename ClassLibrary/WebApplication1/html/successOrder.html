@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>הזמנה התקבלה בהצלחה!</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            background-image: url("/images/background.jpg");
+            background-attachment: fixed;
+        }
+
+        #board {
+            width: 400px;
+            height: 300px;
+            background-color: blanchedalmond;
+            position: relative;
+            top: 100px;
+            border: 1px dashed black;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+           
+            document.getElementById("orderNumber").innerHTML = localStorage.getItem("orderId");
+
+        })
+
+
+
+    </script>
+
+</head>
+<body dir="rtl" align="center">
+    <div id="wrapper" style="padding:10px;" align="center">
+        <div id="board" align="center">
+           
+
+            <h2>פרטי ההזמנה:</h2>
+       
+            <table>
+                <tr>
+                    <td>מספר הזמנה:</td>
+                    <td > <span id="orderNumber"></span></td>
+                </tr>
+                <tr>
+                    <td>מספר לקוח:</td>
+                    <td> <span id="clientNumber"></span></td>
+                </tr>
+                <tr>
+                    <td>שם הסרט:</td>
+                    <td> <span id="movieName"></span></td>
+                </tr>
+                <tr>
+                    <td>כמות מושבים:</td>
+                    <td> <span id="amountSeats"></span></td>
+                </tr>
+               
+            </table>
+            <br />
+            <input type="button" value="הזמנה נוספת"/>
+            
+
+
+
+        </div>
+    </div>
+
+
+</body>
+</html>

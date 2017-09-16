@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="movieDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="nchar" MaxLength="9" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="pass" Type="char" MaxLength="9" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerBuyTickets">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customer_id" Type="nchar" MaxLength="9" />
+          <Property Name="movie_id" Type="int" />
+          <Property Name="amount" Type="int" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="publish_date" Type="date" />
+          <Property Name="langth" Type="smallint" />
+        </EntityType>
+        <EntityType Name="PlayTime">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="movie_id" Type="int" />
+          <Property Name="play" Type="datetime" Nullable="false" />
+          <Property Name="total_sits" Type="int" />
+          <Property Name="availble_sits" Type="int" />
+        </EntityType>
+        <Association Name="FK__CustomerB__custo__1B0907CE">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerBuyTickets">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomerB__movie__1BFD2C07">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
+          <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerBuyTickets">
+              <PropertyRef Name="movie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PlayTime__movie___164452B1">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
+          <End Role="PlayTime" Type="Self.PlayTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PlayTime">
+              <PropertyRef Name="movie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="movieDBModelStoreContainer">
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerBuyTickets" EntityType="Self.CustomerBuyTickets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlayTime" EntityType="Self.PlayTime" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CustomerB__custo__1B0907CE" Association="Self.FK__CustomerB__custo__1B0907CE">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomerB__movie__1BFD2C07" Association="Self.FK__CustomerB__movie__1BFD2C07">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PlayTime__movie___164452B1" Association="Self.FK__PlayTime__movie___164452B1">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="PlayTime" EntitySet="PlayTime" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="movieDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="9" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pass" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CustomerBuyTickets" Relationship="Self.FK__CustomerB__custo__1B0907CE" FromRole="Customer" ToRole="CustomerBuyTickets" />
+        </EntityType>
+        <EntityType Name="CustomerBuyTicket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customer_id" Type="String" MaxLength="9" FixedLength="true" Unicode="true" />
+          <Property Name="movie_id" Type="Int32" />
+          <Property Name="amount" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__CustomerB__custo__1B0907CE" FromRole="CustomerBuyTickets" ToRole="Customer" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK__CustomerB__movie__1BFD2C07" FromRole="CustomerBuyTickets" ToRole="Movie" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="publish_date" Type="DateTime" Precision="0" />
+          <Property Name="langth" Type="Int16" />
+          <NavigationProperty Name="CustomerBuyTickets" Relationship="Self.FK__CustomerB__movie__1BFD2C07" FromRole="Movie" ToRole="CustomerBuyTickets" />
+          <NavigationProperty Name="PlayTimes" Relationship="Self.FK__PlayTime__movie___164452B1" FromRole="Movie" ToRole="PlayTime" />
+        </EntityType>
+        <EntityType Name="PlayTime">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="movie_id" Type="Int32" />
+          <Property Name="play" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="total_sits" Type="Int32" />
+          <Property Name="availble_sits" Type="Int32" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK__PlayTime__movie___164452B1" FromRole="PlayTime" ToRole="Movie" />
+        </EntityType>
+        <Association Name="FK__CustomerB__custo__1B0907CE">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerBuyTickets">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomerB__movie__1BFD2C07">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
+          <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerBuyTickets">
+              <PropertyRef Name="movie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PlayTime__movie___164452B1">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
+          <End Role="PlayTime" Type="Self.PlayTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PlayTime">
+              <PropertyRef Name="movie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="movieDBConnection" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="CustomerBuyTickets" EntityType="Self.CustomerBuyTicket" />
+          <EntitySet Name="Movies" EntityType="Self.Movie" />
+          <EntitySet Name="PlayTimes" EntityType="Self.PlayTime" />
+          <AssociationSet Name="FK__CustomerB__custo__1B0907CE" Association="Self.FK__CustomerB__custo__1B0907CE">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomerB__movie__1BFD2C07" Association="Self.FK__CustomerB__movie__1BFD2C07">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PlayTime__movie___164452B1" Association="Self.FK__PlayTime__movie___164452B1">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="PlayTime" EntitySet="PlayTimes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="movieDBModelStoreContainer" CdmEntityContainer="movieDBConnection">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="movieDBModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerBuyTickets">
+            <EntityTypeMapping TypeName="movieDBModel.CustomerBuyTicket">
+              <MappingFragment StoreEntitySet="CustomerBuyTickets">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="movieDBModel.Movie">
+              <MappingFragment StoreEntitySet="Movie">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="publish_date" ColumnName="publish_date" />
+                <ScalarProperty Name="langth" ColumnName="langth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlayTimes">
+            <EntityTypeMapping TypeName="movieDBModel.PlayTime">
+              <MappingFragment StoreEntitySet="PlayTime">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+                <ScalarProperty Name="play" ColumnName="play" />
+                <ScalarProperty Name="total_sits" ColumnName="total_sits" />
+                <ScalarProperty Name="availble_sits" ColumnName="availble_sits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
