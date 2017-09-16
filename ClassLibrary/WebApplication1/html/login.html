@@ -49,36 +49,36 @@
 
         }
 
-        function getAllmovies() {
+        //function getAllmovies() {
            
-                $.ajax({
-                    dataType: "json",
-                    url: "/api/Values/",
-                    contentType: "application/json; charset=utf-8",
-                    type: "GET",
-                    //data: JSON.stringify({}),
-                    success: function (data) {
-                        for (i in data) {
-                            var $p = $("<p>").html("name = " + data[i].Name + ", id = " + data[i].Id + ", langth = " + data[i].langth)
-                            $("#movies").append($p);
-                        }
-                    },
-                    error: function (err) {
-                        alert(err);
-                        console.log(err);
-                    }
-                });
+        //        $.ajax({
+        //            dataType: "json",
+        //            url: "/api/values/",
+        //            contentType: "application/json; charset=utf-8",
+        //            type: "GET",
+        //            //data: JSON.stringify({}),
+        //            success: function (data) {
+        //                for (i in data) {
+        //                    var $p = $("<p>").html("name = " + data[i].name + ", id = " + data[i].id + ", langth = " + data[i].langth)
+        //                    $("#movies").append($p);
+        //                }
+        //            },
+        //            error: function (err) {
+        //                alert(err);
+        //                console.log(err);
+        //            }
+        //        });
 
-            }
+        //    }
         
            
     </script>
 </head>
 <body dir="rtl" align="center">
 
-    <input type="button" value="get movies" onclick="getAllmovies()" />
+    <!--<input type="button" value="get movies" onclick="getAllmovies()" />
 
-    <div id="movies"> </div>
+    <div id="movies"> </div>-->
 
 
     <div id="wrapper" style="padding:10px;" align="center">

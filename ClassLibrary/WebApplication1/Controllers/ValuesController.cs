@@ -14,21 +14,21 @@ namespace WebApplication1.Controllers
     {
         // GET api/values
         //public IEnumerable<string> Get()
-        [HttpGet]
-        public dynamic Get()
-        {
-            //test
-            movieDBConnection db = new movieDBConnection();
-            return db.Movies.Select(x => new
-                                        {
-                                            name = x.name,
-                                            id = x.id,
-                                            langth = x.langth,
+  
+        //public dynamic Get()
+        //{
+        //    //test
+        //    movieDBConnection db = new movieDBConnection();
+        //    return db.Movies.Select(x => new
+        //                                {
+        //                                    name = x.name,
+        //                                    id = x.id,
+        //                                    langth = x.langth,
 
-                                        }).ToList();
+        //                                }).ToList();
             
             
-        }
+        //}
 
         // GET api/values/5
         public string Get(int id)
