@@ -13,21 +13,20 @@ namespace WebApplication1.Controllers
     public class ValuesController : ApiController
     {
         // GET api/values
-        //public IEnumerable<string> Get()
-  
+       // public IEnumerable<string> Get()
+
+
         //public dynamic Get()
         //{
         //    //test
         //    movieDBConnection db = new movieDBConnection();
         //    return db.Movies.Select(x => new
-        //                                {
-        //                                    name = x.name,
-        //                                    id = x.id,
-        //                                    langth = x.langth,
+        //    {
+        //        name = x.name,
+        //        id = x.id,
+        //        langth = x.langth,
 
-        //                                }).ToList();
-            
-            
+        //    }).ToList();
         //}
 
         // GET api/values/5

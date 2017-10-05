@@ -18,3 +18,13 @@ C:\Users\Yuval\Desktop\project\server\ClassLibrary\ClassLibrary\bin\Debug\Entity
 C:\Users\Yuval\Desktop\project\server\ClassLibrary\ClassLibrary\obj\Debug\ClassLibrary.csprojResolveAssemblyReference.cache
 C:\Users\Yuval\Desktop\project\server\ClassLibrary\ClassLibrary\obj\Debug\ClassLibrary.dll
 C:\Users\Yuval\Desktop\project\server\ClassLibrary\ClassLibrary\obj\Debug\ClassLibrary.pdb
+\\Mac\Dropbox\לימודים\מהנדס אלקטרוניקה רופין\שנה ג\סמסטר קיץ\פיתוח אינטרנט ואפליקציות - צד שרת\Project\ClassLibrary\ClassLibrary\bin\Debug\ClassLibrary.dll.config
+\\Mac\Dropbox\לימודים\מהנדס אלקטרוניקה רופין\שנה ג\סמסטר קיץ\פיתוח אינטרנט ואפליקציות - צד שרת\Project\ClassLibrary\ClassLibrary\bin\Debug\ClassLibrary.dll
+\\Mac\Dropbox\לימודים\מהנדס אלקטרוניקה רופין\שנה ג\סמסטר קיץ\פיתוח אינטרנט ואפליקציות - צד שרת\Project\ClassLibrary\ClassLibrary\bin\Debug\ClassLibrary.pdb
+\\Mac\Dropbox\לימודים\מהנדס אלקטרוניקה רופין\שנה ג\סמסטר קיץ\פיתוח אינטרנט ואפליקציות - צד שרת\Project\ClassLibrary\ClassLibrary\bin\Debug\EntityFramework.dll
+\\Mac\Dropbox\לימודים\מהנדס אלקטרוניקה רופין\שנה ג\סמסטר קיץ\פיתוח אינטרנט ואפליקציות - צד שרת\Project\ClassLibrary\ClassLibrary\bin\Debug\EntityFramework.SqlServer.dll
+\\Mac\Dropbox\לימודים\מהנדס אלקטרוניקה רופין\שנה ג\סמסטר קיץ\פיתוח אינטרנט ואפליקציות - צד שרת\Project\ClassLibrary\ClassLibrary\bin\Debug\EntityFramework.xml
+\\Mac\Dropbox\לימודים\מהנדס אלקטרוניקה רופין\שנה ג\סמסטר קיץ\פיתוח אינטרנט ואפליקציות - צד שרת\Project\ClassLibrary\ClassLibrary\bin\Debug\EntityFramework.SqlServer.xml
+\\Mac\Dropbox\לימודים\מהנדס אלקטרוניקה רופין\שנה ג\סמסטר קיץ\פיתוח אינטרנט ואפליקציות - צד שרת\Project\ClassLibrary\ClassLibrary\obj\Debug\ClassLibrary.csprojResolveAssemblyReference.cache
+\\Mac\Dropbox\לימודים\מהנדס אלקטרוניקה רופין\שנה ג\סמסטר קיץ\פיתוח אינטרנט ואפליקציות - צד שרת\Project\ClassLibrary\ClassLibrary\obj\Debug\ClassLibrary.dll
+\\Mac\Dropbox\לימודים\מהנדס אלקטרוניקה רופין\שנה ג\סמסטר קיץ\פיתוח אינטרנט ואפליקציות - צד שרת\Project\ClassLibrary\ClassLibrary\obj\Debug\ClassLibrary.pdb
