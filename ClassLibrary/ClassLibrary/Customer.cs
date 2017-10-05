@@ -33,6 +33,8 @@ public partial class Customer
 
     public string pass { get; set; }
 
+    public bool isAdmin { get; set; } // change to Private? HOW??
+
 
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

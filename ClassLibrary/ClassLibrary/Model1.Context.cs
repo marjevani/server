@@ -32,13 +32,13 @@ public partial class movieDBConnection : DbContext
     }
 
 
-    public virtual DbSet<Customer> Customers { get; set; }
-
     public virtual DbSet<CustomerBuyTicket> CustomerBuyTickets { get; set; }
 
     public virtual DbSet<Movie> Movies { get; set; }
 
     public virtual DbSet<PlayTime> PlayTimes { get; set; }
+
+    public virtual DbSet<Customer> Customers { get; set; }
 
 }
 

@@ -37,6 +37,8 @@ public partial class Movie
 
     public Nullable<short> langth { get; set; }
 
+    public string genre { get; set; }
+
 
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

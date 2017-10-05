@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="movieDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="movieDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="id" />
@@ -12,6 +12,7 @@
           <Property Name="id" Type="nchar" MaxLength="9" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="pass" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="isAdmin" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CustomerBuyTickets">
           <Key>
@@ -30,6 +31,7 @@
           <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="publish_date" Type="date" />
           <Property Name="langth" Type="smallint" />
+          <Property Name="genre" Type="varchar" MaxLength="6" Nullable="false" />
         </EntityType>
         <EntityType Name="PlayTime">
           <Key>
@@ -41,7 +43,7 @@
           <Property Name="total_sits" Type="int" />
           <Property Name="availble_sits" Type="int" />
         </EntityType>
-        <Association Name="FK__CustomerB__custo__1B0907CE">
+        <Association Name="FK__CustomerB__custo__24927208">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTickets" Multiplicity="*" />
           <ReferentialConstraint>
@@ -53,7 +55,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CustomerB__movie__1BFD2C07">
+        <Association Name="FK__CustomerB__movie__25869641">
           <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
           <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTickets" Multiplicity="*" />
           <ReferentialConstraint>
@@ -65,7 +67,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PlayTime__movie___164452B1">
+        <Association Name="FK__PlayTime__movie___182C9B23">
           <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
           <End Role="PlayTime" Type="Self.PlayTime" Multiplicity="*" />
           <ReferentialConstraint>
@@ -82,33 +84,23 @@
           <EntitySet Name="CustomerBuyTickets" EntityType="Self.CustomerBuyTickets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayTime" EntityType="Self.PlayTime" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__CustomerB__custo__1B0907CE" Association="Self.FK__CustomerB__custo__1B0907CE">
+          <AssociationSet Name="FK__CustomerB__custo__24927208" Association="Self.FK__CustomerB__custo__24927208">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__CustomerB__movie__1BFD2C07" Association="Self.FK__CustomerB__movie__1BFD2C07">
+          <AssociationSet Name="FK__CustomerB__movie__25869641" Association="Self.FK__CustomerB__movie__25869641">
             <End Role="Movie" EntitySet="Movie" />
             <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__PlayTime__movie___164452B1" Association="Self.FK__PlayTime__movie___164452B1">
+          <AssociationSet Name="FK__PlayTime__movie___182C9B23" Association="Self.FK__PlayTime__movie___182C9B23">
             <End Role="Movie" EntitySet="Movie" />
             <End Role="PlayTime" EntitySet="PlayTime" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="movieDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="String" MaxLength="9" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="pass" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="CustomerBuyTickets" Relationship="Self.FK__CustomerB__custo__1B0907CE" FromRole="Customer" ToRole="CustomerBuyTickets" />
-        </EntityType>
         <EntityType Name="CustomerBuyTicket">
           <Key>
             <PropertyRef Name="id" />
@@ -117,8 +109,8 @@
           <Property Name="customer_id" Type="String" MaxLength="9" FixedLength="true" Unicode="true" />
           <Property Name="movie_id" Type="Int32" />
           <Property Name="amount" Type="Int32" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__CustomerB__custo__1B0907CE" FromRole="CustomerBuyTickets" ToRole="Customer" />
           <NavigationProperty Name="Movie" Relationship="Self.FK__CustomerB__movie__1BFD2C07" FromRole="CustomerBuyTickets" ToRole="Movie" />
+          <NavigationProperty Name="Customer" Relationship="movieDBModel.FK__CustomerB__custo__24927208" FromRole="CustomerBuyTicket" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Movie">
           <Key>
@@ -130,6 +122,7 @@
           <Property Name="langth" Type="Int16" />
           <NavigationProperty Name="CustomerBuyTickets" Relationship="Self.FK__CustomerB__movie__1BFD2C07" FromRole="Movie" ToRole="CustomerBuyTickets" />
           <NavigationProperty Name="PlayTimes" Relationship="Self.FK__PlayTime__movie___164452B1" FromRole="Movie" ToRole="PlayTime" />
+          <Property Name="genre" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PlayTime">
           <Key>
@@ -142,18 +135,6 @@
           <Property Name="availble_sits" Type="Int32" />
           <NavigationProperty Name="Movie" Relationship="Self.FK__PlayTime__movie___164452B1" FromRole="PlayTime" ToRole="Movie" />
         </EntityType>
-        <Association Name="FK__CustomerB__custo__1B0907CE">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTicket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CustomerBuyTickets">
-              <PropertyRef Name="customer_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__CustomerB__movie__1BFD2C07">
           <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
           <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTicket" Multiplicity="*" />
@@ -179,14 +160,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="movieDBConnection" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="CustomerBuyTickets" EntityType="Self.CustomerBuyTicket" />
           <EntitySet Name="Movies" EntityType="Self.Movie" />
           <EntitySet Name="PlayTimes" EntityType="Self.PlayTime" />
-          <AssociationSet Name="FK__CustomerB__custo__1B0907CE" Association="Self.FK__CustomerB__custo__1B0907CE">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
-          </AssociationSet>
           <AssociationSet Name="FK__CustomerB__movie__1BFD2C07" Association="Self.FK__CustomerB__movie__1BFD2C07">
             <End Role="Movie" EntitySet="Movies" />
             <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
@@ -195,22 +171,40 @@
             <End Role="Movie" EntitySet="Movies" />
             <End Role="PlayTime" EntitySet="PlayTimes" />
           </AssociationSet>
+          <EntitySet Name="Customers" EntityType="movieDBModel.Customer" />
+          <AssociationSet Name="FK__CustomerB__custo__24927208" Association="movieDBModel.FK__CustomerB__custo__24927208">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerBuyTicket" EntitySet="CustomerBuyTickets" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="pass" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="isAdmin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CustomerBuyTickets" Relationship="movieDBModel.FK__CustomerB__custo__24927208" FromRole="Customer" ToRole="CustomerBuyTicket" />
+        </EntityType>
+        <Association Name="FK__CustomerB__custo__24927208">
+          <End Type="movieDBModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="movieDBModel.CustomerBuyTicket" Role="CustomerBuyTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerBuyTicket">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="movieDBModelStoreContainer" CdmEntityContainer="movieDBConnection">
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="movieDBModel.Customer">
-              <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="pass" ColumnName="pass" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CustomerBuyTickets">
             <EntityTypeMapping TypeName="movieDBModel.CustomerBuyTicket">
               <MappingFragment StoreEntitySet="CustomerBuyTickets">
@@ -224,6 +218,7 @@
           <EntitySetMapping Name="Movies">
             <EntityTypeMapping TypeName="movieDBModel.Movie">
               <MappingFragment StoreEntitySet="Movie">
+                <ScalarProperty Name="genre" ColumnName="genre" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="publish_date" ColumnName="publish_date" />
@@ -239,6 +234,16 @@
                 <ScalarProperty Name="play" ColumnName="play" />
                 <ScalarProperty Name="total_sits" ColumnName="total_sits" />
                 <ScalarProperty Name="availble_sits" ColumnName="availble_sits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="movieDBModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

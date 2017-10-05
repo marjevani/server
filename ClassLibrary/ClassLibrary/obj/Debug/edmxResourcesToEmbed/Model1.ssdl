@@ -7,6 +7,7 @@
     <Property Name="id" Type="nchar" MaxLength="9" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="pass" Type="char" MaxLength="9" Nullable="false" />
+    <Property Name="isAdmin" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="CustomerBuyTickets">
     <Key>
@@ -25,6 +26,7 @@
     <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
     <Property Name="publish_date" Type="date" />
     <Property Name="langth" Type="smallint" />
+    <Property Name="genre" Type="varchar" MaxLength="6" Nullable="false" />
   </EntityType>
   <EntityType Name="PlayTime">
     <Key>
@@ -36,7 +38,7 @@
     <Property Name="total_sits" Type="int" />
     <Property Name="availble_sits" Type="int" />
   </EntityType>
-  <Association Name="FK__CustomerB__custo__1B0907CE">
+  <Association Name="FK__CustomerB__custo__24927208">
     <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
     <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTickets" Multiplicity="*" />
     <ReferentialConstraint>
@@ -48,7 +50,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__CustomerB__movie__1BFD2C07">
+  <Association Name="FK__CustomerB__movie__25869641">
     <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
     <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTickets" Multiplicity="*" />
     <ReferentialConstraint>
@@ -60,7 +62,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PlayTime__movie___164452B1">
+  <Association Name="FK__PlayTime__movie___182C9B23">
     <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
     <End Role="PlayTime" Type="Self.PlayTime" Multiplicity="*" />
     <ReferentialConstraint>
@@ -77,15 +79,15 @@
     <EntitySet Name="CustomerBuyTickets" EntityType="Self.CustomerBuyTickets" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PlayTime" EntityType="Self.PlayTime" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__CustomerB__custo__1B0907CE" Association="Self.FK__CustomerB__custo__1B0907CE">
+    <AssociationSet Name="FK__CustomerB__custo__24927208" Association="Self.FK__CustomerB__custo__24927208">
       <End Role="Customer" EntitySet="Customer" />
       <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
     </AssociationSet>
-    <AssociationSet Name="FK__CustomerB__movie__1BFD2C07" Association="Self.FK__CustomerB__movie__1BFD2C07">
+    <AssociationSet Name="FK__CustomerB__movie__25869641" Association="Self.FK__CustomerB__movie__25869641">
       <End Role="Movie" EntitySet="Movie" />
       <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
     </AssociationSet>
-    <AssociationSet Name="FK__PlayTime__movie___164452B1" Association="Self.FK__PlayTime__movie___164452B1">
+    <AssociationSet Name="FK__PlayTime__movie___182C9B23" Association="Self.FK__PlayTime__movie___182C9B23">
       <End Role="Movie" EntitySet="Movie" />
       <End Role="PlayTime" EntitySet="PlayTime" />
     </AssociationSet>

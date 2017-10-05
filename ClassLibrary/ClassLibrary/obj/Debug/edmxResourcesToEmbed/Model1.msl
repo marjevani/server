@@ -1,15 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="movieDBModelStoreContainer" CdmEntityContainer="movieDBConnection">
-    <EntitySetMapping Name="Customers">
-      <EntityTypeMapping TypeName="movieDBModel.Customer">
-        <MappingFragment StoreEntitySet="Customer">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="pass" ColumnName="pass" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="CustomerBuyTickets">
       <EntityTypeMapping TypeName="movieDBModel.CustomerBuyTicket">
         <MappingFragment StoreEntitySet="CustomerBuyTickets">
@@ -23,6 +14,7 @@
     <EntitySetMapping Name="Movies">
       <EntityTypeMapping TypeName="movieDBModel.Movie">
         <MappingFragment StoreEntitySet="Movie">
+          <ScalarProperty Name="genre" ColumnName="genre" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="publish_date" ColumnName="publish_date" />
@@ -38,6 +30,16 @@
           <ScalarProperty Name="play" ColumnName="play" />
           <ScalarProperty Name="total_sits" ColumnName="total_sits" />
           <ScalarProperty Name="availble_sits" ColumnName="availble_sits" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="movieDBModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
+          <ScalarProperty Name="pass" ColumnName="pass" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -1,5 +1,9 @@
 /ClassLibrary/WebApplication1/Web.config
 App.config
+/ClassLibrary/ClassLibrary/obj/Debug/
+/ClassLibrary/ClassLibrary/bin/Debug/
+
+*.dll
 
 # User-specific files
 *.suo
