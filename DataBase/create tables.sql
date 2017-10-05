@@ -4,7 +4,7 @@ create table Customer
 id nchar(9) primary key,
 name nvarchar(10) not null,
 pass char(9) not null,
-isAdmin int check(isAdmin >= 0 & isAdmin <=1)
+isAdmin bit default(0) not null
 );
 ---------------------------
 create table Movie
