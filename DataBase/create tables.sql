@@ -35,7 +35,9 @@ amount int check(amount > 0)
 
 
 
-
+---------------------
+select *
+from Customer
 
 
 

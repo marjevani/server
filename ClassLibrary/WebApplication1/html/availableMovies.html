@@ -96,9 +96,10 @@
     </style>
     <script>
         var user = JSON.parse(localStorage.getItem("user"));
-        var numOfAvailableMovies = 13;
+        var numOfAvailableSits;
         var itemInRow = 5;
         var $spn;
+       
 
         $(document).ready(function () {
 
@@ -117,43 +118,144 @@
 
             var $tbl = $("<table>").attr("class", "available");
             var $tr = $("<tr>");
-            var colCount = 0;
-            for (var i = 0; i < numOfAvailableMovies; i++, colCount++) {
+            var counter = 0;
 
-                if (rowCount == itemInRow) {
-                    $tr = $("<tr>");
-                    colCount = 0;
-                }
 
-                var $td = $("<td>").attr("class", "w3-white");
-                var $div = $("<div>").attr("class", "internalDiv");
-                var $h2 = $("<h2>").attr("movie-number-name", i + 1).text("שם הסרט:");
-                var $spn = $("<span>").attr("movie-number-place", i + 1).html("מקומות פנויים:");
-                var $div2 = $("<div>").attr("class", "lowerDiv");
-                var $pic = $("<img>").attr({ "src": "/images/first_img.JPG", "movie-number-pic": i + 1 });
-                var $btn = $("<button>").text("הזמן כרטיס").click(function () {
-                    if (true) //עדכון בDB וקבל אישור שתקין
+            $.ajax({
+                dataType: "json",
+                url: "/api/movie",
+                contentType: "application/json; charset=utf-8",
+                type: "GET",
+                //data: JSON.stringify(s),
+                success: function (data) {
+
+                    for (i in data)
                     {
-                        localStorage.setItem("orderId", "from DB");//מהDB
-                        location.href = "successOrder.html"
-                    }
-                });;
-                var $br = $("<br>");
+                        if (counter == itemInRow) {
+                            $tr = $("<tr>");
+                            counter = 0;
+                        }
+                        
+                        
+                        //$.ajax({
+                        //    dataType: "json",
+                        //    url: "/api/PlayTime/" + data[i].id,
+                        //    contentType: "application/json; charset=utf-8",
+                        //    type: "GET",
+                        //    success: function (availS) {
+                               
+                        //        numOfAvailableSits = availS;
+                        //        if (numOfAvailableSits > 0)
+                        //        {
+                                    counter++;
+                                    var $td = $("<td>").attr("class", "w3-white");
+                                    var $div = $("<div>").attr("class", "internalDiv");
+                                    var $nameP = $("<span>").attr("data-name", data[i].name).text("שם הסרט:" + data[i].name);
+                                    var $publishDate = $("<span>").text("תאריך פרסום:" + data[i].publish_date);
+                                    var $langth = $("<span>").text("אורך הסרט:" + data[i].langth);
+                                    var $genre = $("<span>").html("סוג הסרט:" + data[i].genre);
+                                    var $pic = $("<img>").attr({ "src": "/images/first_img.JPG", "movie-number-pic": i + 1 });
+                                    var $selectP = $("<select>");
 
-                $div2.append($pic);
-                $div2.append($br);
-                $div2.append($btn);
+                                    //j = 0;
+                                    //while (j <= numOfAvailableSits) {
+                                    //    $selectP.append('<option value=' + j + '>' + j + '</option>');
+                                    //    j++;
+                                    //}
+                                    $div.append($nameP);
+                                    $div.append($("<br>"));
+                                    $div.append($publishDate);
+                                    $div.append($("<br>"));
+                                    $div.append($langth);
+                                    $div.append($("<br>"));
+                                    $div.append($genre);
+                                    $div.append($("<br>"));
+                                    $div.append($selectP);
+                                    $div.append($("<br>"));
+                                    $div.append($pic);
+
+                                    $td.append($div);
+                                    $tr.append($td);
+                                    $tbl.append($tr);
+                                    $("#availableTbl").append($tbl);
+
+                        //        } ///if
+                                
 
 
-                $div.append($h2);
-                $div.append($spn);
-                $div.append($div2);
+                        //    },  //success_availS
+                        //    error: function () {
+                        //        console.log("connection ERROR - numOfAvailableSits");
+                               
+                        //    } //error
+                        //}); //ajax
 
-                $td.append($div);
-                $tr.append($td);
-                $tbl.append($tr);
-                $("#availableTbl").append($tbl);
-            }
+                       
+
+                        
+                        
+
+
+                    }//for
+
+
+                }, //success_data
+                error: function () {
+                    console.log("connection ERROR - Available movies");
+
+                } //error
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //for (var i = 0; i < numOfAvailableMovies; i++, colCount++) {
+
+            //    if (rowCount == itemInRow) {
+            //        $tr = $("<tr>");
+            //        colCount = 0;
+            //    }
+
+            //    var $td = $("<td>").attr("class", "w3-white");
+            //    var $div = $("<div>").attr("class", "internalDiv");
+            //    var $h2 = $("<h2>").attr("movie-number-name", i + 1).text("שם הסרט:");
+            //    var $spn = $("<span>").attr("movie-number-place", i + 1).html("מקומות פנויים:");
+            //    var $div2 = $("<div>").attr("class", "lowerDiv");
+            //    
+            //    var $btn = $("<button>").text("הזמן כרטיס").click(function () {
+            //        if (true) //עדכון בDB וקבל אישור שתקין
+            //        {
+            //            localStorage.setItem("orderId", "from DB");//מהDB
+            //            location.href = "successOrder.html"
+            //        }
+            //    });;
+            //    var $br = $("<br>");
+
+            //    $div2.append($pic);
+            //    $div2.append($br);
+            //    $div2.append($btn);
+
+
+            //    $div.append($h2);
+            //    $div.append($spn);
+            //    $div.append($div2);
+
+            //    $td.append($div);
+            //    $tr.append($td);
+            //    $tbl.append($tr);
+            //    $("#availableTbl").append($tbl);
+            //}
         });
 
 
