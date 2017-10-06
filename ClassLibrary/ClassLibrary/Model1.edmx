@@ -40,8 +40,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="movie_id" Type="int" />
           <Property Name="play" Type="datetime" Nullable="false" />
-          <Property Name="total_sits" Type="int" />
-          <Property Name="availble_sits" Type="int" />
+          <Property Name="total_sits" Type="int" Nullable="false" />
+          <Property Name="availble_sits" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK__CustomerB__custo__24927208">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
@@ -67,7 +67,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PlayTime__movie___182C9B23">
+        <Association Name="FK__PlayTime__movie___29572725">
           <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
           <End Role="PlayTime" Type="Self.PlayTime" Multiplicity="*" />
           <ReferentialConstraint>
@@ -92,7 +92,7 @@
             <End Role="Movie" EntitySet="Movie" />
             <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__PlayTime__movie___182C9B23" Association="Self.FK__PlayTime__movie___182C9B23">
+          <AssociationSet Name="FK__PlayTime__movie___29572725" Association="Self.FK__PlayTime__movie___29572725">
             <End Role="Movie" EntitySet="Movie" />
             <End Role="PlayTime" EntitySet="PlayTime" />
           </AssociationSet>
@@ -131,8 +131,8 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="movie_id" Type="Int32" />
           <Property Name="play" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="total_sits" Type="Int32" />
-          <Property Name="availble_sits" Type="Int32" />
+          <Property Name="total_sits" Type="Int32" Nullable="false" />
+          <Property Name="availble_sits" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Movie" Relationship="Self.FK__PlayTime__movie___164452B1" FromRole="PlayTime" ToRole="Movie" />
         </EntityType>
         <Association Name="FK__CustomerB__movie__1BFD2C07">

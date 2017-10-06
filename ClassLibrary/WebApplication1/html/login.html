@@ -30,24 +30,6 @@
             var passL = document.getElementById("pass").value;
             document.getElementById("error").innerHTML = "";
             validId_continue(idL, passL);
-
-            //if (true) //בדיקה בDB
-            //{
-            //    ///localStorage.setItem("idL", idL);
-            //    localStorage.setItem("name", "יוסי");//מהDB
-            //    if (idL == id && passL == pass) {
-            //        location.href = "availableMovies.html?admin=1"
-            //    }
-            //    else if (idL == "123" && passL == "123") {
-            //        location.href = "availableMovies.html?admin=0"
-            //    }
-            //    else {
-
-            //        document.getElementById("error").innerHTML = "ת.ז או הסיסמא שהכנסת לא נכונים";
-
-            //    }
-            //}
-
         }
 
 
@@ -58,15 +40,13 @@
                 url: "/api/Costumer/isValidCustomer/" + idL + "/" + passL,
                 contentType: "application/json; charset=utf-8",
                 type: "GET",
-                success: function (customer)
+                success: function (user)
                 {
-                    if (customer != null)
+                    if (user != null)
                     {
-                        localStorage.setItem("user", JSON.stringify(customer));
-                        if (customer.isAdmin == true)
-                            location.href = "availableMovies.html?admin=1"
-                        else
-                            location.href = "availableMovies.html?admin=0"
+                        localStorage.setItem("user", JSON.stringify(user));
+                        var adminParam = user.isAdmin;
+                        location.href = "availableMovies.html";
                     }
                     else 
                         document.getElementById("error").innerHTML = "ת.ז או הסיסמא שהכנסת לא נכונים";
@@ -74,6 +54,7 @@
                 error: function ()
                 {
                     console.log("connection ERROR - validId()");
+                    document.getElementById("error").innerHTML = "ת.ז או הסיסמא שהכנסת לא נכונים";
                 }
             });
         }
@@ -106,18 +87,15 @@
 <body dir="rtl" align="center">
 
     <!--<input type="button" value="get movies" onclick="getAllmovies()" />
-
     <div id="movies"> </div>-->
-
 
     <div id="wrapper" style="padding:10px;" align="center">
         <div id="board" align="center">
-
             <h2>כניסה למערכת</h2>
             <table>
                 <tr>
                     <td> ת.ז:</td>
-                    <td><input type="text" id="idL"/>  </td>
+                    <td><input type="text" id="idL" />  </td>
                 </tr>
                 <tr>
                     <td> סיסמא:</td>
@@ -125,11 +103,10 @@
                 </tr>
             </table>
             <span class="w3-white" id="error"></span> <br /><br />
-             <input type="button" value="היכנס" onclick="login()"/> 
-            <input type="button" value="שכחתי סיסמא" />    
-
+            <input type="button" value="היכנס" onclick="login()" />
+            <input type="button" value="שכחתי סיסמא" />
         </div>
-        </div>
+    </div>
 
 </body>
 </html>

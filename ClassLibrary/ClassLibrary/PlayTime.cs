@@ -24,9 +24,9 @@ public partial class PlayTime
 
     public System.DateTime play { get; set; }
 
-    public Nullable<int> total_sits { get; set; }
+    public int total_sits { get; set; }
 
-    public Nullable<int> availble_sits { get; set; }
+    public int availble_sits { get; set; }
 
 
 

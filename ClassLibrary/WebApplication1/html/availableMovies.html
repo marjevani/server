@@ -95,36 +95,21 @@
        
     </style>
     <script>
+        var user = JSON.parse(localStorage.getItem("user"));
         var numOfAvailableMovies = 13;
         var itemInRow = 5;
-        var counter = 0;
-        var admin = GetQueryString("admin");
         var $spn;
-        function GetQueryString(parameter) {
-
-            var queryPairs = location.search.substr(1).split("&");
-
-            for (k in queryPairs) {
-                var x = queryPairs[k].split("=");
-
-                if (x[0] == parameter)
-                    return x[1];
-            }
-
-            return "";
-        }
 
         $(document).ready(function () {
 
             $spn = document.getElementById("hello");
-            $spn.innerHTML = "שלום " + localStorage.getItem("name");
+            $spn.innerHTML = "שלום " + user.name;
 
-            if (admin == 1) {
+            if (user.isAdmin == 1) {
                 var $add = $("<button>").text("הוסף סרט");
                 $add.click(function () { location.href = "addMovie.html" });
                 $("#admin").append($add).attr("class", "adminDiv");
                 $spn.innerHTML += ", באפשרותך להזמין סרט או להוסיף סרט חדש";
-
             }
             else {
                 $spn.innerHTML += ",איזה סרט תרצה לראות?";
@@ -132,14 +117,14 @@
 
             var $tbl = $("<table>").attr("class", "available");
             var $tr = $("<tr>");
-            for (var i = 0; i < numOfAvailableMovies; i++) {
+            var colCount = 0;
+            for (var i = 0; i < numOfAvailableMovies; i++, colCount++) {
 
-                if (counter == itemInRow) {
+                if (rowCount == itemInRow) {
                     $tr = $("<tr>");
-                    counter = 0;
+                    colCount = 0;
                 }
 
-                counter++;
                 var $td = $("<td>").attr("class", "w3-white");
                 var $div = $("<div>").attr("class", "internalDiv");
                 var $h2 = $("<h2>").attr("movie-number-name", i + 1).text("שם הסרט:");
@@ -151,7 +136,6 @@
                     {
                         localStorage.setItem("orderId", "from DB");//מהDB
                         location.href = "successOrder.html"
-
                     }
                 });;
                 var $br = $("<br>");
@@ -169,11 +153,8 @@
                 $tr.append($td);
                 $tbl.append($tr);
                 $("#availableTbl").append($tbl);
-
-
             }
-
-        } )
+        });
 
 
     </script>
@@ -187,8 +168,6 @@
         <tr>
             <td colspan=" 5"><h4 class="w3-blue head">סרטים זמינים</h4></td>
         </tr>
-       
-        
 
         <tr class="gallery">
             <td colspan="5">

@@ -33,7 +33,7 @@ public partial class Customer
 
     public string pass { get; set; }
 
-    public bool isAdmin { get; set; } // change to Private? HOW??
+    public bool isAdmin { get; set; }
 
 
 

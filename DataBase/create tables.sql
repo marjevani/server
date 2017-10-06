@@ -21,8 +21,8 @@ create table PlayTime
 id int identity(1,1) primary key,
 movie_id int foreign key references Movie(id),
 play datetime not null,
-total_sits int check(total_sits > 0),
-availble_sits int default(0)
+total_sits int check(total_sits > 0) not null,
+availble_sits int default(0) not null
 );
 ------------------------
 create table CustomerBuyTickets
