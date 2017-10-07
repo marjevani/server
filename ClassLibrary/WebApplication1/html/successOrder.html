@@ -14,8 +14,8 @@
         }
 
         #board {
-            width: 400px;
-            height: 300px;
+            width: 500px;
+            height: 350px;
             background-color: blanchedalmond;
             position: relative;
             top: 100px;
@@ -23,11 +23,24 @@
         }
     </style>
     <script>
+        var user = JSON.parse(localStorage.getItem("user"));
+        var data = JSON.parse(localStorage.getItem("data"));
         $(document).ready(function () {
-           
-            document.getElementById("orderNumber").innerHTML = localStorage.getItem("orderId");
+            document.getElementById("h1").innerHTML = user.name + ", תודה שהזמנת כרטיס לסרט";
+            document.getElementById("orderNumber").innerHTML = data.id;
+            document.getElementById("clientNumber").innerHTML = user.id;
+            document.getElementById("movieName").innerHTML = data.movie_name;
+            document.getElementById("play").innerHTML = data.play;
+            document.getElementById("amountSeats").innerHTML = data.amount;
 
+            
         })
+        
+        function add_invitation()
+        {
+
+            location.href = "availableMovies.html";
+        }
 
 
 
@@ -39,8 +52,8 @@
         <div id="board" align="center">
            
 
+            <h2 id="h1"></h2>
             <h2>פרטי ההזמנה:</h2>
-       
             <table>
                 <tr>
                     <td>מספר הזמנה:</td>
@@ -55,13 +68,17 @@
                     <td> <span id="movieName"></span></td>
                 </tr>
                 <tr>
+                    <td>הקרנה:</td>
+                    <td> <span id="play"></span></td>
+                </tr>
+                <tr>
                     <td>כמות מושבים:</td>
                     <td> <span id="amountSeats"></span></td>
                 </tr>
                
             </table>
             <br />
-            <input type="button" value="הזמנה נוספת"/>
+            <input type="button" value="הזמנה נוספת" onclick="add_invitation()"/>
             
 
 
