@@ -13,14 +13,15 @@ id int identity(1,1) primary key,
 name nvarchar(30) not null,
 publish_date date default(getdate()),
 langth smallint check(langth > 0),
-genre varchar(6) NOT NULL CHECK (genre IN('פעולה', 'מתח', 'קומדיה', 'דרמה', 'רומנטי', 'אימה'))
+genre nvarchar(6) NOT NULL CHECK (genre IN('פעולה', 'מתח', 'קומדיה', 'דרמה', 'רומנטי', 'אימה')),
+img nvarchar(100) default('first_img.JPG') not null
 );
 ---------------------------
 create table PlayTime
 (
 id int identity(1,1) primary key,
 movie_id int foreign key references Movie(id),
-play datetime not null,
+play datetime2 not null,
 total_sits int check(total_sits > 0) not null,
 availble_sits int default(0) not null
 );

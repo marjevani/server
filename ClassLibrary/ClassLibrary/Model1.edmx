@@ -31,7 +31,8 @@
           <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="publish_date" Type="date" />
           <Property Name="langth" Type="smallint" />
-          <Property Name="genre" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="genre" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="img" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="PlayTime">
           <Key>
@@ -39,11 +40,11 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="movie_id" Type="int" />
-          <Property Name="play" Type="datetime" Nullable="false" />
+          <Property Name="play" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="total_sits" Type="int" Nullable="false" />
           <Property Name="availble_sits" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__CustomerB__custo__24927208">
+        <Association Name="FK__CustomerB__custo__3B75D760">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTickets" Multiplicity="*" />
           <ReferentialConstraint>
@@ -55,7 +56,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CustomerB__movie__25869641">
+        <Association Name="FK__CustomerB__movie__3C69FB99">
           <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
           <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTickets" Multiplicity="*" />
           <ReferentialConstraint>
@@ -67,7 +68,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PlayTime__movie___29572725">
+        <Association Name="FK__PlayTime__movie___403A8C7D">
           <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
           <End Role="PlayTime" Type="Self.PlayTime" Multiplicity="*" />
           <ReferentialConstraint>
@@ -84,15 +85,15 @@
           <EntitySet Name="CustomerBuyTickets" EntityType="Self.CustomerBuyTickets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayTime" EntityType="Self.PlayTime" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__CustomerB__custo__24927208" Association="Self.FK__CustomerB__custo__24927208">
+          <AssociationSet Name="FK__CustomerB__custo__3B75D760" Association="Self.FK__CustomerB__custo__3B75D760">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__CustomerB__movie__25869641" Association="Self.FK__CustomerB__movie__25869641">
+          <AssociationSet Name="FK__CustomerB__movie__3C69FB99" Association="Self.FK__CustomerB__movie__3C69FB99">
             <End Role="Movie" EntitySet="Movie" />
             <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__PlayTime__movie___29572725" Association="Self.FK__PlayTime__movie___29572725">
+          <AssociationSet Name="FK__PlayTime__movie___403A8C7D" Association="Self.FK__PlayTime__movie___403A8C7D">
             <End Role="Movie" EntitySet="Movie" />
             <End Role="PlayTime" EntitySet="PlayTime" />
           </AssociationSet>
@@ -122,7 +123,8 @@
           <Property Name="langth" Type="Int16" />
           <NavigationProperty Name="CustomerBuyTickets" Relationship="Self.FK__CustomerB__movie__1BFD2C07" FromRole="Movie" ToRole="CustomerBuyTickets" />
           <NavigationProperty Name="PlayTimes" Relationship="Self.FK__PlayTime__movie___164452B1" FromRole="Movie" ToRole="PlayTime" />
-          <Property Name="genre" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="genre" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="img" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="PlayTime">
           <Key>
@@ -130,7 +132,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="movie_id" Type="Int32" />
-          <Property Name="play" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="play" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="total_sits" Type="Int32" Nullable="false" />
           <Property Name="availble_sits" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Movie" Relationship="Self.FK__PlayTime__movie___164452B1" FromRole="PlayTime" ToRole="Movie" />
@@ -218,6 +220,7 @@
           <EntitySetMapping Name="Movies">
             <EntityTypeMapping TypeName="movieDBModel.Movie">
               <MappingFragment StoreEntitySet="Movie">
+                <ScalarProperty Name="img" ColumnName="img" />
                 <ScalarProperty Name="genre" ColumnName="genre" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />

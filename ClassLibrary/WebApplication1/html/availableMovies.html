@@ -99,12 +99,11 @@
         var user = JSON.parse(localStorage.getItem("user"));
         var numOfAvailableSits;
         var itemInRow = 5;
-        var $spn;
        
 
         $(document).ready(function () {
-
-            $spn = document.getElementById("hello");
+            // hello messege - top
+            var $spn = document.getElementById("hello");
             $spn.innerHTML = "שלום " + user.name;
 
             if (user.isAdmin == 1) {
@@ -114,22 +113,19 @@
                 $spn.innerHTML += ", באפשרותך להזמין סרט או להוסיף סרט חדש";
             }
             else {
-                $spn.innerHTML += ",איזה סרט תרצה לראות?";
+                $spn.innerHTML += ",איזה סרט תרצה להזמין?";
             }
 
             var $tbl = $("<table>").attr("class", "available");
             var $tr = $("<tr>");
             var counter = 0;
 
-
             $.ajax({
                 dataType: "json",
                 url: "/api/movie",
                 contentType: "application/json; charset=utf-8",
                 type: "GET",
-                //data: JSON.stringify(s),
                 success: function (data) {
-                    
                     for (i in data)
                     {
                         if (counter == itemInRow) {
@@ -148,7 +144,7 @@
                             var $langth = $("<span>").text("אורך הסרט:" + data[i].langth);
                             var $genre = $("<span>").html("סוג הסרט:" + data[i].genre);
                             var $date = $("<span>").attr("data-play", data[i].PlayTimes[0].play).html("תאריך הקרנה:" + data[i].PlayTimes[0].play);
-                            var $pic = $("<img>").attr({ "src": "/images/first_img.JPG", "movie-number-pic": i + 1 });
+                            var $pic = $("<img>").attr({ "src": "/images/"+ data[i].img, "movie-number-pic": i + 1 });
                             var $selectP = $("<select>");
                            /// $selectP.append('<option value=' + 1 + '>' + 1 + '</option>'); //להוריד
                             j = 1;
@@ -220,22 +216,7 @@
                     },	 //פונקציה  שתופעל לאחר הצלחה
                     error: function () { alert("error in shopping"); }		//פונקציה שתופעל במקרה של שגיאה
                 });
-
-               
-
-
             }
-
-
-
-
-
-
-
-
-
-
-
         }); //document
 
 
@@ -248,12 +229,12 @@
     <div id="admin"></div>
     <table id="bigTbl" align="center">
         <tr>
-            <td colspan=" 5"><h4 class="w3-blue head">סרטים זמינים</h4></td>
+            <td colspan="5"><h4 class="w3-blue head">סרטים זמינים</h4></td>
         </tr>
 
         <tr class="gallery">
             <td colspan="5">
-                <div class=" w3-text-blue" id="availableTbl">
+                <div class="w3-text-blue" id="availableTbl">
                  
                     
                 </div>

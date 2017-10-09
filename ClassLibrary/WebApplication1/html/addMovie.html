@@ -46,73 +46,100 @@
                  
         </style>
         <script>
-            var i = 0, max_projection = 5;
+            var user = JSON.parse(localStorage.getItem("user"));
+            var numOfProj = 0;
+            var max_projection = 5;
+            var allProj = [];
             
+
             function addMovie()
             {
-                ///עדכון בDB
-                if (true) ///עודכן בהצלחה בDB
-                {
-                    alert("הסרט נוסף בהצלחה!");
-                }
-                else {
-                    alert("error");
-                }
-            }
-            function addProjection() {
+                var movie = {
+                    name: $("#name").val(),
+                    publish_date: $("#publish_date").val(),
+                    langth: $("#langth").val(),
+                    genre: $('#genre').find(":selected").text()
+                };
 
+                var fd = new FormData();
+                // append movie
+                var movie_string = JSON.stringify(movie);
+                fd.append("movie", movie_string);
                 
+                // append image
+                fd.append("img", $("#imgInp")[0].files[0]);
 
-                if (i < 5)
+                // append PlayTime data
+                fd.append("numOfProj", numOfProj);
+                fd.append("sits", $("#sits").val());
+                for (var i = 0; i < numOfProj; i++)
+                    fd.append("projection" + i, $("#projection" + i).val());
+
+                // send all data
+                $.ajax({
+                    url: "/api/Movie",
+                    type: "PUT",
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: function ()
+                    {
+                        alert("הסרט נוסף בהצלחה!");
+                        location.reload();
+                    },
+                    error: function ()
+                    {
+                        alert("error");
+                    }
+                });
+            }
+
+
+            function addProjection() {
+                if (numOfProj < max_projection)
                 {
-                    if (i == 0)
+                    if (numOfProj == 0)
                     {
                         $("#projection").empty();
-                    }
-                    
-                    var list = document.getElementById("projection");
-                    
-                   
+                    }                    
                     var d = document.createElement("div");
                     d.style.margin = "5px";
-                    var spn = document.createElement("span");
-                    i++;
-                    spn.innerHTML = i + ".";
                    
-                    var btn1 = document.createElement("input");
-                    btn1.type = "date";
+                    var dateTime = document.createElement("input");
+                    dateTime.type = "datetime-local";
+                    dateTime.id = "projection" + numOfProj;
 
-                    var btn2 = document.createElement("input");
-                    btn2.setAttribute("type", "time");
+                    var spn = document.createElement("span");
+                    numOfProj++;
+                    spn.innerHTML = numOfProj + ".";
+
+                    var list = document.getElementById("projection");
+
                     d.appendChild(spn);
-                    d.appendChild(btn1);
-                    d.appendChild(btn2);
+                    d.appendChild(dateTime);
                     list.appendChild(d);
                 }
-               
             }
+
+
             $(document).ready(function ()
             {
-               if (i==0)
-              { var list = document.getElementById("projection");
+               var list = document.getElementById("projection");
                 var d = document.createElement("div");
                 d.style.margin = "5px";
                 var spn = document.createElement("span");
                 spn.innerHTML = "לא הוכנסו הקרנות";
                 d.appendChild(spn);
                 list.appendChild(d);
-               }
             })
                 
 
             function readURL(input) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
-
                     reader.onload = function (e) {
                         document.getElementById('imgshow').src = e.target.result;
                     }
-
                     reader.readAsDataURL(input.files[0]);
                 }
             }
@@ -124,7 +151,7 @@
 
     <table id="bigTbl" align="center">
         <tr>
-            <td colspan=" 3"><h4 class="w3-blue">הוספת סרט חדש</h4></td>
+            <td colspan= "3"><h4 class="w3-blue">הוספת סרט חדש</h4></td>
         </tr>
         <tr>
             <td>
@@ -133,13 +160,13 @@
 
             <td>
                 <table id="internalTbl" align="center">
-                    <tr><td class="w3-text-white"> שם הסרט </td><td><input type="text" /></td></tr>
-                    <tr><td class="w3-text-white">   מספר מקומות</td><td><input type="text" /></td></tr><!--לעשות סלקט עם האפשרויות  -->
-                    <tr><td class="w3-text-white">    תאריך הוצאה</td><td><input type="date" /></td></tr><!--לעשות סלקט עם האפשרויות  -->
+                    <tr><td class="w3-text-white"> שם הסרט </td><td><input type="text" id="name"/></td></tr>
+                    <tr><td class="w3-text-white">   מספר מקומות</td><td><input type="text" id="sits"/></td></tr><!--לעשות סלקט עם האפשרויות  -->
+                    <tr><td class="w3-text-white">    תאריך הוצאה</td><td><input type="date" id="publish_date"/></td></tr><!--לעשות סלקט עם האפשרויות  -->
                     <tr>
-                        <td class="w3-text-white">    ז'אנר</td>
+                        <td class="w3-text-white" >    ז'אנר</td>
                         <td>
-                            <select>
+                            <select id="genre">
                                 <option>פעולה</option>
                                 <option>מתח</option>
                                 <option>קומדיה</option>
@@ -149,32 +176,20 @@
                             </select>
                         </td>
                     </tr><!--לעשות סלקט עם האפשרויות  -->
-                    <tr><td class="w3-text-white">  אורך הסרט בדקות</td><td><input type="text" /></td></tr><!--לעשות סלקט עם האפשרויות  -->
+                    <tr><td class="w3-text-white">  אורך הסרט בדקות</td><td><input type="text" id="langth"/></td></tr><!--לעשות סלקט עם האפשרויות  -->
                     <tr><td class="w3-text-white"> תמונה</td><td><input type="file" id="imgInp" onchange="readURL(this);" /></td></tr><!--לעשות סלקט עם האפשרויות  -->
-
-
                 </table>
-
             </td>
 
             <td class="w3-display-container">
-                <!--<div class="w3-display-container">-->
                 <table class="w3-display-top">
                     <tr>
                         <td class="w3-text-white ">הקרנות:</td>
                         <td id="projection" align="center"></td>
                         <td align="center" class=""> <input type="button" value="הוסף הקרנה" onclick="addProjection()" /> </td>
-
                     </tr>
-
                 </table>
-
-                <!--</div>-->
-
-
             </td>
-
-
         </tr>
 
         <tr >
@@ -182,14 +197,7 @@
                 <input type="button" value="הוסף" class="bottomButton" onclick="addMovie()" />
                 <input type="button" value="מחק" class="bottomButton" />
             </td>
-           
         </tr>
-
-
-       
-
-
-
     </table>
 
        
