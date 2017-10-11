@@ -226,6 +226,7 @@
     <Content Include="html\availableMovies.html" />
     <Content Include="html\login.html" />
     <Content Include="html\OrderMovie.html" />
+    <Content Include="html\playForMovie.html" />
     <Content Include="html\successOrder.html" />
     <Content Include="images\background.jpg" />
     <Content Include="images\first_img.JPG" />

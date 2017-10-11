@@ -1,105 +1,101 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-   
-    <title>סרטים מוצגים בקולנוע</title>
+
+    <title>הקרנות עבור סרט</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
-        .gallery{
-            /*border-collapse:collapse;*/
-        }
+         .gallery {
+             /*border-collapse:collapse;*/
+         }
 
-        .gallery td {
-            padding: 5px;
-       
-            /*border:1px solid black;*/
-            width:200px;
-            height:200px;
-            /*background-color:white;*/
-             
+             .gallery td {
+                 padding: 5px;
+                 /*border:1px solid black;*/
+                 width: 200px;
+                 height: 200px;
+                 /*background-color:white;*/
+                 position: relative;
+             }
+
+
+         #bigTbl {
+             border-collapse: collapse;
+             margin-top: 30px;
+             padding: 10px;
+         }
+
+         body {
+             background-image: url("/images/background.jpg");
+             background-attachment: fixed;
+         }
+
+         h4 {
+             text-align: center;
+             margin: 5px;
+             padding: 5px; /*ממרכז את הכתב*/
+             color: white;
+             position: relative;
+             width: 1100px;
+         }
+         /*.available td div*/
+         .internalDiv {
+             width: 200px;
+             /*height:330px;*/
+             text-align: center;
+         }
+         /*.smlGallery{
+              height:150px;
              position:relative;
-        }
+         }*/
 
+         /*#smallTbl{
+               top:10px;
+               position:relative;
+         }*/
+         img {
+             width: 100px;
+             height: 100px;
+             margin: 5px;
+         }
 
-        #bigTbl {
-            border-collapse: collapse;
-            margin-top: 30px;
-             padding:10px;
-        }
+         #hello {
+             margin: 5px;
+             padding: 5px;
+             /*width:200px;
+             height:200px;*/
+             border: 1px dashed black;
+             display: inline;
+         }
 
-        body {
-            background-image: url("/images/background.jpg");
-            background-attachment: fixed;
-        }
-        h4{ text-align:center;
-                margin:5px;
-                padding:5px; /*ממרכז את הכתב*/
-                color:white;
-                position:relative;
-                width:1100px;
-                }  
-        /*.available td div*/
-        .internalDiv{
-             width:200px;
-            /*height:330px;*/
-            text-align:center
-       
-         
-        }
-        /*.smlGallery{
-             height:150px;
-            position:relative;
-        }*/
-
-        /*#smallTbl{
-              top:10px;
-              position:relative;
-        }*/
-       img{
-            width:100px;
-            height:100px;
-            margin:5px;
-           
-       }
-       #hello
-       {
-           margin:5px;
-           padding:5px;
-            /*width:200px;
-            height:200px;*/
-            border:1px dashed  black;
-            display:inline;
-       }
-       .avi{
-           margin-left:20px;
-       }
-       /*.head{
-           width:1100px;
-       }*/
-      /*#availableTbl
-       {
+         .avi {
+             margin-left: 20px;
+         }
+         /*.head{
             width:1100px;
-       }*/
-       
-       .lowerDiv
-       {
-          text-align: center;
-       }
-       .adminDiv
-       {
-          /*text-align: center;*/
-          display:inline;
-       }
-       
+        }*/
+         /*#availableTbl
+        {
+             width:1100px;
+        }*/
+
+         .lowerDiv {
+             text-align: center;
+         }
+
+         .adminDiv {
+             /*text-align: center;*/
+             display: inline;
+         }
     </style>
     <script>
         var user = JSON.parse(localStorage.getItem("user"));
         var numOfAvailableSits;
         var itemInRow = 5;
-       
+
 
         $(document).ready(function () {
             // hello messege - top
@@ -110,10 +106,10 @@
                 var $add = $("<button>").text("הוסף סרט");
                 $add.click(function () { location.href = "addMovie.html" });
                 $("#admin").append($add).attr("class", "adminDiv");
-                $spn.innerHTML += ", באפשרותך להזמין סרט או להוסיף סרט חדש";
+                $spn.innerHTML += ", באפשרותך לבחור הקרנה או להוסיף סרט חדש";
             }
             else {
-                $spn.innerHTML += ",איזה סרט תרצה להזמין?";
+                $spn.innerHTML += ",איזה הקרנה ברצונך לבחור?";
             }
 
             var $tbl = $("<table>").attr("class", "available");
@@ -126,16 +122,14 @@
                 contentType: "application/json; charset=utf-8",
                 type: "GET",
                 success: function (data) {
-                    for (i in data)
-                    {
+                    for (i in data) {
                         if (counter == itemInRow) {
                             $tr = $("<tr>");
                             counter = 0;
                         }//if
-                        //numOfAvailableSits = data[i].PlayTimes[0].availble_sits;
-                        //console.log(numOfAvailableSits);
-                        //if (numOfAvailableSits > 0)
-                        //{
+                        numOfAvailableSits = data[i].PlayTimes[0].availble_sits;
+                        console.log(numOfAvailableSits);
+                        if (numOfAvailableSits > 0) {
                             counter++;
                             var $td = $("<td>").attr("class", "w3-white");
                             var $div = $("<div>").attr({ "class": "internalDiv", "data-id": data[i].id });
@@ -144,9 +138,9 @@
                             var $langth = $("<span>").text("אורך הסרט:" + data[i].langth);
                             var $genre = $("<span>").html("סוג הסרט:" + data[i].genre);
                             ///var $date = $("<span>").attr("data-play", data[i].PlayTimes[0].play).html("תאריך הקרנה:" + data[i].PlayTimes[0].play);
-                            var $pic = $("<img>").attr({ "src": "/images/"+ data[i].img, "movie-number-pic": i + 1 });
+                            var $pic = $("<img>").attr({ "src": "/images/" + data[i].img, "movie-number-pic": i + 1 });
                             ///var $selectP = $("<select>");
-                           /// $selectP.append('<option value=' + 1 + '>' + 1 + '</option>'); //להוריד
+                            /// $selectP.append('<option value=' + 1 + '>' + 1 + '</option>'); //להוריד
                             j = 1;
                             while (j <= numOfAvailableSits) {
                                 $selectP.append('<option value=' + j + '>' + j + '</option>');
@@ -169,13 +163,13 @@
                             $div.append($pic);
                             $div.append($("<br>"));
                             $div.append($btn);
-                            
+
                             $td.append($div);
                             $tr.append($td);
                             $tbl.append($tr);
                             $("#availableTbl").append($tbl);
-                       // }//if
-                      
+                        }//if
+
                     }//for
 
                 }, //success_data
@@ -189,16 +183,16 @@
 
             function orderMovie(t) {
                 console.log(t.parentElement.getAttribute("data-id") + t.parentElement.getAttribute("data-id"));
-               var x= {
-                   customer_id: user.id,
-                   movie_id: parseInt(t.parentElement.getAttribute("data-id")),
-                   amount: t.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.selectedIndex+1,
-                    }
+                var x = {
+                    customer_id: user.id,
+                    movie_id: parseInt(t.parentElement.getAttribute("data-id")),
+                    amount: t.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.selectedIndex + 1,
+                }
                 $.ajax({
-                    dataType: "json",			     
+                    dataType: "json",
                     url: "/api/CustomerBuyTickets",
                     contentType: "application/json; charset=utf-8",	   //סוג הנתונים שאנחנו שולחים לשרת
-                    type: "PUT",				  //סוג הפעולה		
+                    type: "PUT",				  //סוג הפעולה
                     data: JSON.stringify(x),			  //הנתונים עצמם שאנחנו שולחים
                     success: function (data) {
                         var nData =
@@ -207,9 +201,9 @@
                                 customer_id: data.customer_id,
                                 movie_id: data.movie_id,
                                 amount: data.amount,
-                                movie_name: t.parentElement.firstElementChild.getAttribute("data-name"), 
-                                play:t.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.getAttribute("data-play"),                                              
-                                }
+                                movie_name: t.parentElement.firstElementChild.getAttribute("data-name"),
+                                play: t.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.getAttribute("data-play"),
+                            }
                         localStorage.setItem("data", JSON.stringify(nData));
                         location.href = "successOrder.html"
 
@@ -225,7 +219,7 @@
 </head>
 <body dir="rtl">
     <br />
-    <span class="w3-white" id="hello" ></span>
+    <span class="w3-white" id="hello"></span>
     <div id="admin"></div>
     <table id="bigTbl" align="center">
         <tr>
@@ -235,18 +229,18 @@
         <tr class="gallery">
             <td colspan="5">
                 <div class="w3-text-blue" id="availableTbl">
-                 
-                    
+
+
                 </div>
 
             </td>
 
-      
 
 
 
 
-</table>
+
+    </table>
 
 </body>
 </html>
