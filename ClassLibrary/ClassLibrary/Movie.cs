@@ -35,7 +35,7 @@ public partial class Movie
 
     public Nullable<System.DateTime> publish_date { get; set; }
 
-    public Nullable<short> langth { get; set; }
+    public short langth { get; set; }
 
     public string genre { get; set; }
 

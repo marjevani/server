@@ -87,9 +87,9 @@
                         alert("הסרט נוסף בהצלחה!");
                         location.reload();
                     },
-                    error: function ()
+                    error: function (xhr, textStatus, errorThrown)
                     {
-                        alert("error");
+                        alert(xhr.responseText);
                     }
                 });
             }
@@ -195,7 +195,7 @@
         <tr >
             <td class="w3-text-white" align="center" colspan="3">
                 <input type="button" value="הוסף" class="bottomButton" onclick="addMovie()" />
-                <input type="button" value="מחק" class="bottomButton" />
+                <input type="button" value="מחק" class="bottomButton" onclick="location.reload()" />
             </td>
         </tr>
     </table>

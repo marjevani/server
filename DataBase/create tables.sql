@@ -12,7 +12,7 @@ create table Movie
 id int identity(1,1) primary key,
 name nvarchar(30) not null,
 publish_date date default(getdate()),
-langth smallint check(langth > 0),
+langth smallint check(langth > 0) not null,
 genre nvarchar(6) NOT NULL CHECK (genre IN('פעולה', 'מתח', 'קומדיה', 'דרמה', 'רומנטי', 'אימה')),
 img nvarchar(100) default('first_img.JPG') not null
 );
@@ -35,10 +35,22 @@ amount int check(amount > 0)
 );
 
 
+--------------------
+-- use to update Movie table (insted of deleting and create again):
+ALTER TABLE Movie ALTER COLUMN langth smallint not null
+
 
 ---------------------
 select *
 from Customer
+
+select *
+from PlayTime
+
+select *
+from Movie
+
+-----------
 
 
 
