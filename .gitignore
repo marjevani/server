@@ -2,6 +2,14 @@
 App.config
 /ClassLibrary/ClassLibrary/obj/Debug/
 /ClassLibrary/ClassLibrary/bin/Debug/
+<<<<<<< HEAD
+/ClassLibrary/ClassLibrary/Model1.edmx
+=======
+/ClassLibrary/ClassLibrary/Customr.cs
+/ClassLibrary/ClassLibrary/CustomrBuyTicket.cs
+/ClassLibrary/ClassLibrary/PlayTime.cs
+/ClassLibrary/ClassLibrary/Model1.*
+>>>>>>> 61bc7f3... fix some issues
 
 *.dll
 
