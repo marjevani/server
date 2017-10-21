@@ -64,6 +64,7 @@
        {
           display:inline;
        }
+   
        
     </style>
     <script>
@@ -146,14 +147,26 @@
 
         }); //document
 
-
+        function logout()
+        {
+            localStorage.clear();
+            location.href = 'login.html';
+        }
     </script>
 
 </head>
 <body dir="rtl">
     <br />
-    <span class="w3-white" id="hello" ></span>
-    <div id="admin"></div>
+  
+    <input type="button" value="logOut" onclick="logout()" id="logOutDiv"  />
+        <span class="w3-white" id="hello"></span>
+        <input type="button" value="צפייה בהזמנות שלי" onclick="location.href = 'userOrders.html'" />
+        <div id="admin"></div>
+   
+
+    
+    
+    
     <table id="bigTbl" align="center">
         <tr>
             <td colspan="5"><h4 class="w3-blue head">סרטים זמינים</h4></td>

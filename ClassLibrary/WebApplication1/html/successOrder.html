@@ -21,6 +21,13 @@
             top: 100px;
             border: 1px dashed black;
         }
+       #logOutDiv
+       {
+           text-align:left;
+           left:30px;
+           top:50px;
+            position:relative;
+       }
     </style>
     <script>
         var user = JSON.parse(localStorage.getItem("user"));
@@ -35,15 +42,19 @@
             document.getElementById("amountSeats").innerHTML = data.amount;
         })
         
-        function add_invitation() 
-        {
-            location.href = "showAll.html";
+        function logout() {
+            localStorage.clear();
+            location.href = 'login.html';
         }
 
     </script>
 
 </head>
 <body dir="rtl" align="center">
+    <div id="logOutDiv">
+        <input type="button" value="logOut" onclick="logout()" />
+    </div>
+
     <div id="wrapper" style="padding:10px;" align="center">
         <div id="board" align="center">
 
@@ -73,7 +84,9 @@
                
             </table>
             <br />
-            <input type="button" value="הזמנה נוספת" onclick="add_invitation()"/>
+            <input type="button" value="הזמנה נוספת" onclick="location.href = 'showAll.html'"/>
+            <input type="button" value="צפייה בהזמנות שלי" onclick="location.href = 'userOrders.html'" />
+      
 
         </div>
     </div>

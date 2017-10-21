@@ -44,6 +44,15 @@ namespace WebApplication1.Controllers
         // DELETE api/<controller>/5
         public void Delete(int id)
         {
+            movieDBConnection db = new movieDBConnection();
+            CustomerBuyTicket cbt = db.CustomerBuyTickets.SingleOrDefault(x => x.id == id);
+            
+            PlayTime p = db.PlayTimes.SingleOrDefault(x => x.id == cbt.playTime_id);
+            p.availble_sits = p.availble_sits + (int)cbt.amount;
+            db.CustomerBuyTickets.Remove(cbt);
+            //  db.CustomerBuyTickets.Add(db.CustomerBuyTickets.SingleOrDefault(x=>x.id == id));
+            db.SaveChanges();
+
         }
     }
 }

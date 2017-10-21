@@ -61,6 +61,14 @@
         .adminDiv {
             display: inline;
         }
+         #logOutDiv
+       {
+           text-align:left;
+           left:30px;
+            position:relative;
+            top:-30px;
+            width:30px;
+       }
     </style>
     <script>
         var user = JSON.parse(localStorage.getItem("user"));
@@ -70,7 +78,7 @@
         $(document).ready(function () {
             // hello messege - top
             var $spn = document.getElementById("hello");
-            $spn.innerHTML = "שלום " + user.name;
+            $spn.innerHTML = "שלום " + user.name ;
 
             var $tbl = $("<table>").attr("class", "available");
             var $tr = $("<tr>");
@@ -79,10 +87,22 @@
             // get and show all CustomerBuyTickets
             $.ajax({
                 dataType: "json",
-                url: "/api/CustomerBuyTickets/" + "1",//user.id,
+                url: "/api/CustomerBuyTickets/" + user.id,//user.id,
                 contentType: "application/json; charset=utf-8",
                 type: "GET",
                 success: function (data) {
+                    if (data.length == 0)
+                    {
+                         $h4 = $("<h4>").text("לא נמצאו הזמנות עבור לקוח");
+                         $("#noOrders").append($h4);
+                         
+
+                    }
+                    else { //data.length != 0
+                        var $tdH = $("<h4>").text("  ההזמנות שלי: " ).attr("class","w3-blue head");
+                            $("#tdHeader").append($tdH);
+                    }
+                    
                     for (i in data)
                     {
                         if (counter == itemInRow) {
@@ -91,12 +111,14 @@
                         }
                         counter++;
                         var $td = $("<td>").attr("class", "w3-white");
-                        var $div = $("<div>").attr({ "class": "internalDiv"})// "data-id": data[i].Movie.id });
+                        var $div = $("<div>").attr({ "class": "internalDiv" , "data-id": data[i].id})// "data-id": data[i].Movie.id });
                         var $nameP = $("<span>").attr("data-name", data[i].Movie.name).text("שם הסרט:" + data[i].Movie.name);
                         var $time = $("<span>").html("זמן הקרנה:" + data[i].PlayTime.play);
-                        var $orders = $("<span>").html("מספר הזמנות:" + data[i].amount);
+                        var $orders = $("<span>").html("מספר כרטיסים:" + data[i].amount);
 
                         var $pic = $("<img>").attr({ "src": "/images/" + data[i].Movie.img, "movie-number-pic": i + 1 });
+                        var $btn = $("<button>").text("בטל הזמנה").click(function () {deleteOrder(this)});
+                       
 
                         $div.append($nameP);
                         $div.append($("<br>"));
@@ -107,6 +129,8 @@
                         $div.append($("<br>"));
                         $div.append($("<br>"));
                         $div.append($pic);
+                        $div.append($("<br>"));
+                        $div.append($btn);
 
                         $td.append($div);
                         $tr.append($td);
@@ -119,16 +143,44 @@
                 } //error
             });
         });
+
+        function deleteOrder(t)
+        {
+            $.ajax({
+                dataType: "json",
+                url: "/api/CustomerBuyTickets/" + t.parentElement.getAttribute("data-id"),
+                contentType: "application/json; charset=utf-8",	   //סוג הנתונים שאנחנו שולחים לשרת
+                type: "DELETE",				  //סוג הפעולה
+                //data: JSON.stringify(x),			  //הנתונים עצמם שאנחנו שולחים
+                success: function (data) {
+                    alert("Order deleted successfully!");
+                    location.reload();
+
+                },	 //פונקציה  שתופעל לאחר הצלחה
+                error: function () { alert("error in delete"); }		//פונקציה שתופעל במקרה של שגיאה
+            });
+        }
+
+        function logout() {
+            localStorage.clear();
+            location.href = 'login.html';
+        }
     </script>
 
 </head> 
 <body dir="rtl">
     <br />
     <span class="w3-white" id="hello"></span>
-    <div id="admin"></div>
+    <!--<div id="admin"></div>-->
+   
+    <input type="button" value="חזרה להצגת כל הסרטים" onclick="location.href = 'showAll.html'" />
+    <div id="logOutDiv">
+        <input type="button" value="logOut" onclick="logout()" />
+    </div>
+    <div id="noOrders" align="center"></div>
     <table id="bigTbl" align="center">
         <tr>
-            <td colspan="5"><h4 class="w3-blue head">ההזמנות שלי</h4></td>
+            <td colspan="5" id="tdHeader" ></td>
         </tr>
 
         <tr class="gallery">

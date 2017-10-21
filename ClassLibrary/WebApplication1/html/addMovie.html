@@ -43,6 +43,12 @@
                width:200px;
                height:200px;
            }
+            #logOutDiv
+             {
+               top: 15px;
+               position:relative
+                
+             }
                  
         </style>
         <script>
@@ -143,12 +149,22 @@
                     reader.readAsDataURL(input.files[0]);
                 }
             }
+            function logout() {
+                localStorage.clear();
+                location.href = 'login.html';
+            }
 
         </script>
     </head>
 
 <body dir="rtl" >
+  
+    <div id="logOutDiv">
+        <input type="button" value="logOut" onclick="logout()" />
+        <input type="button" value="חזרה להצגת כל הסרטים" class="bottomButton" onclick="location.href='showAll.html'" />
 
+    </div>
+    
     <table id="bigTbl" align="center">
         <tr>
             <td colspan= "3"><h4 class="w3-blue">הוספת סרט חדש</h4></td>

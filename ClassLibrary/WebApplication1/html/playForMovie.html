@@ -71,7 +71,11 @@
              display: inline;
          }
 
-
+          #logOutDiv
+       {
+           top: 15px;
+          position:relative
+       }
       
     </style>
     <script>
@@ -86,40 +90,38 @@
             var $spn = document.getElementById("hello");
             $spn.innerHTML = "שלום " + user.name;
 
-            if (user.isAdmin == 1) {
-                var $add = $("<button>").text("הוסף סרט");
-                $add.click(function () { location.href = "addMovie.html" });
-                $("#admin").append($add).attr("class", "adminDiv");
-                $spn.innerHTML += ", באפשרותך לבחור הקרנה או להוסיף סרט חדש";
-            }
-            else {
-                $spn.innerHTML += ",איזה הקרנה ברצונך לבחור?";
-            }
+            //if (user.isAdmin == 1) {
+            //    var $add = $("<button>").text("הוסף סרט");
+            //    $add.click(function () { location.href = "addMovie.html" });
+            //    $("#admin").append($add).attr("class", "adminDiv");
+            //    $spn.innerHTML += ", באפשרותך לבחור הקרנה או להוסיף סרט חדש";
+            //}
+            //else {
+            //    $spn.innerHTML += ",איזה הקרנה ברצונך לבחור?";
+            //}
 
             var $tbl = $("<table>").attr("class", "available");
             var $tr = $("<tr>");
             var counter = 0;
-
+            var countr_Available_plays = 0;
+            var $h4, $h42, $btn; //when no plays to show
             $.ajax({
                 dataType: "json",
                 url: "/api/PlayTime/"+JSON.parse(localStorage.getItem("movie_id")),
                 contentType: "application/json; charset=utf-8",
                 type: "GET",
                 success: function (data) {
-                    if (data.length == 0)
-                    {                        
-                        var $h4 = $("<h4>").text("sold out");
-                        var $h42 = $("<h4>").text("נסה שוב במועד מאוחר יותר");
-                        var $btn = $("<button>").text("חזרה לסרטים המוצגים").click(function () { location.href = "showAll.html"; });
-                        $("#soldOutDiv").append($h4);
-                        $("#soldOutDiv").append($h42);
-                        $("#soldOutDiv").append($btn);
-                    }
-                    else
-                    {
-                        var $tdH = $("<h4>").text("  הקרנות זמינות עבור הסרט: " + JSON.parse(localStorage.getItem("movie_name"))).attr("class", "w3-blue head");
-                        $("#tdHeader").append($tdH);
-                    }
+                    //if (data.length == 0)
+                    //{                        
+                    //    $h4 = $("<h4>").text("לא נמצאו הקרנות");
+                    //    $h42 = $("<h4>").text("נסה שוב במועד מאוחר יותר");
+                    //    $btn = $("<button>").text("חזרה לסרטים המוצגים").click(function () { location.href = "showAll.html"; });
+                    //    $("#soldOutDiv").append($h4);
+                    //    $("#soldOutDiv").append($h42);
+                    //    $("#soldOutDiv").append($btn);
+                    //}
+                   
+                                       
                     for (i in data) {
                         if (counter == itemInRow) {
                             $tr = $("<tr>");
@@ -128,6 +130,7 @@
                         numOfAvailableSits = data[i].availble_sits;
                        
                         if (numOfAvailableSits > 0) {
+                            countr_Available_plays++;
                             counter++;
                             date = new Date(data[i].play);
                             var $td = $("<td>").attr("class", "w3-white");
@@ -165,6 +168,27 @@
                         }//if
 
                     }//for
+                    if (countr_Available_plays == 0) {
+                        if (data.length == 0)
+                        {
+                            $h4 = $("<h4>").text("לא נמצאו הקרנות");
+                        }
+                        else
+                        {
+                            $h4 = $("<h4>").text("SOLD OUT");
+                        }
+                       
+                        $h42 = $("<h4>").text("נסה שוב במועד מאוחר יותר");
+                        $btn = $("<button>").text("חזרה לסרטים המוצגים").click(function () { location.href = "showAll.html"; });
+                        $("#soldOutDiv").append($h4);
+                        $("#soldOutDiv").append($h42);
+                        $("#soldOutDiv").append($btn);
+
+                    }
+                    else { //countr_Available_plays !=0
+                        var $tdH = $("<h4>").text("  הקרנות זמינות עבור הסרט: " + JSON.parse(localStorage.getItem("movie_name"))).attr("class", "w3-blue head");
+                        $("#tdHeader").append($tdH);
+                    }
 
                 }, //success_data
                 error: function () {
@@ -208,21 +232,27 @@
             }
         }); //document
 
-
+        function logout() {
+            localStorage.clear();
+            location.href = 'login.html';
+        }
     </script>
 
 </head>
 <body dir="rtl">
     <br />
-    <span class="w3-white" id="hello"></span>
+    <div id="logOutDiv">
+        <input type="button" value="logOut" onclick="logout()" />
+        <span class="w3-white" id="hello"></span>
+    </div>
+    
    
-    <div id="admin"></div>
+    <!--<div id="admin"></div>-->
+    <input type="button" value="חזרה להצגת כל הסרטים" onclick="location.href = 'showAll.html'" />
     
 
-        <div id="soldOutDiv" align="center"></div>
+    <div id="soldOutDiv" align="center"></div>
  
-   
-
     <table id="bigTbl" align="center">
         <tr>
             <td colspan="5" id="tdHeader"></td>
