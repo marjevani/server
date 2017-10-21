@@ -33,4 +33,33 @@ namespace ClassLibrary
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlayTime> PlayTimes { get; set; }
     }
+<<<<<<< HEAD
+=======
+
+
+    public int id { get; set; }
+
+    public string name { get; set; }
+
+    public Nullable<System.DateTime> publish_date { get; set; }
+
+    public short langth { get; set; }
+
+    public string genre { get; set; }
+
+    public string img { get; set; }
+
+
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<CustomerBuyTicket> CustomerBuyTickets { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<PlayTime> PlayTimes { get; set; }
+
+}
+
+>>>>>>> remotes/origin/master
 }

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ClassLibrary;
+using System.Data.Entity;
 
 namespace WebApplication1.Controllers
 {
@@ -22,9 +23,30 @@ namespace WebApplication1.Controllers
         public List<PlayTime> Get(int id)
         {
             movieDBConnection db = new movieDBConnection();
+<<<<<<< HEAD
             return db.PlayTimes.Where(x => x.movie_id == id).ToList();
             
           
+=======
+            return db.PlayTimes.SingleOrDefault(x => x.movie_id == id).availble_sits;
+        }
+
+        // prevent movie time Discrepancy
+        [HttpGet]
+
+        static public bool is_Valid_projc_time(DateTime projectionTime, short langth)
+        {
+            movieDBConnection db = new movieDBConnection();
+            PlayTime closestTime;
+
+            closestTime = db.PlayTimes.OrderBy(t => DbFunctions.DiffMinutes(t.play, projectionTime)).First();
+
+            short duration = (closestTime.play < projectionTime) ? closestTime.Movie.langth : langth;
+
+            if (Math.Abs((closestTime.play - projectionTime).TotalMinutes) < duration)
+                return false;
+            return true;
+>>>>>>> remotes/origin/master
         }
 
         // POST api/<controller>

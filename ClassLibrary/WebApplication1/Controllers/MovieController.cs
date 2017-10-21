@@ -8,6 +8,7 @@ using ClassLibrary;
 using System.Web;
 using System.IO;
 using Newtonsoft.Json;
+using System.Web.Mvc;
 
 namespace WebApplication1.Controllers
 {
@@ -20,19 +21,13 @@ namespace WebApplication1.Controllers
             return db.Movies.ToList();
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<controller>
         public void Post([FromBody]string value)
         {
         }
 
         // PUT api/<controller>/5
-        public void Put()
+        public HttpResponseMessage Put()
         {
             movieDBConnection db = new movieDBConnection();
             // init Movie
@@ -41,8 +36,8 @@ namespace WebApplication1.Controllers
             Movie tmp = db.Movies.OrderBy(a => a.id).FirstOrDefault();
             if (tmp != null)
                 mv.id = tmp.id + 1;
-            //else
-            //    mv.id = 1;
+            else // no movies in DB
+                mv.id = 1;
 
             // init playTimes -
             List<PlayTime> playTList = new List<PlayTime>();
@@ -54,20 +49,30 @@ namespace WebApplication1.Controllers
                 pt.play = Convert.ToDateTime(HttpContext.Current.Request.Params["projection" + i]);
                 pt.total_sits = Convert.ToInt32(HttpContext.Current.Request.Params["sits"]);
                 pt.availble_sits = pt.total_sits;
+
+                // check if projection time is valide
+                if (!PlayTimeController.is_Valid_projc_time(pt.play, mv.langth))
+                    return Request.CreateErrorResponse(HttpStatusCode.Conflict, "Another movie is playing at this time");
+
                 playTList.Add(pt);
             }
             mv.PlayTimes = playTList;
 
             // handle Image
             HttpPostedFile img = HttpContext.Current.Request.Files["img"];
-            mv.img = mv.id + Path.GetExtension(img.FileName); // check file Extension???
+            if (img != null)
+                mv.img = mv.id + Path.GetExtension(img.FileName); // check file Extension???
+            else
+                mv.img = "first_img.JPG";
 
             // save on dataBase
             db.Movies.Add(mv);
             db.SaveChanges();
 
-            // save on server
-            img.SaveAs(HttpContext.Current.Server.MapPath("~/images/") + mv.img);
+            // save Image on server
+            if (img != null)
+                img.SaveAs(HttpContext.Current.Server.MapPath("~/images/") + mv.img);
+            return Request.CreateResponse(HttpStatusCode.OK, "movie added to DB");
         }
 
 
