@@ -73,7 +73,7 @@
 
           #logOutDiv
        {
-           top: 15px;
+           top: 20px;
           position:relative
        }
       
@@ -90,15 +90,6 @@
             var $spn = document.getElementById("hello");
             $spn.innerHTML = "שלום " + user.name;
 
-            //if (user.isAdmin == 1) {
-            //    var $add = $("<button>").text("הוסף סרט");
-            //    $add.click(function () { location.href = "addMovie.html" });
-            //    $("#admin").append($add).attr("class", "adminDiv");
-            //    $spn.innerHTML += ", באפשרותך לבחור הקרנה או להוסיף סרט חדש";
-            //}
-            //else {
-            //    $spn.innerHTML += ",איזה הקרנה ברצונך לבחור?";
-            //}
 
             var $tbl = $("<table>").attr("class", "available");
             var $tr = $("<tr>");
@@ -111,17 +102,7 @@
                 contentType: "application/json; charset=utf-8",
                 type: "GET",
                 success: function (data) {
-                    //if (data.length == 0)
-                    //{                        
-                    //    $h4 = $("<h4>").text("לא נמצאו הקרנות");
-                    //    $h42 = $("<h4>").text("נסה שוב במועד מאוחר יותר");
-                    //    $btn = $("<button>").text("חזרה לסרטים המוצגים").click(function () { location.href = "showAll.html"; });
-                    //    $("#soldOutDiv").append($h4);
-                    //    $("#soldOutDiv").append($h42);
-                    //    $("#soldOutDiv").append($btn);
-                    //}
-                   
-                                       
+                                
                     for (i in data) {
                         if (counter == itemInRow) {
                             $tr = $("<tr>");
@@ -179,10 +160,10 @@
                         }
                        
                         $h42 = $("<h4>").text("נסה שוב במועד מאוחר יותר");
-                        $btn = $("<button>").text("חזרה לסרטים המוצגים").click(function () { location.href = "showAll.html"; });
+                        $("#soldOutDiv").append("<br>");
                         $("#soldOutDiv").append($h4);
                         $("#soldOutDiv").append($h42);
-                        $("#soldOutDiv").append($btn);
+                       
 
                     }
                     else { //countr_Available_plays !=0
@@ -240,15 +221,16 @@
 
 </head>
 <body dir="rtl">
-    <br />
+   
     <div id="logOutDiv">
         <input type="button" value="logOut" onclick="logout()" />
         <span class="w3-white" id="hello"></span>
+        <input type="button" value="חזרה להצגת כל הסרטים" onclick="location.href = 'showAll.html'" />
     </div>
     
    
     <!--<div id="admin"></div>-->
-    <input type="button" value="חזרה להצגת כל הסרטים" onclick="location.href = 'showAll.html'" />
+    
     
 
     <div id="soldOutDiv" align="center"></div>

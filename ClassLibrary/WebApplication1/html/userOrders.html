@@ -63,11 +63,8 @@
         }
          #logOutDiv
        {
-           text-align:left;
-           left:30px;
-            position:relative;
-            top:-30px;
-            width:30px;
+           top: 20px;
+          position:relative
        }
     </style>
     <script>
@@ -93,7 +90,8 @@
                 success: function (data) {
                     if (data.length == 0)
                     {
-                         $h4 = $("<h4>").text("לא נמצאו הזמנות עבור לקוח");
+                        $h4 = $("<h4>").text("לא נמצאו הזמנות עבור לקוח");
+                        $("#noOrders").append("<br>");
                          $("#noOrders").append($h4);
                          
 
@@ -169,14 +167,17 @@
 
 </head> 
 <body dir="rtl">
-    <br />
-    <span class="w3-white" id="hello"></span>
-    <!--<div id="admin"></div>-->
-   
-    <input type="button" value="חזרה להצגת כל הסרטים" onclick="location.href = 'showAll.html'" />
+    
     <div id="logOutDiv">
         <input type="button" value="logOut" onclick="logout()" />
+        <span class="w3-white" id="hello"></span>
+        <input type="button" value="חזרה להצגת כל הסרטים" onclick="location.href = 'showAll.html'" />
     </div>
+    
+    <!--<div id="admin"></div>-->
+   
+    
+    
     <div id="noOrders" align="center"></div>
     <table id="bigTbl" align="center">
         <tr>
