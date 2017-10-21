@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ההזמנות שלי</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        .gallery td {
+            padding: 5px;
+            width: 200px;
+            height: 200px;
+            position: relative;
+        }
+
+        #bigTbl {
+            border-collapse: collapse;
+            margin-top: 30px;
+            padding: 10px;
+        }
+
+        body {
+            background-image: url("/images/background.jpg");
+            background-attachment: fixed;
+        }
+
+        h4 {
+            text-align: center;
+            margin: 5px;
+            padding: 5px;
+            color: white;
+            position: relative;
+            width: 1100px;
+        }
+
+        .internalDiv {
+            width: 200px;
+            text-align: center;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+        }
+
+        #hello {
+            margin: 5px;
+            padding: 5px;
+            border: 1px dashed black;
+            display: inline;
+        }
+
+        .avi {
+            margin-left: 20px;
+        }
+
+        .lowerDiv {
+            text-align: center;
+        }
+
+        .adminDiv {
+            display: inline;
+        }
+    </style>
+    <script>
+        var user = JSON.parse(localStorage.getItem("user"));
+        var numOfAvailableSits;
+        var itemInRow = 5;
+
+        $(document).ready(function () {
+            // hello messege - top
+            var $spn = document.getElementById("hello");
+            $spn.innerHTML = "שלום " + user.name;
+
+            var $tbl = $("<table>").attr("class", "available");
+            var $tr = $("<tr>");
+            var counter = 0;
+
+            // get and show all CustomerBuyTickets
+            $.ajax({
+                dataType: "json",
+                url: "/api/CustomerBuyTickets/" + "1",//user.id,
+                contentType: "application/json; charset=utf-8",
+                type: "GET",
+                success: function (data) {
+                    for (i in data)
+                    {
+                        if (counter == itemInRow) {
+                            $tr = $("<tr>");
+                            counter = 0;
+                        }
+                        counter++;
+                        var $td = $("<td>").attr("class", "w3-white");
+                        var $div = $("<div>").attr({ "class": "internalDiv"})// "data-id": data[i].Movie.id });
+                        var $nameP = $("<span>").attr("data-name", data[i].Movie.name).text("שם הסרט:" + data[i].Movie.name);
+                        var $time = $("<span>").html("זמן הקרנה:" + data[i].PlayTime.play);
+                        var $orders = $("<span>").html("מספר הזמנות:" + data[i].amount);
+
+                        var $pic = $("<img>").attr({ "src": "/images/" + data[i].Movie.img, "movie-number-pic": i + 1 });
+
+                        $div.append($nameP);
+                        $div.append($("<br>"));
+                        $div.append($time);
+                        $div.append($("<br>"));
+                        $div.append($orders);
+                        $div.append($("<br>"));
+                        $div.append($("<br>"));
+                        $div.append($("<br>"));
+                        $div.append($pic);
+
+                        $td.append($div);
+                        $tr.append($td);
+                        $tbl.append($tr);
+                        $("#availableTbl").append($tbl);
+                    }
+                },
+                error: function () {
+                    console.log("connection ERROR - Available movies");
+                } //error
+            });
+        });
+    </script>
+
+</head> 
+<body dir="rtl">
+    <br />
+    <span class="w3-white" id="hello"></span>
+    <div id="admin"></div>
+    <table id="bigTbl" align="center">
+        <tr>
+            <td colspan="5"><h4 class="w3-blue head">ההזמנות שלי</h4></td>
+        </tr>
+
+        <tr class="gallery">
+            <td colspan="5">
+                <div class="w3-text-blue" id="availableTbl">
+                </div>
+            </td>
+    </table>
+
+</body>
+</html>

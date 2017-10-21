@@ -17,9 +17,12 @@ namespace WebApplication1.Controllers
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public List<CustomerBuyTicket> Get(string id)
         {
-            return "value";
+            movieDBConnection db = new movieDBConnection();
+            List<CustomerBuyTicket> cbt = db.CustomerBuyTickets.Where(x => x.customer_id == id).ToList();
+
+            return cbt;
         }
 
         // POST api/<controller>
@@ -36,7 +39,6 @@ namespace WebApplication1.Controllers
             p.availble_sits = p.availble_sits - (int)cbt.amount;
             db.SaveChanges();
             return cbt;
-         
         }
 
         // DELETE api/<controller>/5
