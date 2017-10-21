@@ -7,7 +7,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="DaysHeader.js"></script>
+    <script src="../Scripts/DaysHeader.js"></script>
     <style>
      
 
@@ -204,7 +204,7 @@
                                 movie_name: localStorage.getItem("movie_name"),
                                 play: t.parentElement.firstElementChild.getAttribute("data-play"),
                             }
-                        localStorage.setItem("data", JSON.stringify(nData));
+                        localStorage.setItem("successOrder", JSON.stringify(nData));
                         location.href = "successOrder.html"
 
                     },	 //פונקציה  שתופעל לאחר הצלחה

@@ -1,77 +1,76 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-   
+
     <title>סרטים מוצגים בקולנוע</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
-
         .gallery td {
             padding: 5px;
-            width:200px;
-            height:200px;
-             position:relative;
+            width: 200px;
+            height: 200px;
+            position: relative;
         }
 
 
         #bigTbl {
             border-collapse: collapse;
             margin-top: 30px;
-             padding:10px;
+            padding: 10px;
         }
 
         body {
             background-image: url("/images/background.jpg");
             background-attachment: fixed;
         }
-        h4{ text-align:center;
-                margin:5px;
-                padding:5px; /*ממרכז את הכתב*/
-                color:white;
-                position:relative;
-                width:1100px;
-                }  
-        /*.available td div*/
-        .internalDiv{
-             width:200px;
-            text-align:center         
+
+        h4 {
+            text-align: center;
+            margin: 5px;
+            padding: 5px; /*ממרכז את הכתב*/
+            color: white;
+            position: relative;
+            width: 1100px;
         }
-       img{
-            width:100px;
-            height:100px;
-            margin:5px;
-           
-       }
-       #hello
-       {
-           margin:5px;
-           padding:5px;
-            border:1px dashed  black;
-            display:inline;
-       }
-       .avi{
-           margin-left:20px;
-       }
-   
-       .lowerDiv
-       {
-          text-align: center;
-       }
-       .adminDiv
-       {
-          display:inline;
-       }
-   
-       
+        /*.available td div*/
+        .internalDiv {
+            width: 200px;
+            text-align: center;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+        }
+
+        #hello {
+            margin: 5px;
+            padding: 5px;
+            border: 1px dashed black;
+            display: inline;
+        }
+
+        .avi {
+            margin-left: 20px;
+        }
+
+        .lowerDiv {
+            text-align: center;
+        }
+
+        .adminDiv {
+            display: inline;
+        }
     </style>
     <script>
         var user = JSON.parse(localStorage.getItem("user"));
         var numOfAvailableSits;
         var itemInRow = 5;
-       
+
 
         $(document).ready(function () {
             // hello messege - top
@@ -98,8 +97,7 @@
                 contentType: "application/json; charset=utf-8",
                 type: "GET",
                 success: function (data) {
-                    for (i in data)
-                    {
+                    for (i in data) {
                         if (counter == itemInRow) {
                             $tr = $("<tr>");
                             counter = 0;
@@ -112,30 +110,30 @@
                         var $publishDate = $("<span>").text("תאריך פרסום:" + date.toLocaleDateString());
                         var $langth = $("<span>").text("אורך הסרט:" + data[i].langth + " דקות");
                         var $genre = $("<span>").html("ז'אנר:" + data[i].genre);
-                        var $pic = $("<img>").attr({ "src": "/images/"+ data[i].img, "movie-number-pic": i + 1 });
+                        var $pic = $("<img>").attr({ "src": "/images/" + data[i].img, "movie-number-pic": i + 1 });
                         var $btn = $("<button>").text("הצג הקרנות").click(function () {
-                                localStorage.setItem("movie_id", JSON.stringify(this.parentElement.getAttribute("data-id")));
-                                localStorage.setItem("movie_name", JSON.stringify(this.parentElement.firstElementChild.getAttribute("data-name")));
-                                location.href = "playForMovie.html"
-                            });
+                            localStorage.setItem("movie_id", JSON.stringify(this.parentElement.getAttribute("data-id")));
+                            localStorage.setItem("movie_name", JSON.stringify(this.parentElement.firstElementChild.getAttribute("data-name")));
+                            location.href = "playForMovie.html"
+                        });
 
-                       $div.append($nameP);
-                       $div.append($("<br>"));
-                       $div.append($publishDate);
-                       $div.append($("<br>"));
-                       $div.append($langth);
-                       $div.append($("<br>"));
-                       $div.append($genre);
-                       $div.append($("<br>"));
-                       $div.append($("<br>"));
-                       $div.append($pic);
-                       $div.append($("<br>"));
-                       $div.append($btn);
-                       $td.append($div);
-                       $tr.append($td);
-                       $tbl.append($tr);
-                       $("#availableTbl").append($tbl);
-                      
+                        $div.append($nameP);
+                        $div.append($("<br>"));
+                        $div.append($publishDate);
+                        $div.append($("<br>"));
+                        $div.append($langth);
+                        $div.append($("<br>"));
+                        $div.append($genre);
+                        $div.append($("<br>"));
+                        $div.append($("<br>"));
+                        $div.append($pic);
+                        $div.append($("<br>"));
+                        $div.append($btn);
+                        $td.append($div);
+                        $tr.append($td);
+                        $tbl.append($tr);
+                        $("#availableTbl").append($tbl);
+
                     }//for
 
                 }, //success_data
@@ -147,8 +145,7 @@
 
         }); //document
 
-        function logout()
-        {
+        function logout() {
             localStorage.clear();
             location.href = 'login.html';
         }
@@ -157,16 +154,12 @@
 </head>
 <body dir="rtl">
     <br />
-  
-    <input type="button" value="logOut" onclick="logout()" id="logOutDiv"  />
-        <span class="w3-white" id="hello"></span>
-        <input type="button" value="צפייה בהזמנות שלי" onclick="location.href = 'userOrders.html'" />
-        <div id="admin"></div>
-   
 
-    
-    
-    
+    <input type="button" value="logOut" onclick="logout()" id="logOutDiv" />
+    <span class="w3-white" id="hello"></span>
+    <input type="button" value="צפייה בהזמנות שלי" onclick="location.href = 'userOrders.html'" />
+    <div id="admin"></div>
+
     <table id="bigTbl" align="center">
         <tr>
             <td colspan="5"><h4 class="w3-blue head">סרטים זמינים</h4></td>
@@ -175,18 +168,9 @@
         <tr class="gallery">
             <td colspan="5">
                 <div class="w3-text-blue" id="availableTbl">
-                 
-                    
                 </div>
-
             </td>
-
-      
-
-
-
-
-</table>
+    </table>
 
 </body>
 </html>

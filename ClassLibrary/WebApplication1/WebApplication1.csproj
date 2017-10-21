@@ -223,7 +223,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="html\addMovie.html" />
-    <Content Include="html\DaysHeader.js" />
+    <Content Include="Scripts\DaysHeader.js" />
     <Content Include="html\showAll.html" />
     <Content Include="html\login.html" />
     <Content Include="html\playForMovie.html" />
@@ -310,7 +310,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54315</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

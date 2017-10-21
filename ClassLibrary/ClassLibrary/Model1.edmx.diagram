@@ -7,9 +7,13 @@
       <Diagram DiagramId="7b6f12c77709415aaece4a340150dd73" Name="Diagram1">
         <EntityTypeShape EntityType="movieDBModel.CustomerBuyTicket" Width="4.125" PointX="3.25" PointY="0.625" IsExpanded="true" />
         <EntityTypeShape EntityType="movieDBModel.Movie" Width="1.5" PointX="8.875" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="movieDBModel.PlayTime" Width="1.5" PointX="7.5" PointY="4.125" IsExpanded="true" />
-        <AssociationConnector Association="movieDBModel.FK__CustomerB__movie__1BFD2C07" ManuallyRouted="false" />
-        <AssociationConnector Association="movieDBModel.FK__PlayTime__movie___164452B1" ManuallyRouted="false" />
+<<<<<<< Updated upstream
+        <AssociationConnector Association="movieDBModel.FK__CustomerB__movie__1BFD2C07" ManuallyRouted="false" />        <AssociationConnector Association="movieDBModel.FK__PlayTime__movie___164452B1" ManuallyRouted="false" />
+=======
+        <EntityTypeShape EntityType="movieDBModel.PlayTime" Width="1.5" PointX="7" PointY="3.75" IsExpanded="true" />
+        
+        
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; Stashed changes
         <EntityTypeShape EntityType="movieDBModel.Customer" Width="1.5" PointX="0.75" PointY="0.875" />
         <AssociationConnector Association="movieDBModel.FK__CustomerB__custo__24927208" />
         <AssociationConnector Association="movieDBModel.FK__CustomerB__playT__48CFD27E" />

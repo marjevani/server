@@ -32,12 +32,29 @@ namespace WebApplication1.Controllers
             movieDBConnection db = new movieDBConnection();
             // init Movie
             string st = HttpContext.Current.Request.Params["movie"];
-            Movie mv = JsonConvert.DeserializeObject<Movie>(st);
-            Movie tmp = db.Movies.OrderBy(a => a.id).FirstOrDefault();
-            if (tmp != null)
-                mv.id = tmp.id + 1;
-            else // no movies in DB
-                mv.id = 1;
+            Movie mv;
+            try
+            {
+                mv = JsonConvert.DeserializeObject<Movie>(st);
+            }
+            catch
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict, "חסרים נתונים בסרט");
+            }
+
+            Movie tmp;
+            try
+            {
+                tmp = db.Movies.OrderByDescending(a => a.id).FirstOrDefault();
+                if (tmp != null)
+                    mv.id = tmp.id + 1;
+                else // no movies in DB
+                    mv.id = 1;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("ERROR - Build ID for movie" + e);
+            }
 
             // init playTimes -
             List<PlayTime> playTList = new List<PlayTime>();
@@ -46,7 +63,10 @@ namespace WebApplication1.Controllers
             {
                 PlayTime pt = new PlayTime();
                 pt.movie_id = mv.id;
-                pt.play = Convert.ToDateTime(HttpContext.Current.Request.Params["projection" + i]);
+                DateTime temp;
+                if (!DateTime.TryParse(HttpContext.Current.Request.Params["projection" + i],out temp))
+                    return Request.CreateErrorResponse(HttpStatusCode.Conflict, "זמן הקרנה לא חוקי");
+                pt.play = temp;
                 pt.total_sits = Convert.ToInt32(HttpContext.Current.Request.Params["sits"]);
                 pt.availble_sits = pt.total_sits;
 

@@ -29,7 +29,11 @@
             var idL = document.getElementById("idL").value;
             var passL = document.getElementById("pass").value;
             document.getElementById("error").innerHTML = "";
-            validId_continue(idL, passL);
+
+            if (idL == "" || passL == "")
+                document.getElementById("error").innerHTML = "ת.ז או הסיסמא שהכנסת לא נכונים";
+            else
+                validId_continue(idL, passL);
         }
 
 
@@ -54,7 +58,6 @@
                 error: function ()
                 {
                     console.log("connection ERROR - validId()");
-                    document.getElementById("error").innerHTML = "ת.ז או הסיסמא שהכנסת לא נכונים";
                 }
             });
         }
@@ -67,19 +70,19 @@
     <div id="wrapper" style="padding:10px;" align="center">
         <div id="board" align="center">
             <h2>כניסה למערכת</h2>
-            <table>
-                <tr>
-                    <td> ת.ז:</td>
-                    <td><input type="text" id="idL" />  </td>
-                </tr>
-                <tr>
-                    <td> סיסמא:</td>
-                    <td><input type="password" id="pass" />  </td>
-                </tr>
-            </table>
-            <span class="w3-white" id="error"></span> <br /><br />
-            <input type="button" value="היכנס" onclick="login()" />
-            <input type="button" value="שכחתי סיסמא" />
+                <table>
+                    <tr>
+                        <td> ת.ז:</td>
+                        <td><input type="text" id="idL" autofocus />  </td>
+                    </tr>
+                    <tr>
+                        <td> סיסמא:</td>
+                        <td><input type="password" id="pass" />  </td>
+                    </tr>
+                </table>
+                <span class="w3-white" id="error"></span> <br /><br />
+                <input type="submit" value="היכנס" onclick="login()" />
+                <input type="button" value="שכחתי סיסמא" />
         </div>
     </div>
 

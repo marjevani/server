@@ -20,7 +20,9 @@ namespace WebApplication1.Controllers
         public List<CustomerBuyTicket> Get(string id)
         {
             movieDBConnection db = new movieDBConnection();
-            List<CustomerBuyTicket> cbt = db.CustomerBuyTickets.Where(x => x.customer_id == id).ToList();
+            List<CustomerBuyTicket> cbt = db.CustomerBuyTickets
+                .Where(x => x.customer_id == id)
+                .OrderByDescending(a=> a.PlayTime.play).ToList();
 
             return cbt;
         }
