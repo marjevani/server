@@ -18,7 +18,8 @@ namespace WebApplication1.Controllers
         public List<Movie> Get()
         {
             movieDBConnection db = new movieDBConnection();
-            return db.Movies.ToList();
+            DateTime now = DateTime.Now;
+            return db.Movies.Where(a => a.PlayTimes.Any(b => b.play >= now) == true).ToList();
         }
 
         // POST api/<controller>

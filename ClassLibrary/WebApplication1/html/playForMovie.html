@@ -110,7 +110,6 @@
                         }
                         numOfAvailableSits = data[i].availble_sits;
                        
-                        if (numOfAvailableSits > 0) {
                             countr_Available_plays++;
                             counter++;
                             date = new Date(data[i].play);
@@ -120,13 +119,22 @@
                             var $day = $("<span>").text("יום הקרנה:" + days[date.getDay()]).attr({ "class": "internalDiv"});
                             var $hour = $("<span>").text("שעת הקרנה:" + date.toLocaleTimeString('en-GB'));
                             var $avail = $("<span>").text("מס' כרטיסים פנויים:" + numOfAvailableSits);
-                            var $selectP = $("<select>");
-                            j = 1;
-                            while (j <= numOfAvailableSits) {
-                                $selectP.append('<option value=' + j + '>' + j + '</option>');
-                                j++;
+
+                            if (numOfAvailableSits > 0)
+                            {
+                                var $selectP = $("<select>");
+                                j = 1;
+                                while (j <= numOfAvailableSits) {
+                                    $selectP.append('<option value=' + j + '>' + j + '</option>');
+                                    j++;
+                                }
+                                var $btn = $("<button>").text("הזמן כרטיסים").attr("class", "w3-btn w3-ripple w3-blue").click(function () { orderMovie(this) });
                             }
-                            var $btn = $("<button>").text("הזמן כרטיסים").click(function () { orderMovie(this) });
+                            else
+                            {
+                                var $selectP = $("<span>").text("");
+                                var $btn = $("<button>").text("הכרטיסים אזלו").attr({ "disabled": "true" , "class" : "w3-btn w3-ripple w3-blue"});
+                            }
 
                             $div.append($date);
                             $div.append($("<br>"));
@@ -146,9 +154,7 @@
                             $tr.append($td);
                             $tbl.append($tr);
                             $("#availableTbl").append($tbl);
-                        }//if
-
-                    }//for
+                    }
                     if (countr_Available_plays == 0) {
                         if (data.length == 0)
                         {
