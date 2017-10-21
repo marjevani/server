@@ -2,24 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-    <title>הקרנות עבור סרט</title>
+    <title>הקרנות זמינות עבור סרט</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
-         .gallery {
-             /*border-collapse:collapse;*/
-         }
+     
 
-             .gallery td {
-                 padding: 5px;
-                 /*border:1px solid black;*/
-                 width: 200px;
-                 height: 200px;
-                 /*background-color:white;*/
-                 position: relative;
-             }
+           .gallery td {
+                padding: 5px;
+                width: 200px;
+                height: 200px;
+                position: relative;
+            }
 
 
          #bigTbl {
@@ -44,18 +40,10 @@
          /*.available td div*/
          .internalDiv {
              width: 200px;
-             /*height:330px;*/
              text-align: center;
          }
-         /*.smlGallery{
-              height:150px;
-             position:relative;
-         }*/
-
-         /*#smallTbl{
-               top:10px;
-               position:relative;
-         }*/
+        
+        
          img {
              width: 100px;
              height: 100px;
@@ -65,8 +53,6 @@
          #hello {
              margin: 5px;
              padding: 5px;
-             /*width:200px;
-             height:200px;*/
              border: 1px dashed black;
              display: inline;
          }
@@ -74,22 +60,18 @@
          .avi {
              margin-left: 20px;
          }
-         /*.head{
-            width:1100px;
-        }*/
-         /*#availableTbl
-        {
-             width:1100px;
-        }*/
+       
 
          .lowerDiv {
              text-align: center;
          }
 
          .adminDiv {
-             /*text-align: center;*/
              display: inline;
          }
+
+
+      
     </style>
     <script>
         var user = JSON.parse(localStorage.getItem("user"));
@@ -118,51 +100,62 @@
 
             $.ajax({
                 dataType: "json",
-                url: "/api/movie",
+                url: "/api/PlayTime/"+JSON.parse(localStorage.getItem("movie_id")),
                 contentType: "application/json; charset=utf-8",
                 type: "GET",
                 success: function (data) {
+                    if (data.length == 0)
+                    {
+                        
+                        var $h4 = $("<h4>").text("sold out");
+                        var $h42 = $("<h4>").text("נסה שוב במועד מאוחר יותר");
+                        var $btn = $("<button>").text("חזרה לסרטים המוצגים").click(function () { location.href = "showAll.html"; });
+                        $("#soldOutDiv").append($h4);
+                        $("#soldOutDiv").append($h42);
+                        $("#soldOutDiv").append($btn);
+
+                        
+
+
+                    }
+                    else
+                    {
+                        var $tdH = $("<h4>").text("  הקרנות זמינות עבור הסרט: " + JSON.parse(localStorage.getItem("movie_name"))).attr("class", "w3-blue head");
+                        $("#tdHeader").append($tdH);
+                    }
                     for (i in data) {
                         if (counter == itemInRow) {
                             $tr = $("<tr>");
                             counter = 0;
                         }//if
-                        numOfAvailableSits = data[i].PlayTimes[0].availble_sits;
-                        console.log(numOfAvailableSits);
+                        numOfAvailableSits = data[i].availble_sits;
+                       
                         if (numOfAvailableSits > 0) {
                             counter++;
                             var $td = $("<td>").attr("class", "w3-white");
                             var $div = $("<div>").attr({ "class": "internalDiv", "data-id": data[i].id });
-                            var $nameP = $("<span>").attr("data-name", data[i].name).text("שם הסרט:" + data[i].name);
-                            var $publishDate = $("<span>").text("תאריך פרסום:" + data[i].publish_date); ///<---תאריך ושעה
-                            var $langth = $("<span>").text("אורך הסרט:" + data[i].langth);
-                            var $genre = $("<span>").html("סוג הסרט:" + data[i].genre);
-                            ///var $date = $("<span>").attr("data-play", data[i].PlayTimes[0].play).html("תאריך הקרנה:" + data[i].PlayTimes[0].play);
-                            var $pic = $("<img>").attr({ "src": "/images/" + data[i].img, "movie-number-pic": i + 1 });
-                            ///var $selectP = $("<select>");
-                            /// $selectP.append('<option value=' + 1 + '>' + 1 + '</option>'); //להוריד
+                            var $date = $("<span>").text("תאריך הקרנה:" + data[i].play).attr({ "class": "internalDiv", "data-play": data[i].play });  /// אולי להפריד תאריך ושעה?
+                            var $hour = $("<span>").text("שעת הקרנה:" + data[i].hour);
+                            var $avail = $("<span>").text("מס' כרטיסים פנויים:" + numOfAvailableSits);
+                            var $selectP = $("<select>");
                             j = 1;
                             while (j <= numOfAvailableSits) {
                                 $selectP.append('<option value=' + j + '>' + j + '</option>');
                                 j++;
                             }
-                            var $btn = $("<button>").text("הצג הקרנות").click(function () { orderMovie(this) });
+                            var $btn = $("<button>").text("הזמן כרטיסים").click(function () { orderMovie(this) });
 
-                            $div.append($nameP);
+                            $div.append($date);
                             $div.append($("<br>"));
-                            $div.append($publishDate);
+                            $div.append($hour);
                             $div.append($("<br>"));
-                            $div.append($langth);
+                            $div.append($avail);
                             $div.append($("<br>"));
-                            $div.append($genre);
+                            $div.append($selectP);
                             $div.append($("<br>"));
-                            ///$div.append($date);
-                            $div.append($("<br>"));
-                            ///$div.append($selectP);
-                            $div.append($("<br>"));
-                            $div.append($pic);
                             $div.append($("<br>"));
                             $div.append($btn);
+                          
 
                             $td.append($div);
                             $tr.append($td);
@@ -182,12 +175,13 @@
 
 
             function orderMovie(t) {
-                console.log(t.parentElement.getAttribute("data-id") + t.parentElement.getAttribute("data-id"));
                 var x = {
                     customer_id: user.id,
-                    movie_id: parseInt(t.parentElement.getAttribute("data-id")),
-                    amount: t.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.selectedIndex + 1,
+                    movie_id: JSON.parse(localStorage.getItem("movie_id")),
+                    amount: t.previousElementSibling.previousElementSibling.previousElementSibling.selectedIndex + 1,
+                    playTime_id: t.parentElement.getAttribute("data-id"),
                 }
+
                 $.ajax({
                     dataType: "json",
                     url: "/api/CustomerBuyTickets",
@@ -201,8 +195,8 @@
                                 customer_id: data.customer_id,
                                 movie_id: data.movie_id,
                                 amount: data.amount,
-                                movie_name: t.parentElement.firstElementChild.getAttribute("data-name"),
-                                play: t.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.getAttribute("data-play"),
+                                movie_name: localStorage.getItem("movie_name"),
+                                play: t.parentElement.firstElementChild.getAttribute("data-play"),
                             }
                         localStorage.setItem("data", JSON.stringify(nData));
                         location.href = "successOrder.html"
@@ -220,10 +214,17 @@
 <body dir="rtl">
     <br />
     <span class="w3-white" id="hello"></span>
+   
     <div id="admin"></div>
+    
+
+        <div id="soldOutDiv" align="center"></div>
+ 
+   
+
     <table id="bigTbl" align="center">
         <tr>
-            <td colspan="5"><h4 class="w3-blue head">סרטים זמינים</h4></td>
+            <td colspan="5" id="tdHeader"></td>
         </tr>
 
         <tr class="gallery">
@@ -241,6 +242,8 @@
 
 
     </table>
+
+    
 
 </body>
 </html>

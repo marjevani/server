@@ -18,8 +18,10 @@ namespace ClassLibrary
         public string customer_id { get; set; }
         public Nullable<int> movie_id { get; set; }
         public Nullable<int> amount { get; set; }
+        public Nullable<int> playTime_id { get; set; }
     
         public virtual Movie Movie { get; set; }
         public virtual Customer Customer { get; set; }
+        public virtual PlayTime PlayTime { get; set; }
     }
 }

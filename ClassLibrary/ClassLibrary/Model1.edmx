@@ -22,6 +22,7 @@
           <Property Name="customer_id" Type="nchar" MaxLength="9" />
           <Property Name="movie_id" Type="int" />
           <Property Name="amount" Type="int" />
+          <Property Name="playTime_id" Type="int" />
         </EntityType>
         <EntityType Name="Movie">
           <Key>
@@ -30,8 +31,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="publish_date" Type="date" />
-          <Property Name="langth" Type="smallint" />
-          <Property Name="genre" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="langth" Type="smallint" Nullable="false" />
+          <Property Name="genre" Type="varchar" MaxLength="6" Nullable="false" />
           <Property Name="img" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="PlayTime">
@@ -40,11 +41,11 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="movie_id" Type="int" />
-          <Property Name="play" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="play" Type="datetime" Nullable="false" />
           <Property Name="total_sits" Type="int" Nullable="false" />
           <Property Name="availble_sits" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__CustomerB__custo__3B75D760">
+        <Association Name="FK__CustomerB__custo__1CF15040">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTickets" Multiplicity="*" />
           <ReferentialConstraint>
@@ -56,7 +57,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CustomerB__movie__3C69FB99">
+        <Association Name="FK__CustomerB__movie__1DE57479">
           <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
           <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTickets" Multiplicity="*" />
           <ReferentialConstraint>
@@ -68,7 +69,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PlayTime__movie___403A8C7D">
+        <Association Name="FK__CustomerB__playT__21B6055D">
+          <End Role="PlayTime" Type="Self.PlayTime" Multiplicity="0..1" />
+          <End Role="CustomerBuyTickets" Type="Self.CustomerBuyTickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlayTime">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerBuyTickets">
+              <PropertyRef Name="playTime_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PlayTime__movie___182C9B23">
           <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
           <End Role="PlayTime" Type="Self.PlayTime" Multiplicity="*" />
           <ReferentialConstraint>
@@ -85,15 +98,19 @@
           <EntitySet Name="CustomerBuyTickets" EntityType="Self.CustomerBuyTickets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayTime" EntityType="Self.PlayTime" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__CustomerB__custo__3B75D760" Association="Self.FK__CustomerB__custo__3B75D760">
+          <AssociationSet Name="FK__CustomerB__custo__1CF15040" Association="Self.FK__CustomerB__custo__1CF15040">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__CustomerB__movie__3C69FB99" Association="Self.FK__CustomerB__movie__3C69FB99">
+          <AssociationSet Name="FK__CustomerB__movie__1DE57479" Association="Self.FK__CustomerB__movie__1DE57479">
             <End Role="Movie" EntitySet="Movie" />
             <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__PlayTime__movie___403A8C7D" Association="Self.FK__PlayTime__movie___403A8C7D">
+          <AssociationSet Name="FK__CustomerB__playT__21B6055D" Association="Self.FK__CustomerB__playT__21B6055D">
+            <End Role="PlayTime" EntitySet="PlayTime" />
+            <End Role="CustomerBuyTickets" EntitySet="CustomerBuyTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PlayTime__movie___182C9B23" Association="Self.FK__PlayTime__movie___182C9B23">
             <End Role="Movie" EntitySet="Movie" />
             <End Role="PlayTime" EntitySet="PlayTime" />
           </AssociationSet>
@@ -112,6 +129,8 @@
           <Property Name="amount" Type="Int32" />
           <NavigationProperty Name="Movie" Relationship="Self.FK__CustomerB__movie__1BFD2C07" FromRole="CustomerBuyTickets" ToRole="Movie" />
           <NavigationProperty Name="Customer" Relationship="movieDBModel.FK__CustomerB__custo__24927208" FromRole="CustomerBuyTicket" ToRole="Customer" />
+          <Property Name="playTime_id" Type="Int32" />
+          <NavigationProperty Name="PlayTime" Relationship="movieDBModel.FK__CustomerB__playT__21B6055D" FromRole="CustomerBuyTicket" ToRole="PlayTime" />
         </EntityType>
         <EntityType Name="Movie">
           <Key>
@@ -120,10 +139,10 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="publish_date" Type="DateTime" Precision="0" />
-          <Property Name="langth" Type="Int16" />
+          <Property Name="langth" Type="Int16" Nullable="false" />
           <NavigationProperty Name="CustomerBuyTickets" Relationship="Self.FK__CustomerB__movie__1BFD2C07" FromRole="Movie" ToRole="CustomerBuyTickets" />
           <NavigationProperty Name="PlayTimes" Relationship="Self.FK__PlayTime__movie___164452B1" FromRole="Movie" ToRole="PlayTime" />
-          <Property Name="genre" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="genre" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="img" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="PlayTime">
@@ -132,10 +151,11 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="movie_id" Type="Int32" />
-          <Property Name="play" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="play" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="total_sits" Type="Int32" Nullable="false" />
           <Property Name="availble_sits" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Movie" Relationship="Self.FK__PlayTime__movie___164452B1" FromRole="PlayTime" ToRole="Movie" />
+          <NavigationProperty Name="CustomerBuyTickets" Relationship="movieDBModel.FK__CustomerB__playT__21B6055D" FromRole="PlayTime" ToRole="CustomerBuyTicket" />
         </EntityType>
         <Association Name="FK__CustomerB__movie__1BFD2C07">
           <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
@@ -178,6 +198,10 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="CustomerBuyTicket" EntitySet="CustomerBuyTickets" />
           </AssociationSet>
+          <AssociationSet Name="FK__CustomerB__playT__21B6055D" Association="movieDBModel.FK__CustomerB__playT__21B6055D">
+            <End Role="PlayTime" EntitySet="PlayTimes" />
+            <End Role="CustomerBuyTicket" EntitySet="CustomerBuyTickets" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Customer">
           <Key>
@@ -201,6 +225,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__CustomerB__playT__21B6055D">
+          <End Type="movieDBModel.PlayTime" Role="PlayTime" Multiplicity="0..1" />
+          <End Type="movieDBModel.CustomerBuyTicket" Role="CustomerBuyTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlayTime">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerBuyTicket">
+              <PropertyRef Name="playTime_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -210,6 +246,7 @@
           <EntitySetMapping Name="CustomerBuyTickets">
             <EntityTypeMapping TypeName="movieDBModel.CustomerBuyTicket">
               <MappingFragment StoreEntitySet="CustomerBuyTickets">
+                <ScalarProperty Name="playTime_id" ColumnName="playTime_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="customer_id" ColumnName="customer_id" />
                 <ScalarProperty Name="movie_id" ColumnName="movie_id" />

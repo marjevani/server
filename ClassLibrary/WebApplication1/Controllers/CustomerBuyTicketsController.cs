@@ -32,17 +32,11 @@ namespace WebApplication1.Controllers
         {
             movieDBConnection db = new movieDBConnection();
             db.CustomerBuyTickets.Add(cbt);
-            PlayTime p= db.PlayTimes.SingleOrDefault(x => x.movie_id == cbt.movie_id);
+            PlayTime p = db.PlayTimes.SingleOrDefault(x => x.id == cbt.playTime_id);
             p.availble_sits = p.availble_sits - (int)cbt.amount;
             db.SaveChanges();
             return cbt;
-                     
-
-             
-                            
-                          
-
-  
+         
         }
 
         // DELETE api/<controller>/5

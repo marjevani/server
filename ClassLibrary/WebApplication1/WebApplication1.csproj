@@ -223,7 +223,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="html\addMovie.html" />
-    <Content Include="html\availableMovies.html" />
+    <Content Include="html\showAll.html" />
     <Content Include="html\login.html" />
     <Content Include="html\OrderMovie.html" />
     <Content Include="html\playForMovie.html" />

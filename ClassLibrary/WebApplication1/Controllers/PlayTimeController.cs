@@ -19,10 +19,10 @@ namespace WebApplication1.Controllers
         // GET api/<controller>/5
         [HttpGet]
         [Route("api/PlayTime/{id}")]
-        public int Get(int id)
+        public List<PlayTime> Get(int id)
         {
             movieDBConnection db = new movieDBConnection();
-            return db.PlayTimes.SingleOrDefault(x => x.movie_id == id).availble_sits;
+            return db.PlayTimes.Where(x => x.movie_id == id).ToList();
             
           
         }
