@@ -30,19 +30,15 @@
             document.getElementById("orderNumber").innerHTML = data.id;
             document.getElementById("clientNumber").innerHTML = user.id;
             document.getElementById("movieName").innerHTML = data.movie_name;
-            document.getElementById("play").innerHTML = data.play;
+            d = new Date(data.play);
+            document.getElementById("play").innerHTML = d.toLocaleString('en-GB');
             document.getElementById("amountSeats").innerHTML = data.amount;
-
-            
         })
         
-        function add_invitation()
+        function add_invitation() 
         {
-
-            location.href = "availableMovies.html";
+            location.href = "showAll.html";
         }
-
-
 
     </script>
 
@@ -50,7 +46,6 @@
 <body dir="rtl" align="center">
     <div id="wrapper" style="padding:10px;" align="center">
         <div id="board" align="center">
-           
 
             <h2 id="h1"></h2>
             <h2>פרטי ההזמנה:</h2>
@@ -68,7 +63,7 @@
                     <td> <span id="movieName"></span></td>
                 </tr>
                 <tr>
-                    <td>הקרנה:</td>
+                    <td>זמן הקרנה:</td>
                     <td> <span id="play"></span></td>
                 </tr>
                 <tr>
@@ -79,9 +74,6 @@
             </table>
             <br />
             <input type="button" value="הזמנה נוספת" onclick="add_invitation()"/>
-            
-
-
 
         </div>
     </div>

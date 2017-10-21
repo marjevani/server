@@ -107,9 +107,10 @@
                         var $td = $("<td>").attr("class", "w3-white");
                         var $div = $("<div>").attr({ "class": "internalDiv", "data-id": data[i].id });
                         var $nameP = $("<span>").attr("data-name", data[i].name).text("שם הסרט:" + data[i].name);
-                        var $publishDate = $("<span>").text("תאריך פרסום:" + data[i].publish_date); ///<---תאריך ושעה
-                        var $langth = $("<span>").text("אורך הסרט:" + data[i].langth);
-                        var $genre = $("<span>").html("סוג הסרט:" + data[i].genre);
+                        date = new Date(data[i].publish_date);
+                        var $publishDate = $("<span>").text("תאריך פרסום:" + date.toLocaleDateString());
+                        var $langth = $("<span>").text("אורך הסרט:" + data[i].langth + " דקות");
+                        var $genre = $("<span>").html("ז'אנר:" + data[i].genre);
                         var $pic = $("<img>").attr({ "src": "/images/"+ data[i].img, "movie-number-pic": i + 1 });
                         var $btn = $("<button>").text("הצג הקרנות").click(function () {
                                 localStorage.setItem("movie_id", JSON.stringify(this.parentElement.getAttribute("data-id")));

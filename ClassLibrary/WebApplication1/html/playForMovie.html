@@ -4,9 +4,10 @@
 
     <title>הקרנות זמינות עבור סרט</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="DaysHeader.js"></script>
     <style>
      
 
@@ -74,6 +75,7 @@
       
     </style>
     <script>
+        
         var user = JSON.parse(localStorage.getItem("user"));
         var numOfAvailableSits;
         var itemInRow = 5;
@@ -105,18 +107,13 @@
                 type: "GET",
                 success: function (data) {
                     if (data.length == 0)
-                    {
-                        
+                    {                        
                         var $h4 = $("<h4>").text("sold out");
                         var $h42 = $("<h4>").text("נסה שוב במועד מאוחר יותר");
                         var $btn = $("<button>").text("חזרה לסרטים המוצגים").click(function () { location.href = "showAll.html"; });
                         $("#soldOutDiv").append($h4);
                         $("#soldOutDiv").append($h42);
                         $("#soldOutDiv").append($btn);
-
-                        
-
-
                     }
                     else
                     {
@@ -127,15 +124,17 @@
                         if (counter == itemInRow) {
                             $tr = $("<tr>");
                             counter = 0;
-                        }//if
+                        }
                         numOfAvailableSits = data[i].availble_sits;
                        
                         if (numOfAvailableSits > 0) {
                             counter++;
+                            date = new Date(data[i].play);
                             var $td = $("<td>").attr("class", "w3-white");
                             var $div = $("<div>").attr({ "class": "internalDiv", "data-id": data[i].id });
-                            var $date = $("<span>").text("תאריך הקרנה:" + data[i].play).attr({ "class": "internalDiv", "data-play": data[i].play });  /// אולי להפריד תאריך ושעה?
-                            var $hour = $("<span>").text("שעת הקרנה:" + data[i].hour);
+                            var $date = $("<span>").text("תאריך הקרנה:" + date.toLocaleDateString()).attr({ "class": "internalDiv", "data-play": data[i].play });
+                            var $day = $("<span>").text("יום הקרנה:" + days[date.getDay()]).attr({ "class": "internalDiv"});
+                            var $hour = $("<span>").text("שעת הקרנה:" + date.toLocaleTimeString('en-GB'));
                             var $avail = $("<span>").text("מס' כרטיסים פנויים:" + numOfAvailableSits);
                             var $selectP = $("<select>");
                             j = 1;
@@ -146,6 +145,8 @@
                             var $btn = $("<button>").text("הזמן כרטיסים").click(function () { orderMovie(this) });
 
                             $div.append($date);
+                            $div.append($("<br>"));
+                            $div.append($day);
                             $div.append($("<br>"));
                             $div.append($hour);
                             $div.append($("<br>"));
