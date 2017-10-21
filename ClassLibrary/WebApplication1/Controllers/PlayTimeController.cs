@@ -23,12 +23,7 @@ namespace WebApplication1.Controllers
         public List<PlayTime> Get(int id)
         {
             movieDBConnection db = new movieDBConnection();
-<<<<<<< HEAD
             return db.PlayTimes.Where(x => x.movie_id == id).ToList();
-            
-          
-=======
-            return db.PlayTimes.SingleOrDefault(x => x.movie_id == id).availble_sits;
         }
 
         // prevent movie time Discrepancy
@@ -46,7 +41,6 @@ namespace WebApplication1.Controllers
             if (Math.Abs((closestTime.play - projectionTime).TotalMinutes) < duration)
                 return false;
             return true;
->>>>>>> remotes/origin/master
         }
 
         // POST api/<controller>
