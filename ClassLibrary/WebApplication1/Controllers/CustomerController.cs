@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ClassLibrary;
+using Newtonsoft.Json;
+using System.Web;
 
 namespace WebApplication1.Controllers
 {
@@ -34,11 +36,34 @@ namespace WebApplication1.Controllers
         // POST: api/Costumer
         public void Post([FromBody]string value)
         {
+            
         }
 
         // PUT: api/Costumer/5
-        public void Put(int id, [FromBody]string value)
+        public string Put()
         {
+            movieDBConnection db = new movieDBConnection();
+            // init Customer
+            string st = HttpContext.Current.Request.Params["customer"];
+            Customer c;
+            try
+            {
+                c = JsonConvert.DeserializeObject<Customer>(st);
+            }
+            catch
+            {
+                return "חסרים נתונים בלקוח";
+            }
+
+            Customer ct = db.Customers.SingleOrDefault(x => x.id == c.id);
+            if (ct != null)
+                return  "הלקוח כבר קיים במערכת";
+            else
+            {
+                db.Customers.Add(c);
+                db.SaveChanges();
+                return  "הלקוח נוסף בהצלחה";
+            }
         }
 
         // DELETE: api/Costumer/5

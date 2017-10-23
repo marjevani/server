@@ -102,7 +102,8 @@
                 contentType: "application/json; charset=utf-8",
                 type: "GET",
                 success: function (data) {
-                                
+                    var $tdH = $("<h4>").text("  הקרנות זמינות עבור הסרט: " + JSON.parse(localStorage.getItem("movie_name"))).attr("class", "w3-blue head");
+                    $("#tdHeader").append($tdH);          
                     for (i in data) {
                         if (counter == itemInRow) {
                             $tr = $("<tr>");
@@ -155,27 +156,26 @@
                             $tbl.append($tr);
                             $("#availableTbl").append($tbl);
                     }
-                    if (countr_Available_plays == 0) {
-                        if (data.length == 0)
-                        {
-                            $h4 = $("<h4>").text("לא נמצאו הקרנות");
-                        }
-                        else
-                        {
-                            $h4 = $("<h4>").text("SOLD OUT");
-                        }
+                    //if (countr_Available_plays == 0) {
+                    //    if (data.length == 0)
+                    //    {
+                    //        $h4 = $("<h4>").text("לא נמצאו הקרנות");
+                    //    }
+                    //    else
+                    //    {
+                    //        $h4 = $("<h4>").text("SOLD OUT");
+                    //    }
                        
-                        $h42 = $("<h4>").text("נסה שוב במועד מאוחר יותר");
-                        $("#soldOutDiv").append("<br>");
-                        $("#soldOutDiv").append($h4);
-                        $("#soldOutDiv").append($h42);
+                    //    $h42 = $("<h4>").text("נסה שוב במועד מאוחר יותר");
+                    //    $("#soldOutDiv").append("<br>");
+                    //    $("#soldOutDiv").append($h4);
+                    //    $("#soldOutDiv").append($h42);
                        
 
-                    }
-                    else { //countr_Available_plays !=0
-                        var $tdH = $("<h4>").text("  הקרנות זמינות עבור הסרט: " + JSON.parse(localStorage.getItem("movie_name"))).attr("class", "w3-blue head");
-                        $("#tdHeader").append($tdH);
-                    }
+                    //}
+                    //else { //countr_Available_plays !=0
+                    //    
+                    //}
 
                 }, //success_data
                 error: function () {
