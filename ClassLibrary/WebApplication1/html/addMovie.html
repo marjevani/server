@@ -1,281 +1,272 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-    <head>
-        <title>הוספת סרט</title>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="stylesheet.css">
+<head>
+    <title>הוספת סרט</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
-        <script>
-            var user = JSON.parse(localStorage.getItem("user"));
-            var numOfProj = 0;
-            var max_projection = 5;
-            var allProj = [];
-            var $trOut, $td, $pic, $tbl1, $tbl2, $select,trIn;
-            var i = 0; //counter for select
-            $(document).ready(function () {
-               if (user != null ) { //There is a user
-                    ifUser = 1;
-                    var $div = document.getElementById("hello");
-                    var $spn = $("<span>").innerHTML = "שלום " + user.name;
-                    $div.append($spn);
-                    var $logOut = $("<button>").text("התנתק").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { logout() });
-                    var $view = $("<button>").text("צפייה בהזמנות שלי").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'userOrders.html' });
-                    $("#btn").append($logOut);
-                    $("#btn").append($view);
-                    bulidForm();
-                   
-                   
-                }
-                else { //No user exists
-                    ifUser = 0;
-                    var $div = document.getElementById("hello");
-                    var $spn = $("<span>").innerHTML = "גישה למנהלים בלבד";
-                    $div.append($spn);
-                    var $con = $("<button>").text("התחבר").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'login.html' });
-                    var $reg = $("<button>").text("הרשמה").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'addUser.html' });
-                    $("#btn").append($con);
-                    $("#btn").append($reg);
-                    
+    <script>
+        var user = JSON.parse(localStorage.getItem("user"));
+        var numOfProj = 0;
+        var max_projection = 5;
+        var allProj = [];
+        var $trOut, $td, $pic, $tbl1, $tbl2, $select, trIn;
+        var i = 0; //counter for select
 
+        $(document).ready(function () {
+            if (user != null) { //There is a user
+                ifUser = 1;//
+                var $div = document.getElementById("hello");
+                var $spn = $("<span>").innerHTML = "שלום " + user.name;
+                $div.append($spn);
+                var $logOut = $("<button>").text("התנתק").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { logout() });
+                var $view = $("<button>").text("צפייה בהזמנות שלי").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'userOrders.html' });
+                $("#btn").append($logOut);
+                $("#btn").append($view);
+                bulidForm();
+            }
+            else { //No user exists
+                ifUser = 0;
+                var $div = document.getElementById("hello");
+                var $spn = $("<span>").innerHTML = "גישה למנהלים בלבד";
+                $div.append($spn);
+                var $con = $("<button>").text("התחבר").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'login.html' });
+                var $reg = $("<button>").text("הרשמה").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'addUser.html' });
+                $("#btn").append($con);
+                $("#btn").append($reg);
+            }
+        });
+
+        function addMovie() {
+            var movie = {
+                name: $("#name").val(),
+                publish_date: $("#publish_date").val(),
+                langth: $("#langth").val(),
+                genre: $('#genre').find(":selected").text()
+            };
+
+            var fd = new FormData();
+            // append movie
+            var movie_string = JSON.stringify(movie);
+            fd.append("movie", movie_string);
+
+            // append image
+            fd.append("img", $("#imgInp")[0].files[0]);
+
+            // append PlayTime data
+            fd.append("numOfProj", numOfProj);
+            fd.append("sits", $("#sits").val());
+            for (var i = 0; i < numOfProj; i++)
+                fd.append("projection" + i, $("#projection" + i).val());
+
+            // send all data
+            $.ajax({
+                url: "/api/Movie",
+                type: "PUT",
+                data: fd,
+                contentType: false,
+                processData: false,
+                success: function () {
+                    setTimeout(function () {
+                        alert("הסרט נוסף בהצלחה!");
+                    }
+                        , 10);
+                    location.reload();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    var error = JSON.parse(xhr.responseText).Message;
+                    if (error != "חסרים נתונים בסרט")
+                        alert();
                 }
             });
+        }
 
-            function addMovie()
-            {
-                var movie = {
-                    name: $("#name").val(),
-                    publish_date: $("#publish_date").val(),
-                    langth: $("#langth").val(),
-                    genre: $('#genre').find(":selected").text()
-                };
-
-                var fd = new FormData();
-                // append movie
-                var movie_string = JSON.stringify(movie);
-                fd.append("movie", movie_string);
-                
-                // append image
-                fd.append("img", $("#imgInp")[0].files[0]);
-
-                // append PlayTime data
-                fd.append("numOfProj", numOfProj);
-                fd.append("sits", $("#sits").val());
-                for (var i = 0; i < numOfProj; i++)
-                    fd.append("projection" + i, $("#projection" + i).val());
-
-                // send all data
-                $.ajax({
-                    url: "/api/Movie",
-                    type: "PUT",
-                    data: fd,
-                    contentType: false,
-                    processData: false,
-                    success: function ()
-                    {
-                        setTimeout(function(){
-                            alert("הסרט נוסף בהצלחה!");
-                        }
-                            , 10);                        
-                        location.reload();
-                    },
-                    error: function (xhr, textStatus, errorThrown)
-                    {
-                        var error = JSON.parse(xhr.responseText).Message;
-                        if (error != "חסרים נתונים בסרט")
-                            alert();
-                    }
-                });
-            }
-
-
-            function addProjection() {
-                if (numOfProj < max_projection)
-                {
-                    if (numOfProj == 0)
-                    {
-                        $("#projection").empty();
-                    }                    
-                    var d = document.createElement("div");
-                    d.style.margin = "5px";
-
-                   
-                    var dateTime = document.createElement("input");
-                    dateTime.type = "datetime-local";
-                    dateTime.required = true;
-                    dateTime.value = (new Date().toJSON().slice(0,19));
-                    dateTime.id = "projection" + numOfProj;
-
-                    var spn = document.createElement("span");
-                    numOfProj++;
-                    spn.innerHTML = numOfProj + ".";
-
-                    var list = document.getElementById("projection");
-
-                    d.appendChild(spn);
-                    d.appendChild(dateTime);
-                    list.appendChild(d);
+        function addProjection() {
+            if (numOfProj < max_projection) {
+                if (numOfProj == 0) {
+                    $("#projection").empty();
                 }
-            }
-
-
-            $(document).ready(function ()
-            {
-               var list = document.getElementById("projection");
                 var d = document.createElement("div");
                 d.style.margin = "5px";
+
+                var dateTime = document.createElement("input");
+                dateTime.type = "datetime-local";
+                dateTime.step = 60;
+                dateTime.required = true;
+                dateTime.value = (new Date()).toJSON().slice(0, 17)+"00";
+                dateTime.min = dateTime.value;
+                dateTime.id = "projection" + numOfProj;
+
                 var spn = document.createElement("span");
-                spn.innerHTML = "לא הוכנסו הקרנות";
+                numOfProj++;
+                spn.innerHTML = numOfProj + ".";
+
+                var list = document.getElementById("projection");
+
                 d.appendChild(spn);
+                d.appendChild(dateTime);
                 list.appendChild(d);
-            })
-                
+            }
+        }
 
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        document.getElementById('imgshow').src = e.target.result;
-                    }
-                    reader.readAsDataURL(input.files[0]);
+        /////////////////////
+        $(document).ready(function () {
+            var list = document.getElementById("projection");
+            var div = document.createElement("div");
+            div.style.margin = "5px";
+            var spn = document.createElement("span");
+            spn.innerHTML = "לא הוכנסו הקרנות";
+            div.appendChild(spn);
+            list.appendChild(div);
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('imgshow').src = e.target.result;
                 }
+                reader.readAsDataURL(input.files[0]);
             }
-            function logout() {
-                localStorage.clear();
-                location.href = 'login.html';
-            }
-            function bulidForm()
-            {
-                //head
-                $h4 = $("<h4>").text("הוספת סרט חדש").attr("class", "w3-large  w3-round w3-green w3-border w3-border-white");
-                $td = $("<td>").attr("colspan", "5");
-                $trOut = $("<tr>");
-                $td.append($h4);
-                $trOut.append($td);
-                $("#bigTbl").append($trOut);
-                //img
-                $trOut = $("<tr>").attr("class", "w3-panel w3-pale-green w3-bottombar w3-border-green w3-border");
-                $td = $("<td>");
-                $pic = $("<img>").attr({ "src": "/images/first_img.JPG", "id": "imgshow" });
-                $td.append($pic);
-                $trOut.append($td);
-                //details+plays
-                $td = $("<td>");
-                $tbl1 = $("<table>").attr({ "align": "center", "id": "internalTbl" }); //details
-                $td.append($tbl1);
-                $trOut.append($td); //ראשי
-                $("#bigTbl").append($trOut);
-                ///movie name
-                $trIn = $("<tr>");
-                $td = $("<td>").attr({ "class": "w3-text-black" }).text("שם הסרט*");
-                $trIn.append($td);
-                $td = $("<td>");
-                $inp = $("<input>").attr({ "type": "text", "required": "true", "autofocus": "true", "id": "name" });
-                $td.append($inp);
-                $trIn.append($td);
-                $tbl1.append($trIn);
-                ///number of place
-                $trIn = $("<tr>");
-                $td = $("<td>").attr("class", "w3-text-black").text("מספר מקומות*");
-                $trIn.append($td);
-                $td = $("<td>");
-                $inp = $("<input>").attr({ "type": "text", "required": "true", "id": "sits" });
-                $td.append($inp);
-                $trIn.append($td);
-                $tbl1.append($trIn);
-                //release date
-                $trIn = $("<tr>");
-                $td = $("<td>").attr("class", "w3-text-black").text("תאריך הוצאה");
-                $trIn.append($td);
-                $td = $("<td>");
-                $inp = $("<input>").attr({ "type": "date", "id": "publish_date" });
-                $td.append($inp);
-                $trIn.append($td);
-                $tbl1.append($trIn);
-                ///genre
-                $trIn = $("<tr>");
-                $td = $("<td>").attr({ "type": "text" }).text("ז'אנר*");
-                $trIn.append($td);
-                $td = $("<td>");
-                $select = $("<select>").attr({ "id": "genre" }); i = 0;
-                $select.append('<option value=' + i + '>' + "פעולה" + '</option>'); i++;
-                $select.append('<option value=' + i + '>' + "מתח" + '</option>'); i++;
-                $select.append('<option value=' + i + '>' + "קומדיה" + '</option>'); i++;
-                $select.append('<option value=' + i + '>' + "דרמה" + '</option>'); i++;
-                $select.append('<option value=' + i + '>' + "רומנטי" + '</option>'); i++;
-                $select.append('<option value=' + i + '>' + "אימה" + '</option>'); i++;
-                $td.append($select);
-                $trIn.append($td);
-                $tbl1.append($trIn);
-                //the length of the movie
-                $trIn = $("<tr>");
-                $td = $("<td>").attr({ "class": "w3-text-black" }).text("אורך הסרט בדקות*");
-                $trIn.append($td);
-                $td = $("<td>");
-                $inp = $("<input>").attr({ "type": "text", "required": "true", "id": "langth" });
-                $td.append($inp);
-                $trIn.append($td);
-                $tbl1.append($trIn);
-                //add pic
-                $trIn = $("<tr>");
-                $td = $("<td>").attr({ "class": "w3-text-black" }).text("הוספת תמונה");
-                $trIn.append($td);
-                $td = $("<td>");
-                $inp = $("<input>").attr({ "type": "file", "id": "imgInp", "onchange": "readURL(this)" });
-                $td.append($inp);
-                $trIn.append($td);
-                $tbl1.append($trIn);
-                $trOut.append($tbl1);
-                //end table1
-                $td = $("<td>").attr({ "class": "w3-display-container" });
-                $tbl2 = $("<table>").attr({ "class": "w3-display-top" }); //plays
-                $td.append($tbl2);
-                $trOut.append($td);
-                /// plays
-                $trIn = $("<tr>");
-                $td = $("<td>").attr({ "class": "w3-text-black" }).text("הקרנות:");
-                $trIn.append($td);
-                $trOut.append($trIn);
-                $tbl2.append($trIn);
-                $td = $("<td>").attr({ "id": "projection", "align": "center" });
-                $trIn.append($td);
-                $td = $("<td>").attr({ "align": "center" });
-                $btnP = $("<input>").attr({ "type": "button", "onclick": "addProjection()", "value": "הוסף הקרנה" });
-                $td.append($btnP);
-                $trIn.append($td);
+        }
 
-                //add btn
-                $btnA = $("<input>").attr({ "class": "bottomButton w3-button w3-block w3-green w3-round", "type": "submit", "onclick": "addMovie()", "value": "הוסף" });
-                $("#submitB").append($btnA);
-                document.getElementById("publish_date").value = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).toISOString().substr(0, 10);
+        function logout() {
+            localStorage.clear();
+            location.href = 'login.html';
+        }
 
-            }
+        function bulidForm() {
+            //head
+            $h4 = $("<h4>").text("הוספת סרט חדש").attr("class", "w3-large  w3-round w3-green w3-border w3-border-white");
+            $td = $("<td>").attr("colspan", "5");
+            $trOut = $("<tr>");
+            $td.append($h4);
+            $trOut.append($td);
+            $("#bigTbl").append($trOut);
+            //img
+            $trOut = $("<tr>").attr("class", "w3-panel w3-pale-green w3-bottombar w3-border-green w3-border");
+            $td = $("<td>");
+            $pic = $("<img>").attr({ "src": "/images/first_img.JPG", "id": "imgshow" });
+            $td.append($pic);
+            $trOut.append($td);
+            //details+plays
+            $td = $("<td>");
+            $tbl1 = $("<table>").attr({ "align": "center", "id": "internalTbl" }); //details
+            $td.append($tbl1);
+            $trOut.append($td); //ראשי
+            $("#bigTbl").append($trOut);
+            ///movie name
+            $trIn = $("<tr>");
+            $td = $("<td>").attr({ "class": "w3-text-black" }).text("שם הסרט*");
+            $trIn.append($td);
+            $td = $("<td>");
+            $inp = $("<input>").attr({ "type": "text", "required": "true", "autofocus": "true", "id": "name" ,"autofocus":"on"});
+            $td.append($inp);
+            $trIn.append($td);
+            $tbl1.append($trIn);
+            ///number of place
+            $trIn = $("<tr>");
+            $td = $("<td>").attr("class", "w3-text-black").text("מספר מקומות*");
+            $trIn.append($td);
+            $td = $("<td>");
+            $inp = $("<input>").attr({ "type": "number", "required": "true", "id": "sits" });
+            $td.append($inp);
+            $trIn.append($td);
+            $tbl1.append($trIn);
+            //release date
+            $trIn = $("<tr>");
+            $td = $("<td>").attr("class", "w3-text-black").text("תאריך הוצאה");
+            $trIn.append($td);
+            $td = $("<td>");
+            $inp = $("<input>").attr({ "type": "date", "id": "publish_date" });
+            $td.append($inp);
+            $trIn.append($td);
+            $tbl1.append($trIn);
+            ///genre
+            $trIn = $("<tr>");
+            $td = $("<td>").attr({ "type": "text" }).text("ז'אנר*");
+            $trIn.append($td);
+            $td = $("<td>");
+            $select = $("<select>").attr({ "id": "genre" }); i = 0;
+            $select.append('<option value=' + i + '>' + "פעולה" + '</option>'); i++;
+            $select.append('<option value=' + i + '>' + "מתח" + '</option>'); i++;
+            $select.append('<option value=' + i + '>' + "קומדיה" + '</option>'); i++;
+            $select.append('<option value=' + i + '>' + "דרמה" + '</option>'); i++;
+            $select.append('<option value=' + i + '>' + "רומנטי" + '</option>'); i++;
+            $select.append('<option value=' + i + '>' + "אימה" + '</option>'); i++;
+            $td.append($select);
+            $trIn.append($td);
+            $tbl1.append($trIn);
+            //the length of the movie
+            $trIn = $("<tr>");
+            $td = $("<td>").attr({ "class": "w3-text-black" }).text("אורך הסרט בדקות*");
+            $trIn.append($td);
+            $td = $("<td>");
+            $inp = $("<input>").attr({ "type": "number", "required": "true", "id": "langth" });
+            $td.append($inp);
+            $trIn.append($td);
+            $tbl1.append($trIn);
+            //add pic
+            $trIn = $("<tr>");
+            $td = $("<td>").attr({ "class": "w3-text-black" }).text("הוספת תמונה");
+            $trIn.append($td);
+            $td = $("<td>");
+            $inp = $("<input>").attr({ "type": "file", "id": "imgInp", "onchange": "readURL(this)" });
+            $td.append($inp);
+            $trIn.append($td);
+            $tbl1.append($trIn);
+            $trOut.append($tbl1);
+            //end table1
+            $td = $("<td>").attr({ "class": "w3-display-container" });
+            $tbl2 = $("<table>").attr({ "class": "w3-display-top" }); //plays
+            $td.append($tbl2);
+            $trOut.append($td);
+            /// plays
+            $trIn = $("<tr>");
+            $td = $("<td>").attr({ "class": "w3-text-black" }).text("הקרנות:");
+            $trIn.append($td);
+            $trOut.append($trIn);
+            $tbl2.append($trIn);
+            $td = $("<td>").attr({ "id": "projection", "align": "center" });
+            $trIn.append($td);
+            $td = $("<td>").attr({ "align": "center" });
+            $btnP = $("<input>").attr({ "type": "button", "onclick": "addProjection()", "value": "הוסף הקרנה" });
+            $td.append($btnP);
+            $trIn.append($td);
 
-        </script>
-    </head>
+            // implements onSubmit method
+            $("#form").submit(function (event) {
+                event.preventDefault();
+                addMovie();
+            });
 
-<body dir="rtl" >
-  
+            //add btn
+            $submit = $("<input>").attr({ "class": "bottomButton w3-button w3-block w3-green w3-round", "type": "submit", "value": "הוסף" }); //"onclick": "addMovie()",
+            $("#submitB").append($submit);
+            document.getElementById("publish_date").value = new Date().toISOString().substr(0, 10);
+        }
+
+    </script>
+</head>
+
+<body dir="rtl">
+
     <!--Top menu-->
     <div class="w3-bar w3-card-2">
-        <button onclick=" location.href = 'showAll.html'" class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">home</i></button>
+        <button onclick=" location.href='showAll.html' " class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class="material-icons">home</i></button>
         <div id="btn"></div>
-        <!--<button class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">search</i></button>-->
         <div class="w3-text-white" id="hello"></div>
     </div>
-
-    <form >
-
+    
+    <!--Input Table-->
+    <form id="form" autocomplete="off">
         <table id="bigTbl" align="center">  </table>
-        <br />  
-        <div align="center" id="submitB"></div>
-        
-
+        <br />
+        <div id="submitB" align="center"></div>
     </form>
 
- 
 </body>
 </html>

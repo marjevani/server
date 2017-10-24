@@ -9,6 +9,13 @@
 
     <script>
 
+        $(document).ready(function () {
+            $("form").submit(function (event) {
+                event.preventDefault();
+                login();
+            })
+        });
+
         function login() {
             var idL = document.getElementById("idL").value;
             var passL = document.getElementById("pass").value;
@@ -55,19 +62,21 @@
     <div id="wrapper" style="padding:10px;" align="center">
         <div id="board" align="center">
             <h2>כניסה למערכת</h2>
+            <form id="form">
                 <table>
                     <tr>
                         <td> ת.ז:</td>
-                        <td><input type="text" id="idL" autofocus />  </td>
+                        <td><input type="text" id="idL" autofocus required />  </td>
                     </tr>
                     <tr>
                         <td> סיסמא:</td>
-                        <td><input type="password" id="pass" />  </td>
+                        <td><input type="password" id="pass" required/>  </td>
                     </tr>
                 </table>
                 <span class="w3-white" id="error"></span> <br /><br />
-                <input type="submit" value="היכנס" onclick="login()" />
+                <input type="submit" value="היכנס" />
                 <input type="button" value="רישום משתמש חדש" onclick="location.href = 'addUser.html'" />
+            </form>
         </div>
     </div>
 

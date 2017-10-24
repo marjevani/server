@@ -25,35 +25,42 @@
  
     </style>
     <script>
-     
+        var machPasswords = false;
+
         $(document).ready(function () {
-           // document.getElementById("h1").innerHTML = user.name + ", תודה שהזמנת כרטיס לסרט";
-            //document.getElementById("orderNumber").innerHTML = successOrder.id;
-            //document.getElementById("clientNumber").innerHTML = user.id;
-            //document.getElementById("movieName").innerHTML = successOrder.movie_name;
-            //d = new Date(successOrder.play);
-            //document.getElementById("play").innerHTML = d.toLocaleString('en-GB');
-            //document.getElementById("amountSeats").innerHTML = successOrder.amount;
+            $("#form").submit(function (event) {
+                event.preventDefault();
+                if(machPasswords==true)
+                    addUser();
+            });
+
+            $('#password, #confirm_password').on('keyup', function () {
+                if ($('#password').val() == "" || $('#confirm_password').val() == "")
+                {
+                    $('#message').html('');
+                }
+                else if ($('#password').val() == $('#confirm_password').val())
+                {
+                    $('#message').html('סיסמאות תואמות').removeClass("w3-red").addClass("w3-green");
+                    machPasswords = true;
+                }
+                else
+                {
+                    $('#message').html('סיסמאות לא תואמות').removeClass("w3-green").addClass("w3-red");
+                    machPasswords = false;
+                }
+            });
         })
 
         function addUser()
         {
             var fd = new FormData();
 
-            //var p1=document.getElementById("pass1").value;
-            //var p2 = document.getElementById("pass2").value;
-         
-            //if ( p1 != p2)
-            //{
-            //    document.getElementById("msg").innerHTML = "הסיסמאות אינן זהות"
-            //}
-            //else {
-
             // create Customer
             var customer = {
                     id: document.getElementById("user_id").value,
                     name: document.getElementById("user_name").value,
-                    pass: document.getElementById("pass1").value,
+                    pass: document.getElementById("password").value,
                     isAdmin: false
             };
 
@@ -89,32 +96,34 @@
     <div id="wrapper" style="padding:10px;" align="center">
         <div id="board" align="center">
 
-            <h2 id="h1"></h2>
-            <h2>הוספת לקוח חדש:</h2>
-            <table>
-                <tr>
-                    <td>תעודת זהות:</td>
-                    <td><input type="text" id="user_id" autofocus required /></td>
-                </tr>
-                <tr>
-                    <td>שם: </td>
-                    <td> <input type="text" id="user_name" required /></td>
-                </tr>
-                <tr>
-                    <td>סיסמא:</td>
-                    <td> <input type="password" id="pass1" required /></td>
-                </tr>
-                <tr>
-                    <td>וידוא סיסמא:</td>
-                    <td><input type="password" id="pass2" required /></td>
-                </tr>
-        
+            <form id="form" autocomplete="off">
+                <h2 id="h1"></h2>
+                <h2>הוספת לקוח חדש:</h2>
+                <table>
+                    <tr>
+                        <td>תעודת זהות:</td>
+                        <td><input type="number" id="user_id" autofocus required /></td>
+                    </tr>
+                    <tr>
+                        <td>שם: </td>
+                        <td> <input type="text" id="user_name" required /></td>
+                    </tr>
+                    <tr>
+                        <td>סיסמא:</td>
+                        <td> <input type="password" id="password" required /></td>
+                    </tr>
+                    <tr>
+                        <td>וידוא סיסמא:</td>
+                        <td>
+                            <input type="password" id="confirm_password" required />
+                        </td>
+                    </tr>
 
-            </table>
-            <span class="w3-white" id="msg"></span> <br /><br />
-            <input type="submit" value="הוסף לקוח" onclick="addUser()" />
-            <input type="button" value="חזרה לדף הראשי" onclick="location.href = 'login.html'" />
-
+                </table>
+                    <span id="message" class="w3-red"></span> <br /><br />
+                <input type="submit" value="הוסף לקוח" id="addbtn"/>
+                <input type="button" value="חזרה לדף הראשי" onclick="location.href = 'login.html'" />
+            </form>
 
         </div>
     </div>
