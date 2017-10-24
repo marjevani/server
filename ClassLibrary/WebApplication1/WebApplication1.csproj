@@ -223,8 +223,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="html\addMovie.html" />
-    <Content Include="html\addmovietemp.html" />
     <Content Include="html\addUser.html" />
+    <Content Include="html\HtmlPage1.html" />
+    <Content Include="html\messegeModule.html" />
     <Content Include="html\StyleSheet.css" />
     <Content Include="Scripts\DaysHeader.js" />
     <Content Include="html\showAll.html" />

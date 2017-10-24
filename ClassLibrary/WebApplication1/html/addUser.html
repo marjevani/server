@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
 
     <style>
         body {
@@ -32,6 +33,9 @@
                 event.preventDefault();
                 if(machPasswords==true)
                     addUser();
+                $(function () {
+                    $("#includedContent").load("messegeModule.html");
+                });
             });
 
             $('#password, #confirm_password').on('keyup', function () {
@@ -70,28 +74,30 @@
 
             // send data
                 $.ajax({
-                    dataType: "json",
                     url: "/api/customer",
                     contentType: "application/json; charset=utf-8",
                     type: "PUT",
-                    data:fd,
+                    data: fd,
+                    contentType: false,
+                    processData: false,
                     success: function (msg) {
-                        document.getElementById("msq").innerHTML = msq;
+                        succMsg("הודעה", false); //    להשלים הודעות, לא תמיד לעבוד ישר לעמוד הצפיה הרגיל
+                        localStorage.setItem("user", JSON.stringify(user));
+                        location.href = "showAll.html"
                     },
                     error: function () {
-                        console.log("שגיאה בהוספת לקוח");
+                        errorMsg("שגיאה בהוספת לקוח", true);
                     }
                 });
             }
 
-        
-
+      
     </script>
 
 </head>
 <body dir="rtl" align="center">
 
-   
+
 
     <div id="wrapper" style="padding:10px;" align="center">
         <div id="board" align="center">
@@ -120,14 +126,16 @@
                     </tr>
 
                 </table>
-                    <span id="message" class="w3-red"></span> <br /><br />
-                <input type="submit" value="הוסף לקוח" id="addbtn"/>
+                <span id="message" class="w3-red"></span> <br /><br />
+                <input type="submit" value="הוסף לקוח" id="addbtn" />
                 <input type="button" value="חזרה לדף הראשי" onclick="location.href = 'login.html'" />
             </form>
 
         </div>
     </div>
-
+    
+    <!--add module for animated messeges-->
+    <div id="includedContent"></div>
 
 </body>
 </html>

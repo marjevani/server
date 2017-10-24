@@ -43,20 +43,6 @@ namespace WebApplication1.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.Conflict, "חסרים נתונים בסרט");
             }
 
-            Movie tmp;
-            try
-            {
-                tmp = db.Movies.OrderByDescending(a => a.id).FirstOrDefault();
-                if (tmp != null)
-                    mv.id = tmp.id + 1;
-                else // no movies in DB
-                    mv.id = 1;
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine("ERROR - Build ID for movie" + e);
-            }
-
             // init playTimes -
             List<PlayTime> playTList = new List<PlayTime>();
             int numOfProj = Convert.ToInt32(HttpContext.Current.Request.Params["numOfProj"]);
@@ -72,8 +58,8 @@ namespace WebApplication1.Controllers
                 pt.availble_sits = pt.total_sits;
 
                 // check if projection time is valide
-                if (!PlayTimeController.is_Valid_projc_time(pt.play, mv.langth))
-                    return Request.CreateErrorResponse(HttpStatusCode.Conflict, "Another movie is playing at this time");
+                if (!PlayTimeController.is_Valid_projc_time(pt.play, new TimeSpan(0, mv.langth,0).Ticks))
+                    return Request.CreateErrorResponse(HttpStatusCode.Conflict, "זמן ההקרנה המבוקש תפוס");
 
                 playTList.Add(pt);
             }
@@ -93,7 +79,7 @@ namespace WebApplication1.Controllers
             // save Image on server
             if (img != null)
                 img.SaveAs(HttpContext.Current.Server.MapPath("~/images/") + mv.img);
-            return Request.CreateResponse(HttpStatusCode.OK, "movie added to DB");
+            return Request.CreateResponse(HttpStatusCode.OK, "הסרט נוסף בהצלחה");
         }
 
 

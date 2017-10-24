@@ -4,6 +4,7 @@
     <title>ההזמנות שלי</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
@@ -11,7 +12,11 @@
         var user = JSON.parse(localStorage.getItem("user"));
 
         $(document).ready(function () {
-            
+            /* load MSG module */
+            $(function () {
+                $("#includedContent").load("messegeModule.html");
+            });
+
             if (user != null) { //There is a user
                 var $div = document.getElementById("hello");
                 var $spn = $("<span>").innerHTML = "שלום " + user.name;
@@ -47,7 +52,7 @@
                             var $li = $("<li>").attr({ "class": "w3-bar w3-white  w3-round-xlarge ", "data-id": data[i].id });
                             var $cnl = $("<span>").text("x").attr("class", "w3-bar-item w3-button w3-white w3-xlarge w3-left").click(function () { deleteOrder(this) });
                             var $pic = $("<img>").attr({ "src": "/images/" + data[i].Movie.img, "movie-number-pic": i + 1, "class": "w3-bar-item w3-right" });
-                            var $div = $("<div>").attr({ "class": "w3-bar-item w3-right internalDiv" })// "data-id": data[i].Movie.id });
+                            var $div = $("<div>").attr({ "class": "w3-bar-item w3-right internalDiv" })
 
                             var $nameP = $("<span>").attr("data-name", data[i].Movie.name).text("שם הסרט:" + data[i].Movie.name);
                             var date = new Date(data[i].PlayTime.play);
@@ -98,10 +103,11 @@
                 contentType: "application/json; charset=utf-8",
                 type: "DELETE",
                 success: function (data) {
-                    alert("Order deleted successfully!");
-                    location.reload();
+                    succMsg("ההזמנה המבוקשת נמחקה", true);
                 },
-                error: function () { alert("error in delete"); }
+                error: function () {
+                    errorMsg("בעיה במחיקה", true);
+                }
             });
         }
 
@@ -115,7 +121,7 @@
 <body dir="rtl">
     <!--Top menu-->
     <div class="w3-bar w3-card-2">
-        <button onclick=" location.href = 'showAll.html'" class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">home</i></button>
+        <button onclick="location.href = 'showAll.html'" class="w3-bar-item w3-button w3-padding-large w3-text-white"><i class="material-icons">home</i></button>
         <div id="btn"></div>
         <!--<button class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">search</i></button>-->
         <div class="w3-text-white" id="hello"></div>
@@ -128,6 +134,8 @@
     </div>
        
 
-  
+    <!--add module for animated messeges-->
+    <div id="includedContent"></div>
+
 </body>
 </html>

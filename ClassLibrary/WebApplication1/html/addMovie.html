@@ -12,11 +12,14 @@
         var user = JSON.parse(localStorage.getItem("user"));
         var numOfProj = 0;
         var max_projection = 5;
-        var allProj = [];
-        var $trOut, $td, $pic, $tbl1, $tbl2, $select, trIn;
-        var i = 0; //counter for select
 
         $(document).ready(function () {
+            /* load MSG module */
+            $(function () {
+                $("#includedContent").load("messegeModule.html");
+            });
+
+            /* handle user */
             if (user != null) { //There is a user
                 ifUser = 1;//
                 var $div = document.getElementById("hello");
@@ -26,6 +29,8 @@
                 var $view = $("<button>").text("צפייה בהזמנות שלי").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'userOrders.html' });
                 $("#btn").append($logOut);
                 $("#btn").append($view);
+                if (user.isAdmin == false)
+                    return;
                 bulidForm();
             }
             else { //No user exists
@@ -38,6 +43,15 @@
                 $("#btn").append($con);
                 $("#btn").append($reg);
             }
+
+            /* build projection section */
+            var list = document.getElementById("projection");
+            var div = document.createElement("div");
+            div.style.margin = "5px";
+            var spn = document.createElement("span");
+            spn.innerHTML = "לא הוכנסו הקרנות";
+            div.appendChild(spn);
+            list.appendChild(div);
         });
 
         function addMovie() {
@@ -70,16 +84,11 @@
                 contentType: false,
                 processData: false,
                 success: function () {
-                    setTimeout(function () {
-                        alert("הסרט נוסף בהצלחה!");
-                    }
-                        , 10);
-                    location.reload();
+                    succMsg("הסרט נוסף בהצלחה!", true);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     var error = JSON.parse(xhr.responseText).Message;
-                    if (error != "חסרים נתונים בסרט")
-                        alert();
+                    errorMsg(error, false);
                 }
             });
         }
@@ -94,9 +103,8 @@
 
                 var dateTime = document.createElement("input");
                 dateTime.type = "datetime-local";
-                dateTime.step = 60;
                 dateTime.required = true;
-                dateTime.value = (new Date()).toJSON().slice(0, 17)+"00";
+                dateTime.value = (new Date()).toJSON().slice(0, 17) + "00";
                 dateTime.min = dateTime.value;
                 dateTime.id = "projection" + numOfProj;
 
@@ -111,17 +119,6 @@
                 list.appendChild(d);
             }
         }
-
-        /////////////////////
-        $(document).ready(function () {
-            var list = document.getElementById("projection");
-            var div = document.createElement("div");
-            div.style.margin = "5px";
-            var spn = document.createElement("span");
-            spn.innerHTML = "לא הוכנסו הקרנות";
-            div.appendChild(spn);
-            list.appendChild(div);
-        });
 
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -139,6 +136,7 @@
         }
 
         function bulidForm() {
+            var $trOut, $trIn, $td, $pic, $tbl1, $tbl2, $select;
             //head
             $h4 = $("<h4>").text("הוספת סרט חדש").attr("class", "w3-large  w3-round w3-green w3-border w3-border-white");
             $td = $("<td>").attr("colspan", "5");
@@ -163,7 +161,7 @@
             $td = $("<td>").attr({ "class": "w3-text-black" }).text("שם הסרט*");
             $trIn.append($td);
             $td = $("<td>");
-            $inp = $("<input>").attr({ "type": "text", "required": "true", "autofocus": "true", "id": "name" ,"autofocus":"on"});
+            $inp = $("<input>").attr({ "type": "text", "required": "true", "autofocus": "true", "id": "name", "autofocus": "on" });
             $td.append($inp);
             $trIn.append($td);
             $tbl1.append($trIn);
@@ -190,7 +188,8 @@
             $td = $("<td>").attr({ "type": "text" }).text("ז'אנר*");
             $trIn.append($td);
             $td = $("<td>");
-            $select = $("<select>").attr({ "id": "genre" }); i = 0;
+            var i = 0;
+            $select = $("<select>").attr({ "id": "genre" });
             $select.append('<option value=' + i + '>' + "פעולה" + '</option>'); i++;
             $select.append('<option value=' + i + '>' + "מתח" + '</option>'); i++;
             $select.append('<option value=' + i + '>' + "קומדיה" + '</option>'); i++;
@@ -256,17 +255,21 @@
 
     <!--Top menu-->
     <div class="w3-bar w3-card-2">
-        <button onclick=" location.href='showAll.html' " class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class="material-icons">home</i></button>
+        <button onclick="location.href='showAll.html'" , class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class="material-icons">home</i></button>
         <div id="btn"></div>
         <div class="w3-text-white" id="hello"></div>
     </div>
-    
+
     <!--Input Table-->
     <form id="form" autocomplete="off">
         <table id="bigTbl" align="center">  </table>
         <br />
         <div id="submitB" align="center"></div>
     </form>
+
+    <!--add module for animated messeges-->
+    <div id="includedContent"></div>
+ 
 
 </body>
 </html>

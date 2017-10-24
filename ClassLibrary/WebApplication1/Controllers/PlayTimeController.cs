@@ -29,16 +29,27 @@ namespace WebApplication1.Controllers
         // prevent movie time Discrepancy
         [HttpGet]
 
-        static public bool is_Valid_projc_time(DateTime projectionTime, short langth)
+        static public bool is_Valid_projc_time(DateTime projectionTime, long langthTicks)
         {
             movieDBConnection db = new movieDBConnection();
-            PlayTime closestTime;
 
-            closestTime = db.PlayTimes.OrderBy(t => DbFunctions.DiffMinutes(t.play, projectionTime)).First();
+            //List<PlayTime> closestTime = db.PlayTimes.OrderBy(t => DbFunctions.DiffMinutes(projectionTime, t.play)).ToList();
 
-            short duration = (closestTime.play < projectionTime) ? closestTime.Movie.langth : langth;
+            List<PlayTime> closestTime = db.PlayTimes.OrderBy(t => t.play).ToList();
 
-            if (Math.Abs((closestTime.play - projectionTime).TotalMinutes) < duration)
+            PlayTime close = closestTime[0];
+            long min = Math.Abs((close.play - projectionTime).Ticks);
+            foreach(PlayTime x in closestTime)
+            {
+                if(Math.Abs((x.play - projectionTime).Ticks) < min) {
+                    min = Math.Abs((x.play - projectionTime).Ticks);
+                    close = x;
+                }
+            }
+
+            long duration = (close.play < projectionTime) ? new TimeSpan(0, close.Movie.langth, 0).Ticks : langthTicks;
+
+            if (Math.Abs((close.play - projectionTime).Ticks) < duration)
                 return false;
             return true;
         }

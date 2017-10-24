@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
     <script>
 
         $(document).ready(function () {
@@ -37,13 +36,11 @@
                 type: "GET",
                 success: function (user)
                 {
-                    if (user != null)
-                    {
+                    if (user != null) {
                         localStorage.setItem("user", JSON.stringify(user));
-                        var adminParam = user.isAdmin;
                         window.history.back();
                     }
-                    else 
+                    else
                         document.getElementById("error").innerHTML = "ת.ז או הסיסמא שהכנסת לא נכונים";
                 },
                 error: function ()
@@ -52,6 +49,7 @@
                 }
             });
         }
+
 
 
     </script>
@@ -80,5 +78,7 @@
         </div>
     </div>
 
+
 </body>
 </html>
+

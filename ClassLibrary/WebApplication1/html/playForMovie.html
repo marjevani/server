@@ -154,7 +154,8 @@
                     location.href = "successOrder.html"
 
                 },	 
-                error: function () { alert("בעיה בהזמנת סרט"); }		
+                error: function () { errorMsg("בעיה בהזמנת סרט", false
+                    ); }		
             });
         }
 
@@ -170,7 +171,7 @@
 <body dir="rtl">
     <!--Top menu-->
     <div class="w3-bar w3-card-2">
-        <button onclick=" location.href = 'showAll.html'" class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">home</i></button>
+        <button onclick="location.href = 'showAll.html'" class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class="material-icons">home</i></button>
         <div id="btn"></div>
         <!--<button class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">search</i></button>-->
         <div class ="w3-text-white" id="hello"></div>
