@@ -12,22 +12,25 @@
         var user = JSON.parse(localStorage.getItem("user"));
         var successOrder = JSON.parse(localStorage.getItem("successOrder"));
         $(document).ready(function () {//There is a user
-            if (user != null) {
+            if (user != null) {//There is a user
                 ifUser = 1;
+                var $logOut = $("<button>").text("התנתק").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { logout() });
+                var $view = $("<button>").text("צפייה בהזמנות שלי").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'userOrders.html' });
+                $("#btn").append($logOut);
+                $("#btn").append($view);
                 if (user.isAdmin == 1) {
                     var $add = $("<button>").text("הוסף סרט").attr("class", "w3-bar-item w3-button w3-padding-large w3-text-white");
                     $add.click(function () { location.href = "addMovie.html" });
-                    $("#admin").append($add).attr("class", "adminDiv");
+                    $("#btn").append($add).attr("class", "adminDiv");
                 }
-                $("#connectB").hide();
-                $("#addB").hide();
-                if(successOrder==null)
-                {
-                    $("#board_order").hide();
-                    var $div = document.getElementById("hello");
-                    var $spn = $("<span>").innerHTML = "נתונים אינם זמינים";
-                    $div.append($spn);
-                }
+
+                //if(successOrder==null)
+                //{
+                //    $("#board_order").hide();
+                //    var $div = document.getElementById("hello");
+                //    var $spn = $("<span>").innerHTML = "נתונים אינם זמינים";
+                //    $div.append($spn);
+                //}
 
             }
             else {//No user exists
@@ -35,9 +38,10 @@
                 var $div = document.getElementById("hello");
                 var $spn = $("<span>").innerHTML = "נתונים אינם זמינים";
                 $div.append($spn);
-                $("#logoutB").hide();
-                $("#myO").hide();
-                $("#board_order").hide();
+                var $con = $("<button>").text("התחבר").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'login.html' });
+                var $reg = $("<button>").text("הרשמה").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'addUser.html' });
+                $("#btn").append($con);
+                $("#btn").append($reg);
                 
 
             }
@@ -62,12 +66,8 @@
 
     <div class="w3-bar w3-card-2">
         <button onclick=" location.href = 'showAll.html'" class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">home</i></button>
-        <input type="button" id="logoutB" value="התנתק" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="logout()" />
-        <input type="button" id="connectB" value="התחבר" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="location.href = 'login.html'" />
-        <input type="button" id="addB" value="הרשמה" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="location.href='addUser.html'" />
-        <input type="button" id="myO" value="צפייה בהזמנות שלי" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="location.href = 'userOrders.html'" />
-        <div id="admin"></div>
-        <button class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">search</i></button>
+        <div id="btn"></div>
+        <!--<button class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">search</i></button>-->
         <div class="w3-text-white" id="hello"></div>
     </div>
 
