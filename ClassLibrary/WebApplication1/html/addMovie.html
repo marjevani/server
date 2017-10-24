@@ -4,53 +4,11 @@
     <head>
         <title>הוספת סרט</title>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <style>
-            .bottomButton{
-               margin:10px;
-            }
-            #imgInp{
-                width:200px;
-            }
-            #projection{
-                width:350px;
-            }
-            #bigTbl td{
-                padding:15px;
-            }
-            
-            #internalTbl td{
-                padding:5px;
-            }
-            #bigTbl {
-                border-collapse: collapse;
-               margin-top:30px;
-            }
-            body {
-                     background-image: url("/images/background.jpg");
-                    background-attachment: fixed;
-            }
-            h4{ text-align:center;
-                margin:5px;
-                padding:5px; /*ממרכז את הכתב*/
-                color:white;
-                position:relative;
-                }  
+        <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
-           #imgshow{
-               width:200px;
-               height:200px;
-           }
-            #logOutDiv
-             {
-               top: 10px;
-               position:relative
-                
-             }
-                 
-        </style>
         <script>
             var user = JSON.parse(localStorage.getItem("user"));
             var numOfProj = 0;
@@ -59,6 +17,27 @@
 
             $(document).ready(function () {
                 document.getElementById("publish_date").value = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).toISOString().substr(0, 10);
+                if (user != null) { //There is a user
+                    ifUser = 1;
+                    var $div = document.getElementById("hello");
+                    var $spn = $("<span>").innerHTML = "שלום " + user.name;
+                    $div.append($spn);
+                    $("#connectB").hide();
+                    $("#addB").hide();
+
+                }
+                else { //No user exists
+                    ifUser = 0;
+                    var $div = document.getElementById("hello");
+                    var $spn = $("<span>").innerHTML = "גישה למנהלים בלבד";
+                    $div.append($spn);
+                    $("#logoutB").hide();
+                    $("#myO").hide();
+                    $("#bigTbl").hide();
+                    $("#submitB").hide();
+                    
+
+                }
             });
 
             function addMovie()
@@ -170,29 +149,37 @@
 
 <body dir="rtl" >
   
-    <div id="logOutDiv">
-        <input type="button" value="logOut" onclick="logout()" />
-        <input type="button" value="חזרה להצגת כל הסרטים" class="bottomButton" onclick="location.href='showAll.html'" />
-
+    <!--Top menu-->
+    <div class="w3-bar w3-card-2">
+        <button onclick=" location.href = 'showAll.html'" class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">home</i></button>
+        <input type="button" id="logoutB" value="התנתק" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="logout()" />
+        <input type="button" id="connectB" value="התחבר" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="location.href = 'login.html'" />
+        <input type="button" id="addB" value="הרשמה" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="location.href='addUser.html'" />
+        <input type="button" id="myO" value="צפייה בהזמנות שלי" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="location.href = 'userOrders.html'" />
+        <button class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">search</i></button>
+        <div class="w3-text-white" id="hello"></div>
     </div>
-    <form>
+
+    <form >
 
         <table id="bigTbl" align="center">
             <tr>
-                <td colspan="3"><h4 class="w3-blue">הוספת סרט חדש</h4></td>
+                <td colspan="5">
+                    <h4 id="addMovie" class="w3-large  w3-round w3-green w3-border w3-border-white">הוספת סרט חדש</h4>
+                </td>
             </tr>
-            <tr>
+            <tr class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border ">
                 <td>
                     <img id="imgshow" src="/images/first_img.JPG" />
                 </td>
 
                 <td>
                     <table id="internalTbl" align="center">
-                        <tr><td class="w3-text-white"> שם הסרט* </td><td><input type="text" id="name" required autofocus/></td></tr>
-                        <tr><td class="w3-text-white">   מספר מקומות*</td><td><input type="text" id="sits" required/></td></tr>
-                        <tr><td class="w3-text-white">    תאריך הוצאה</td><td><input type="date" id="publish_date"/></td></tr>
+                        <tr><td class="w3-text-black "> שם הסרט* </td><td><input type="text" id="name" required autofocus /></td></tr>
+                        <tr><td class="w3-text-black">   מספר מקומות*</td><td><input type="text" id="sits" required /></td></tr>
+                        <tr><td class="w3-text-black">    תאריך הוצאה</td><td><input type="date" id="publish_date" /></td></tr>
                         <tr>
-                            <td class="w3-text-white" required>    ז'אנר*</td>
+                            <td class="w3-text-black" required>    ז'אנר*</td>
                             <td>
                                 <select id="genre">
                                     <option>פעולה</option>
@@ -204,31 +191,38 @@
                                 </select>
                             </td>
                         </tr>
-                        <tr><td class="w3-text-white">  אורך הסרט בדקות*</td><td><input type="text" id="langth" required/></td></tr>
-                        <tr><td class="w3-text-white"> תמונה</td><td><input type="file" id="imgInp" onchange="readURL(this);" /></td></tr>
+                        <tr><td class="w3-text-black">  אורך הסרט בדקות*</td><td><input type="text" id="langth" required /></td></tr>
+                        <tr><td class="w3-text-black"> תמונה</td><td><input type="file" id="imgInp" onchange="readURL(this);" /></td></tr>
+
                     </table>
                 </td>
 
                 <td class="w3-display-container">
                     <table class="w3-display-top">
                         <tr>
-                            <td class="w3-text-white ">הקרנות:</td>
+                            <td class="w3-text-black ">הקרנות:</td>
                             <td id="projection" align="center"></td>
                             <td align="center" class=""> <input type="button" value="הוסף הקרנה" onclick="addProjection()" /> </td>
+
                         </tr>
+
                     </table>
                 </td>
             </tr>
             <tr>
-                <td class="w3-text-white" align="center" colspan="3">
-                    <input type="submit" value="הוסף" class="bottomButton" onclick="addMovie()" />
-                    <input type="button" value="מחק" class="bottomButton" onclick="location.reload()" />
-                </td>
+
+                <td class="w3-text-white" align="center" colspan="3"></td>
+
             </tr>
         </table>
+        <div align="center" id="submitB">
+            <input type="submit" value="הוסף" class="bottomButton w3-button w3-block w3-green w3-round" onclick="addMovie()" />
+
+        </div>
+        
 
     </form>
 
-        
+ 
 </body>
 </html>

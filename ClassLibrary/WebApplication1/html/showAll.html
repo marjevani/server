@@ -4,93 +4,45 @@
 
     <title>סרטים מוצגים בקולנוע</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <style>
-        .gallery td {
-            padding: 5px;
-            width: 200px;
-            height: 200px;
-            position: relative;
-        }
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
-
-        #bigTbl {
-            border-collapse: collapse;
-            margin-top: 30px;
-            padding: 10px;
-        }
-
-        body {
-            background-image: url("/images/background.jpg");
-            background-attachment: fixed;
-        }
-
-        h4 {
-            text-align: center;
-            margin: 5px;
-            padding: 5px; /*ממרכז את הכתב*/
-            color: white;
-            position: relative;
-            width: 1100px;
-        }
-        /*.available td div*/
-        .internalDiv {
-            width: 200px;
-            text-align: center;
-        }
-
-        img {
-            width: 100px;
-            height: 100px;
-            margin: 5px;
-        }
-
-        #hello {
-            margin: 5px;
-            padding: 5px;
-            border: 1px dashed black;
-            display: inline;
-        }
-
-        .avi {
-            margin-left: 20px;
-        }
-
-        .lowerDiv {
-            text-align: center;
-        }
-
-        .adminDiv {
-            display: inline;
-        }
-    </style>
     <script>
         var user = JSON.parse(localStorage.getItem("user"));
-        var numOfAvailableSits;
         var itemInRow = 5;
 
 
         $(document).ready(function () {
-            // hello messege - top
-            var $spn = document.getElementById("hello");
-            $spn.innerHTML = "שלום " + user.name;
+            
+            if (user != null) //There is a user
+            {
+                var $div = document.getElementById("hello");
+                var $spn = $("<span>").innerHTML = "שלום " + user.name;
+                $div.append($spn);
+                if (user.isAdmin == 1) {
+                    var $add = $("<button>").text("הוסף סרט").attr("class", "w3-bar-item w3-button w3-padding-large w3-text-white");
+                    $add.click(function () { location.href = "addMovie.html" });
+                    $("#admin").append($add).attr("class", "adminDiv");
+                }
+                $("#connectB").hide();
+                $("#addB").hide();
 
-            if (user.isAdmin == 1) {
-                var $add = $("<button>").text("הוסף סרט");
-                $add.click(function () { location.href = "addMovie.html" });
-                $("#admin").append($add).attr("class", "adminDiv");
-                $spn.innerHTML += ", באפשרותך להזמין סרט או להוסיף סרט חדש";
             }
-            else {
-                $spn.innerHTML += ",איזה סרט תרצה להזמין?";
+            else //No user exists
+            {
+                $("#logoutB").hide();
+                $("#myO").hide();
+                
             }
 
+            //Create the movie table
             var $tbl = $("<table>").attr("class", "available");
             var $tr = $("<tr>");
             var counter = 0;
 
+            //bring plays from db
             $.ajax({
                 dataType: "json",
                 url: "/api/movie",
@@ -103,7 +55,7 @@
                             counter = 0;
                         }
                         counter++;
-                        var $td = $("<td>").attr("class", "w3-white");
+                        var $td = $("<td>").attr("class", "w3-panel w3-pale-green w3-bottombar w3-border-green w3-border ");
                         var $div = $("<div>").attr({ "class": "internalDiv", "data-id": data[i].id });
                         var $nameP = $("<span>").attr("data-name", data[i].name).text("שם הסרט:" + data[i].name);
                         date = new Date(data[i].publish_date);
@@ -111,7 +63,7 @@
                         var $langth = $("<span>").text("אורך הסרט:" + data[i].langth + " דקות");
                         var $genre = $("<span>").html("ז'אנר:" + data[i].genre);
                         var $pic = $("<img>").attr({ "src": "/images/" + data[i].img, "movie-number-pic": i + 1 });
-                        var $btn = $("<button>").text("הצג הקרנות").click(function () {
+                        var $btn = $("<button>").text("הצג הקרנות").attr("class", "w3-button w3-block w3-indigo  w3-round-xlarge w3-border w3-border-white").click(function () {
                             localStorage.setItem("movie_id", JSON.stringify(this.parentElement.getAttribute("data-id")));
                             localStorage.setItem("movie_name", JSON.stringify(this.parentElement.firstElementChild.getAttribute("data-name")));
                             location.href = "playForMovie.html"
@@ -138,36 +90,44 @@
 
                 }, //success_data
                 error: function () {
-                    console.log("connection ERROR - Available movies");
-
+                    console.log("תקלה בהצגת הסרטים");
                 } //error
             });
 
         }); //document
 
         function logout() {
-            localStorage.clear();
-            location.href = 'login.html';
+            localStorage.removeItem("user");
+            location.href = 'showAll.html';
         }
+
+  
     </script>
 
 </head>
 <body dir="rtl">
-    <br />
+   
+    <div class="w3-bar w3-card-2" >
+        <button onclick=" location.href = 'showAll.html'" class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">home</i></button>      
+        <input type="button" id="logoutB" value="התנתק" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="logout()"  />
+        <input type="button" id="connectB"  value="התחבר" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="location.href = 'login.html'" />
+        <input type="button" id="addB" value="הרשמה" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="location.href='addUser.html'" />
+        <input type="button" id="myO" value="צפייה בהזמנות שלי" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="location.href = 'userOrders.html'" />
+        <div id="admin"></div>
+        <button  class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">search</i></button>
+        <div class="w3-text-white" id="hello"></div>
+    </div>
+    
+    
 
-    <input type="button" value="logOut" onclick="logout()" id="logOutDiv" />
-    <span class="w3-white" id="hello"></span>
-    <input type="button" value="צפייה בהזמנות שלי" onclick="location.href = 'userOrders.html'" />
-    <div id="admin"></div>
-
-    <table id="bigTbl" align="center">
+    <table align="center">
         <tr>
-            <td colspan="5"><h4 class="w3-blue head">סרטים זמינים</h4></td>
+            <td ><h4 class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">סרטים זמינים</h4></td>
         </tr>
 
         <tr class="gallery">
             <td colspan="5">
-                <div class="w3-text-blue" id="availableTbl">
+                <div class="w3-text-blue" id="availableTbl" align="center">
                 </div>
             </td>
     </table>

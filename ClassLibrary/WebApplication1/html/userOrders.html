@@ -3,140 +3,90 @@
 <head>
     <title>ההזמנות שלי</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <style>
-        .gallery td {
-            padding: 5px;
-            width: 200px;
-            height: 200px;
-            position: relative;
-        }
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
-        #bigTbl {
-            border-collapse: collapse;
-            margin-top: 30px;
-            padding: 10px;
-        }
-
-        body {
-            background-image: url("/images/background.jpg");
-            background-attachment: fixed;
-        }
-
-        h4 {
-            text-align: center;
-            margin: 5px;
-            padding: 5px;
-            color: white;
-            position: relative;
-            width: 1100px;
-        }
-
-        .internalDiv {
-            width: 200px;
-            text-align: center;
-        }
-
-        img {
-            width: 100px;
-            height: 100px;
-            margin: 5px;
-        }
-
-        #hello {
-            margin: 5px;
-            padding: 5px;
-            border: 1px dashed black;
-            display: inline;
-        }
-
-        .avi {
-            margin-left: 20px;
-        }
-
-        .lowerDiv {
-            text-align: center;
-        }
-
-        .adminDiv {
-            display: inline;
-        }
-
-        #logOutDiv {
-            top: 20px;
-            position: relative;
-        }
-    </style>
     <script>
         var user = JSON.parse(localStorage.getItem("user"));
-        var numOfAvailableSits;
-        var itemInRow = 5;
 
         $(document).ready(function () {
-            // hello messege - top
-            var $spn = document.getElementById("hello");
-            $spn.innerHTML = "שלום " + user.name;
-
-            var $tbl = $("<table>").attr("class", "available");
-            var $tr = $("<tr>");
-            var counter = 0;
-
-            // get and show all CustomerBuyTickets
-            $.ajax({
-                dataType: "json",
-                url: "/api/CustomerBuyTickets/" + user.id,
-                contentType: "application/json; charset=utf-8",
-                type: "GET",
-                success: function (data) {
-                    if (data.length == 0) {
-                        $h4 = $("<h4>").text("לא נמצאו הזמנות עבור לקוח");
-                        $("#noOrders").append("<br>");
-                        $("#noOrders").append($h4);
-                    }
-                    else { //data.length != 0
-                        var $tdH = $("<h4>").text("  ההזמנות שלי: ").attr("class", "w3-blue head");
-                        $("#tdHeader").append($tdH);
-                    }
-
-                    for (i in data) {
-                        if (counter == itemInRow) {
-                            $tr = $("<tr>");
-                            counter = 0;
-                        }
-                        counter++;
-                        var $td = $("<td>").attr("class", "w3-white");
-                        var $div = $("<div>").attr({ "class": "internalDiv", "data-id": data[i].id })// "data-id": data[i].Movie.id });
-                        var $nameP = $("<span>").attr("data-name", data[i].Movie.name).text("שם הסרט:" + data[i].Movie.name);
-                        date = new Date(data[i].PlayTime.play);
-                        var $time = $("<span>").html("זמן הקרנה:" + date.toLocaleString('en-GB'));
-                        var $orders = $("<span>").html("מספר כרטיסים:" + data[i].amount);
-
-                        var $pic = $("<img>").attr({ "src": "/images/" + data[i].Movie.img, "movie-number-pic": i + 1 });
-                        var $btn = $("<button>").text("בטל הזמנה").click(function () { deleteOrder(this) });
-
-
-                        $div.append($nameP);
-                        $div.append($("<br>"));
-                        $div.append($time);
-                        $div.append($("<br>"));
-                        $div.append($orders);
-                        $div.append($("<br>"));
-                        $div.append($("<br>"));
-                        $div.append($("<br>"));
-                        $div.append($pic);
-                        $div.append($("<br>"));
-                        $div.append($btn);
-
-                        $td.append($div);
-                        $tr.append($td);
-                        $tbl.append($tr);
-                        $("#availableTbl").append($tbl);
-                    }
-                },
-                error: function () {
-                    console.log("connection ERROR - Available movies");
+            
+            if (user != null) { //There is a user
+                var $spn = document.getElementById("hello");
+                $spn.innerHTML = "שלום " + user.name;
+                if (user.isAdmin == 1) {
+                    var $add = $("<button>").text("הוסף סרט").attr("class", "w3-bar-item w3-button w3-padding-large w3-text-white");
+                    $add.click(function () { location.href = "addMovie.html" });
+                    $("#admin").append($add).attr("class", "adminDiv");
                 }
-            });
+                $("#connectB").hide();
+                $("#addB").hide();
+                ///View invitations
+                var $ul = $("<ul>").attr({ "class": "w3-ul ulSize" });
+                $.ajax({
+                    dataType: "json",
+                    url: "/api/CustomerBuyTickets/" + user.id,
+                    contentType: "application/json; charset=utf-8",
+                    type: "GET",
+                    success: function (data) {
+                        if (data.length == 0) {
+                            $h4 = $("<h4>").text("לא נמצאו הזמנות עבור לקוח");
+                            $("#noOrders").append("<br>");
+                            $("#noOrders").append($h4);
+                        }
+                        else { //data.length != 0
+                            var $tdH = $("<h4>").text("  ההזמנות שלי: ").attr({ "class": "w3-tag w3-large  w3-round w3-green w3-border w3-border-white size" });
+                            $("#divOrders").append($tdH);
+                        }
+
+
+
+
+                        for (i in data) {
+                            var $li = $("<li>").attr({ "class": "w3-bar w3-white  w3-round-xlarge ", "data-id": data[i].id });
+                            var $cnl = $("<span>").text("x").attr("class", "w3-bar-item w3-button w3-white w3-xlarge w3-left").click(function () { deleteOrder(this) });
+                            var $pic = $("<img>").attr({ "src": "/images/" + data[i].Movie.img, "movie-number-pic": i + 1, "class": "w3-bar-item w3-right" });
+                            var $div = $("<div>").attr({ "class": "w3-bar-item w3-right internalDiv" })// "data-id": data[i].Movie.id });
+
+                            var $nameP = $("<span>").attr("data-name", data[i].Movie.name).text("שם הסרט:" + data[i].Movie.name);
+                            var date = new Date(data[i].PlayTime.play);
+                            var $time = $("<span>").html("זמן הקרנה:" + date.toLocaleString('en-GB'));
+                            var $orders = $("<span>").html("מספר כרטיסים:" + data[i].amount);
+
+                            var $divP = $("<div>").attr({ "class": " w3-right" });
+                            $divP.append($pic);
+
+                            $div.append($nameP);
+                            $div.append($("<br>"));
+                            $div.append($time);
+                            $div.append($("<br>"));
+                            $div.append($orders);
+                            $div.append($("<br>"));
+
+                            $li.append($cnl);
+                            $li.append($divP);
+                            $li.append($div);
+                            $ul.append($li);
+
+                        }//for
+                        $("#divOrders").append($ul);
+                    },
+                    error: function () {
+                        console.log("connection ERROR - Available movies");
+                    }
+                });
+
+            }
+            else { //user==null
+                $("#logoutB").hide();
+                $("#myO").hide();
+                var $div = document.getElementById("hello");
+                var $spn = $("<span>").innerHTML = "אין נתונים";
+                $div.append($spn);
+
+            }
+            
         });
 
         function deleteOrder(t) {
@@ -155,31 +105,31 @@
 
         function logout() {
             localStorage.clear();
-            location.href = 'login.html';
+            location.href = 'showAll.html';
         }
     </script>
 
 </head>
 <body dir="rtl">
-
-    <div id="logOutDiv">
-        <input type="button" value="logOut" onclick="logout()" />
-        <span class="w3-white" id="hello"></span>
-        <input type="button" value="חזרה להצגת כל הסרטים" onclick="location.href = 'showAll.html'" />
+    <!--Top menu-->
+    <div class="w3-bar w3-card-2">
+        <button onclick=" location.href = 'showAll.html'" class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">home</i></button>
+        <input type="button" id="logoutB" value="התנתק" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="logout()" />
+        <input type="button" id="connectB" value="התחבר" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="location.href = 'login.html'" />
+        <input type="button" id="addB" value="הרשמה" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="location.href='addUser.html'" />
+        <input type="button" id="myO" value="צפייה בהזמנות שלי" class="w3-bar-item w3-button w3-padding-large  w3-text-white" onclick="location.href = 'userOrders.html'" />
+        <div id="admin"></div>
+        <button class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">search</i></button>
+        <div class="w3-text-white" id="hello"></div>
     </div>
+ 
 
-    <div id="noOrders" align="center"></div>
-    <table id="bigTbl" align="center">
-        <tr>
-            <td colspan="5" id="tdHeader"></td>
-        </tr>
+    <div id="noOrders" class="w3-text-white" align="center"></div>
 
-        <tr class="gallery">
-            <td colspan="5">
-                <div class="w3-text-blue" id="availableTbl">
-                </div>
-            </td>
-    </table>
+    <div class="w3-container" id="divOrders" align="center">
+    </div>
+       
 
+  
 </body>
 </html>

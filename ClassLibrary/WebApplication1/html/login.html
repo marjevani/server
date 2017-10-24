@@ -3,26 +3,10 @@
 <head>
     <title>כניסה למערכת</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <style>
-
-         body {
-           background-image: url("/images/background.jpg");
-            background-attachment: fixed;
-        }
-         #board {
-                width: 400px;
-                height: 220px;
-                background-color:blanchedalmond;
-                position: relative;
-                top:100px;
-                border:1px dashed  black;
-            }
-
-    </style>
     <script>
 
         function login() {
@@ -50,7 +34,7 @@
                     {
                         localStorage.setItem("user", JSON.stringify(user));
                         var adminParam = user.isAdmin;
-                        location.href = "showAll.html";
+                        window.history.back();
                     }
                     else 
                         document.getElementById("error").innerHTML = "ת.ז או הסיסמא שהכנסת לא נכונים";
@@ -61,6 +45,7 @@
                 }
             });
         }
+
 
     </script>
 </head>
