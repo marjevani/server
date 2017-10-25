@@ -21,6 +21,7 @@
 
             /* handle user */
             if (user != null) { //There is a user
+
                 ifUser = 1;//
                 var $div = document.getElementById("hello");
                 var $spn = $("<span>").innerHTML = "שלום " + user.name;
@@ -30,7 +31,10 @@
                 $("#btn").append($logOut);
                 $("#btn").append($view);
                 if (user.isAdmin == false)
+                {
+                    $("#form").append($("<h3>").html("אין באפשרותך להוסיף סרט").attr("class", "w3-text-white w3-center"));
                     return;
+                }
                 bulidForm();
             }
             else { //No user exists

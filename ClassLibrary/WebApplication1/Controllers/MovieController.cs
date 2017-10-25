@@ -37,6 +37,7 @@ namespace WebApplication1.Controllers
             try
             {
                 mv = JsonConvert.DeserializeObject<Movie>(st);
+                mv.img = "first_img.JPG";
             }
             catch
             {
@@ -65,20 +66,36 @@ namespace WebApplication1.Controllers
             }
             mv.PlayTimes = playTList;
 
+
+            // save on dataBase
+            try
+            {            
+                db.Movies.Add(mv);
+                db.SaveChanges();
+            }
+            catch
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict, "בעיה בגישה למס''ד נתונים \n פעולה לא התבצעה");
+            }
+
             // handle Image
             HttpPostedFile img = HttpContext.Current.Request.Files["img"];
             if (img != null)
-                mv.img = mv.id + Path.GetExtension(img.FileName); // check file Extension???
-            else
-                mv.img = "first_img.JPG";
+            {
+                try
+                {
+                    mv.img = mv.id + Path.GetExtension(img.FileName);
+                    db.SaveChanges();
 
-            // save on dataBase
-            db.Movies.Add(mv);
-            db.SaveChanges();
+                    // save Image on server
+                    img.SaveAs(HttpContext.Current.Server.MapPath("~/images/") + mv.img);
+                }
+                catch
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.Conflict, "בעיה בשמירת תמונה \n לא נשמרה תמונה");
+                }
+            }
 
-            // save Image on server
-            if (img != null)
-                img.SaveAs(HttpContext.Current.Server.MapPath("~/images/") + mv.img);
             return Request.CreateResponse(HttpStatusCode.OK, "הסרט נוסף בהצלחה");
         }
 
