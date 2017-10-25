@@ -21,8 +21,8 @@
                 var $div = document.getElementById("hello");
                 var $spn = $("<span>").innerHTML = "שלום " + user.name;
                 $div.append($spn);
-                
-                var $logOut = $("<button>").text("התנתק").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { logout()});
+
+                var $logOut = $("<button>").text("התנתק").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { logout() });
                 var $view = $("<button>").text("צפייה בהזמנות שלי").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'userOrders.html' });
                 $("#btn").append($logOut);
                 $("#btn").append($view);
@@ -38,7 +38,7 @@
                 var $con = $("<button>").text("התחבר").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'login.html' });
                 var $reg = $("<button>").text("הרשמה").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'addUser.html' });
                 $("#btn").append($con);
-                $("#btn").append($reg);              
+                $("#btn").append($reg);
             }
 
             //Create the movie table
@@ -105,24 +105,21 @@
             location.href = 'showAll.html';
         }
 
-  
+
     </script>
 
 </head>
 <body dir="rtl">
-   
-    <div class="w3-bar w3-card-2" >
+
+    <div class="w3-bar w3-card-2">
         <button onclick="location.href = 'showAll.html'" class="w3-bar-item w3-button w3-padding-large w3-text-white"><i class="material-icons">home</i></button>
         <div id="btn"></div>
-        <!--<button  class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">search</i></button>-->
         <div class="w3-text-white" id="hello"></div>
     </div>
-    
-    
 
     <table align="center">
         <tr>
-            <td ><h4 class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">סרטים זמינים</h4></td>
+            <td><h4 class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">סרטים זמינים</h4></td>
         </tr>
 
         <tr class="gallery">

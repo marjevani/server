@@ -5,6 +5,7 @@
     <title>הוספת סרט</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
@@ -14,15 +15,13 @@
         var max_projection = 5;
 
         $(document).ready(function () {
-            /* load MSG module */
+            // include Messege Module
             $(function () {
                 $("#includedContent").load("messegeModule.html");
             });
 
             /* handle user */
             if (user != null) { //There is a user
-
-                ifUser = 1;//
                 var $div = document.getElementById("hello");
                 var $spn = $("<span>").innerHTML = "שלום " + user.name;
                 $div.append($spn);
@@ -30,15 +29,13 @@
                 var $view = $("<button>").text("צפייה בהזמנות שלי").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'userOrders.html' });
                 $("#btn").append($logOut);
                 $("#btn").append($view);
-                if (user.isAdmin == false)
-                {
+                if (user.isAdmin == false) {
                     $("#form").append($("<h3>").html("אין באפשרותך להוסיף סרט").attr("class", "w3-text-white w3-center"));
                     return;
                 }
                 bulidForm();
             }
             else { //No user exists
-                ifUser = 0;
                 var $div = document.getElementById("hello");
                 var $spn = $("<span>").innerHTML = "גישה למנהלים בלבד";
                 $div.append($spn);
@@ -47,15 +44,6 @@
                 $("#btn").append($con);
                 $("#btn").append($reg);
             }
-
-            /* build projection section */
-            var list = document.getElementById("projection");
-            var div = document.createElement("div");
-            div.style.margin = "5px";
-            var spn = document.createElement("span");
-            spn.innerHTML = "לא הוכנסו הקרנות";
-            div.appendChild(spn);
-            list.appendChild(div);
         });
 
         function addMovie() {
@@ -74,13 +62,13 @@
             // append image
             fd.append("img", $("#imgInp")[0].files[0]);
 
-            // append PlayTime data
+            // append PlayTimes data
             fd.append("numOfProj", numOfProj);
             fd.append("sits", $("#sits").val());
             for (var i = 0; i < numOfProj; i++)
                 fd.append("projection" + i, $("#projection" + i).val());
 
-            // send all data
+            // send all data to server
             $.ajax({
                 url: "/api/Movie",
                 type: "PUT",
@@ -116,11 +104,9 @@
                 numOfProj++;
                 spn.innerHTML = numOfProj + ".";
 
-                var list = document.getElementById("projection");
-
                 d.appendChild(spn);
                 d.appendChild(dateTime);
-                list.appendChild(d);
+                document.getElementById("projection").appendChild(d);
             }
         }
 
@@ -136,7 +122,7 @@
 
         function logout() {
             localStorage.clear();
-            location.href = 'login.html';
+            location.href = 'showAll.html';
         }
 
         function bulidForm() {
@@ -240,16 +226,24 @@
             $td.append($btnP);
             $trIn.append($td);
 
+            //add btn
+            $submit = $("<input>").attr({ "class": "bottomButton w3-button w3-block w3-green w3-round", "type": "submit", "value": "הוסף" }); //"onclick": "addMovie()",
+            $("#submitB").append($submit);
+            document.getElementById("publish_date").value = new Date().toISOString().substr(0, 10);
+
+            /* build projection section */
+            var div = document.createElement("div");
+            div.style.margin = "5px";
+            var spn = document.createElement("span");
+            spn.innerHTML = "לא הוכנסו הקרנות";
+            div.appendChild(spn);
+            document.getElementById("projection").appendChild(div);
+
             // implements onSubmit method
             $("#form").submit(function (event) {
                 event.preventDefault();
                 addMovie();
             });
-
-            //add btn
-            $submit = $("<input>").attr({ "class": "bottomButton w3-button w3-block w3-green w3-round", "type": "submit", "value": "הוסף" }); //"onclick": "addMovie()",
-            $("#submitB").append($submit);
-            document.getElementById("publish_date").value = new Date().toISOString().substr(0, 10);
         }
 
     </script>
@@ -273,7 +267,6 @@
 
     <!--add module for animated messeges-->
     <div id="includedContent"></div>
- 
 
 </body>
 </html>

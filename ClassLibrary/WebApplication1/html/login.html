@@ -12,7 +12,12 @@
             $("form").submit(function (event) {
                 event.preventDefault();
                 login();
-            })
+            });
+
+            //include Messege Module
+            $(function () {
+                $("#includedContent").load("messegeModule.html");
+            });
         });
 
         function login() {
@@ -20,10 +25,7 @@
             var passL = document.getElementById("pass").value;
             document.getElementById("error").innerHTML = "";
 
-            if (idL == "" || passL == "")
-                document.getElementById("error").innerHTML = "ת.ז או הסיסמא שהכנסת לא נכונים";
-            else
-                validId_continue(idL, passL);
+            validId_continue(idL, passL);
         }
 
 
@@ -38,10 +40,11 @@
                 {
                     if (user != null) {
                         localStorage.setItem("user", JSON.stringify(user));
-                        window.history.back();
+                        if (window.history.back() == undefined)
+                            location.href = "showAll.html";
                     }
                     else
-                        document.getElementById("error").innerHTML = "ת.ז או הסיסמא שהכנסת לא נכונים";
+                        errorMsg("ת.ז או הסיסמא לא נכונים", false);
                 },
                 error: function ()
                 {
@@ -78,6 +81,8 @@
         </div>
     </div>
 
+    <!--add module for animated messeges-->
+    <div id="includedContent"></div>
 
 </body>
 </html>

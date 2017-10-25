@@ -12,7 +12,7 @@
         var user = JSON.parse(localStorage.getItem("user"));
 
         $(document).ready(function () {
-            /* load MSG module */
+            // include Messeges Module
             $(function () {
                 $("#includedContent").load("messegeModule.html");
             });
@@ -23,8 +23,8 @@
                 $div.append($spn);
 
                 var $logOut = $("<button>").text("התנתק").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { logout() });
-                 $("#btn").append($logOut);
-                
+                $("#btn").append($logOut);
+
                 if (user.isAdmin == 1) {
                     var $add = $("<button>").text("הוסף סרט").attr("class", "w3-bar-item w3-button w3-padding-large w3-text-white");
                     $add.click(function () { location.href = "addMovie.html" });
@@ -59,7 +59,7 @@
                             var $time = $("<span>").html("זמן הקרנה:" + date.toLocaleString('en-GB'));
                             var $orders = $("<span>").html("מספר כרטיסים:" + data[i].amount);
 
-                            var $divP = $("<div>").attr({ "class": " w3-right", id:"divP" });
+                            var $divP = $("<div>").attr({ "class": " w3-right", id: "divP" });
                             $divP.append($pic);
 
                             $div.append($nameP);
@@ -91,9 +91,7 @@
                 var $div = document.getElementById("hello");
                 var $spn = $("<span>").innerHTML = "אין נתונים";
                 $div.append($spn);
-
             }
-            
         });
 
         function deleteOrder(t) {
@@ -115,6 +113,7 @@
             localStorage.clear();
             location.href = 'showAll.html';
         }
+
     </script>
 
 </head>
@@ -123,16 +122,14 @@
     <div class="w3-bar w3-card-2">
         <button onclick="location.href = 'showAll.html'" class="w3-bar-item w3-button w3-padding-large w3-text-white"><i class="material-icons">home</i></button>
         <div id="btn"></div>
-        <!--<button class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">search</i></button>-->
         <div class="w3-text-white" id="hello"></div>
     </div>
- 
+
 
     <div id="noOrders" class="w3-text-white" align="center"></div>
 
     <div class="w3-container" id="divOrders" align="center">
     </div>
-       
 
     <!--add module for animated messeges-->
     <div id="includedContent"></div>

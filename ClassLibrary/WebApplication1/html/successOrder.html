@@ -11,7 +11,7 @@
     <script>
         var user = JSON.parse(localStorage.getItem("user"));
         var successOrder = JSON.parse(localStorage.getItem("successOrder"));
-        $(document).ready(function () {//There is a user
+        $(document).ready(function () {
             if (user != null) {//There is a user
                 ifUser = 1;
                 var $logOut = $("<button>").text("התנתק").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { logout() });
@@ -23,15 +23,6 @@
                     $add.click(function () { location.href = "addMovie.html" });
                     $("#btn").append($add).attr("class", "adminDiv");
                 }
-
-                //if(successOrder==null)
-                //{
-                //    $("#board_order").hide();
-                //    var $div = document.getElementById("hello");
-                //    var $spn = $("<span>").innerHTML = "נתונים אינם זמינים";
-                //    $div.append($spn);
-                //}
-
             }
             else {//No user exists
                 ifUser = 0;
@@ -42,9 +33,8 @@
                 var $reg = $("<button>").text("הרשמה").attr("class", "w3-bar-item w3-button w3-padding-large  w3-text-white").click(function () { location.href = 'addUser.html' });
                 $("#btn").append($con);
                 $("#btn").append($reg);
-                
-
             }
+
             document.getElementById("h1").innerHTML = user.name + ", תודה שהזמנת כרטיס לסרט";
             document.getElementById("orderNumber").innerHTML = successOrder.id;
             document.getElementById("clientNumber").innerHTML = user.id;
@@ -52,22 +42,21 @@
             d = new Date(successOrder.play);
             document.getElementById("play").innerHTML = d.toLocaleString('en-GB');
             document.getElementById("amountSeats").innerHTML = successOrder.amount;
-        })
-        
+        });
+
         function logout() {
             localStorage.clear();
-            location.href = 'login.html';
+            location.href = 'showAll.html';
         }
 
     </script>
 
 </head>
-<body dir="rtl" >
+<body dir="rtl">
 
     <div class="w3-bar w3-card-2">
-        <button onclick=" location.href = 'showAll.html'" class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">home</i></button>
+        <button onclick=" location.href='showAll.html' " class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">home</i></button>
         <div id="btn"></div>
-        <!--<button class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class=" material-icons">search</i></button>-->
         <div class="w3-text-white" id="hello"></div>
     </div>
 
@@ -97,14 +86,9 @@
                     <td>כמות מושבים:</td>
                     <td> <span id="amountSeats"></span></td>
                 </tr>
-
             </table>
-
-
-
         </div>
     </div>
-
 
 </body>
 </html>

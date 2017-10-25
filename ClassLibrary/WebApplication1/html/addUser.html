@@ -22,8 +22,6 @@
             top: 100px;
             border: 1px dashed black;
         }
-
- 
     </style>
     <script>
         var machPasswords = false;
@@ -31,73 +29,72 @@
         $(document).ready(function () {
             $("#form").submit(function (event) {
                 event.preventDefault();
-                if(machPasswords==true)
+                if (machPasswords == true)
                     addUser();
-                $(function () {
-                    $("#includedContent").load("messegeModule.html");
-                });
+            });
+            // include Messege Module
+            $(function () {
+                $("#includedContent").load("messegeModule.html");
             });
 
+            checkPassworsHandler();
+        });
+
+        function checkPassworsHandler() {
             $('#password, #confirm_password').on('keyup', function () {
-                if ($('#password').val() == "" || $('#confirm_password').val() == "")
-                {
+                if ($('#password').val() == "" || $('#confirm_password').val() == "") {
                     $('#message').html('');
                 }
-                else if ($('#password').val() == $('#confirm_password').val())
-                {
+                else if ($('#password').val() == $('#confirm_password').val()) {
                     $('#message').html('סיסמאות תואמות').removeClass("w3-red").addClass("w3-green");
                     machPasswords = true;
                 }
-                else
-                {
+                else {
                     $('#message').html('סיסמאות לא תואמות').removeClass("w3-green").addClass("w3-red");
                     machPasswords = false;
                 }
             });
-        })
+        }
 
-        function addUser()
-        {
+        function addUser() {
             var fd = new FormData();
 
-            // create Customer
+            // create Customer object
             var customer = {
-                    id: document.getElementById("user_id").value,
-                    name: document.getElementById("user_name").value,
-                    pass: document.getElementById("password").value,
-                    isAdmin: false
+                id: document.getElementById("user_id").value,
+                name: document.getElementById("user_name").value,
+                pass: document.getElementById("password").value,
+                isAdmin: false
             };
 
             // append Customer
             var customer_string = JSON.stringify(customer);
             fd.append("customer", customer_string);
 
-            // send data
-                $.ajax({
-                    url: "/api/customer",
-                    contentType: "application/json; charset=utf-8",
-                    type: "PUT",
-                    data: fd,
-                    contentType: false,
-                    processData: false,
-                    success: function (msg) {
-                        succMsg("הודעה", false); //    להשלים הודעות, לא תמיד לעבוד ישר לעמוד הצפיה הרגיל
-                        localStorage.setItem("user", JSON.stringify(user));
-                        location.href = "showAll.html"
-                    },
-                    error: function () {
-                        errorMsg("שגיאה בהוספת לקוח", true);
-                    }
-                });
-            }
+            // send data to server
+            $.ajax({
+                url: "/api/customer",
+                contentType: "application/json; charset=utf-8",
+                type: "PUT",
+                data: fd,
+                contentType: false,
+                processData: false,
+                success: function (msg) {
+                    succMsg("הודעה", false); //    להשלים הודעות, לא תמיד לעבוד ישר לעמוד הצפיה הרגיל
+                    localStorage.setItem("user", JSON.stringify(user));
+                    location.href = "showAll.html"
+                },
+                error: function () {
+                    errorMsg("שגיאה בהוספת לקוח", true);
+                }
+            });
+        }
 
-      
+
     </script>
 
 </head>
 <body dir="rtl" align="center">
-
-
 
     <div id="wrapper" style="padding:10px;" align="center">
         <div id="board" align="center">
@@ -128,12 +125,12 @@
                 </table>
                 <span id="message" class="w3-red"></span> <br /><br />
                 <input type="submit" value="הוסף לקוח" id="addbtn" />
-                <input type="button" value="חזרה לדף הראשי" onclick="location.href = 'login.html'" />
+                <input type="button" value="חזרה לדף הראשי" onclick="location.href = 'showAll.html'" />
             </form>
 
         </div>
     </div>
-    
+
     <!--add module for animated messeges-->
     <div id="includedContent"></div>
 
