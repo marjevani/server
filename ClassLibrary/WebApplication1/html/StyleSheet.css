@@ -71,27 +71,37 @@ h4 {
 
 /* end addMovie*/
 
+/*add user*/
+ #board_reg {
+    width: 400px;
+    height: 300px;
+    position: relative;
+    top:80px;
+    border:1px dashed  black;
+}
+
+/*end add user*/
+
 /*login*/
  #board {
     width: 400px;
-    height: 220px;
-    background-color:blanchedalmond;
+    height: 250px;
     position: relative;
-    top:100px;
+    top:80px;
     border:1px dashed  black;
 }
  /* end login*/
 
  /*successOrder*/
- 
-#board_order {
+  #board_order {
     width: 500px;
-    height: 300px;
+    height: 350px;
     background-color: blanchedalmond;
     position: relative;
-    top: 100px;
+    top: 80px;
     border: 1px dashed black;
 }
+
 /* end successOrder*/
 
 /*userOrders*/
@@ -104,8 +114,16 @@ h4 {
     width:200px;
 }
 
+<<<<<<< .mine
+/* end userOrders*/  
+
+
+
+
+=======
 /* end userOrders*/     
 
 .modal{
     width:600px;
 }
+>>>>>>> .theirs

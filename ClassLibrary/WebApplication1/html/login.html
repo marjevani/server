@@ -4,8 +4,11 @@
     <title>כניסה למערכת</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   
+
     <script>
 
         $(document).ready(function () {
@@ -59,9 +62,13 @@
 </head>
 <body dir="rtl" align="center">
 
+    <!--Top menu-->
+    <div class="w3-bar w3-card-2 ">
+        <button onclick="location.href='showAll.html'" , class="w3-bar-item w3-button w3-padding-large  w3-text-white"><i class="material-icons">home</i></button>
+    </div>
 
     <div id="wrapper" style="padding:10px;" align="center">
-        <div id="board" align="center">
+        <div align="center" id="board" class="w3-panel w3-indigo w3-card-4">
             <h2>כניסה למערכת</h2>
             <form id="form">
                 <table>
@@ -71,12 +78,12 @@
                     </tr>
                     <tr>
                         <td> סיסמא:</td>
-                        <td><input type="password" id="pass" required/>  </td>
+                        <td><input type="password" id="pass" required />  </td>
                     </tr>
                 </table>
                 <span class="w3-white" id="error"></span> <br /><br />
-                <input type="submit" value="היכנס" />
-                <input type="button" value="רישום משתמש חדש" onclick="location.href = 'addUser.html'" />
+                <input type="submit" value="היכנס" class="w3-button w3-white w3-border  w3-round-large" />
+                <input type="button" value="משתמש חדש" class="w3-button w3-white w3-border  w3-round-large" onclick="location.href = 'addUser.html'" />
             </form>
         </div>
     </div>

@@ -12,14 +12,12 @@ namespace ClassLibrary
     using System;
     using System.Collections.Generic;
     
-    public partial class CustomerBuyTicket
+    public partial class sysdiagram
     {
-        public int id { get; set; }
-        public string customer_id { get; set; }
-        public Nullable<int> amount { get; set; }
-        public Nullable<int> playTime_id { get; set; }
-    
-        public virtual Customer Customer { get; set; }
-        public virtual PlayTime PlayTime { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

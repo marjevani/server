@@ -40,7 +40,7 @@ namespace WebApplication1.Controllers
         }
 
         // PUT: api/Costumer/5
-        public string Put()
+        public HttpResponseMessage Put()
         {
             movieDBConnection db = new movieDBConnection();
             // init Customer
@@ -52,17 +52,17 @@ namespace WebApplication1.Controllers
             }
             catch
             {
-                return "חסרים נתונים בלקוח";
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict, "חסרים נתונים בלקוח");
             }
 
             Customer ct = db.Customers.SingleOrDefault(x => x.id == c.id);
             if (ct != null)
-                return  "הלקוח כבר קיים במערכת";
+                 return Request.CreateErrorResponse(HttpStatusCode.Conflict, "קיים לקוח במערכת עם ת.ז זהה");
             else
             {
                 db.Customers.Add(c);
                 db.SaveChanges();
-                return  "הלקוח נוסף בהצלחה";
+                return Request.CreateResponse(HttpStatusCode.OK, "הלקוח נוסף בהצלחה");
             }
         }
 
