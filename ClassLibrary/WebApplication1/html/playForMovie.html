@@ -70,7 +70,7 @@
                             counter++;
                             numOfAvailableSits = data[i].availble_sits;
                             var $td = $("<td>").attr("class", "w3-panel w3-pale-green w3-bottombar w3-border-green w3-border ");
-                            var $div = $("<div>").attr({ "class": "w3-bar-item w3-right internalDiv", "data-id": data[i].id })// "data-id": data[i].Movie.id });
+                            var $div = $("<div>").attr({ "class": "w3-bar-item w3-right internalDiv", "data-id": data[i].id })
                             date = new Date(data[i].play);
                             var $date = $("<span>").text("תאריך הקרנה:" + date.toLocaleDateString()).attr({ "class": "", "data-play": data[i].play });
                             var $day = $("<span>").text("יום הקרנה:" + days[date.getDay()]);
@@ -145,7 +145,7 @@
                         {
                             id: data.id,
                             customer_id: data.customer_id,
-                            movie_id: data.movie_id,
+                            movie_id: data.PlayTime.movie_id,
                             amount: data.amount,
                             movie_name: localStorage.getItem("movie_name"),
                             play: t.parentElement.firstElementChild.getAttribute("data-play"),

@@ -30,14 +30,17 @@ create table CustomerBuyTickets
 (
 id int identity(1,1) primary key,
 customer_id nchar(9) foreign key references Customer(id),
-movie_id int foreign key references Movie(id),
+playTime_id int foreign key references playTime(id),
 amount int check(amount > 0)
 );
 
 
 --------------------
--- use to update Movie table (insted of deleting and create again):
 ALTER TABLE Movie ALTER COLUMN langth smallint not null
+
+ALTER TABLE CustomerBuyTickets
+  ADD playTime_id int foreign key references PlayTime(id)
+
 
 
 ---------------------

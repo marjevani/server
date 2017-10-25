@@ -51,10 +51,10 @@
                         for (i in data) {
                             var $li = $("<li>").attr({ "class": "w3-bar w3-white  w3-round-xlarge ", "data-id": data[i].id });
                             var $cnl = $("<span>").text("x").attr("class", "w3-bar-item w3-button w3-white w3-xlarge w3-left").click(function () { deleteOrder(this) });
-                            var $pic = $("<img>").attr({ "src": "/images/" + data[i].Movie.img, "movie-number-pic": i + 1, "class": "w3-bar-item w3-right" });
+                            var $pic = $("<img>").attr({ "src": "/images/" + data[i].PlayTime.Movie.img, "movie-number-pic": i + 1, "class": "w3-bar-item w3-right" });
                             var $div = $("<div>").attr({ "class": "w3-bar-item w3-right internalDiv" })
 
-                            var $nameP = $("<span>").attr("data-name", data[i].Movie.name).text("שם הסרט:" + data[i].Movie.name);
+                            var $nameP = $("<span>").attr("data-name", data[i].PlayTime.Movie.name).text("שם הסרט:" + data[i].PlayTime.Movie.name);
                             var date = new Date(data[i].PlayTime.play);
                             var $time = $("<span>").html("זמן הקרנה:" + date.toLocaleString('en-GB'));
                             var $orders = $("<span>").html("מספר כרטיסים:" + data[i].amount);

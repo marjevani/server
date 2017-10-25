@@ -22,8 +22,6 @@ public partial class Movie
     public Movie()
     {
 
-        this.CustomerBuyTickets = new HashSet<CustomerBuyTicket>();
-
         this.PlayTimes = new HashSet<PlayTime>();
 
     }
@@ -42,10 +40,6 @@ public partial class Movie
     public string img { get; set; }
 
 
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<CustomerBuyTicket> CustomerBuyTickets { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 

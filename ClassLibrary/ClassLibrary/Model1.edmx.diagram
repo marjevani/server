@@ -5,12 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="7b6f12c77709415aaece4a340150dd73" Name="Diagram1">
-        <EntityTypeShape EntityType="movieDBModel.CustomerBuyTicket" Width="4.125" PointX="3.25" PointY="0.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="movieDBModel.Movie" Width="1.5" PointX="8.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="movieDBModel.CustomerBuyTicket" Width="4.125" PointX="4" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="movieDBModel.Movie" Width="1.5" PointX="9.25" PointY="4" IsExpanded="true" />
 <<<<<<< Updated upstream
-        <AssociationConnector Association="movieDBModel.FK__CustomerB__movie__1BFD2C07" ManuallyRouted="false" />        <AssociationConnector Association="movieDBModel.FK__PlayTime__movie___164452B1" ManuallyRouted="false" />
+                <AssociationConnector Association="movieDBModel.FK__PlayTime__movie___164452B1" ManuallyRouted="false" />
 =======
-        <EntityTypeShape EntityType="movieDBModel.PlayTime" Width="1.5" PointX="7" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="movieDBModel.PlayTime" Width="1.5" PointX="9.25" PointY="0.625" IsExpanded="true" />
         
         
 &gt;&gt;&gt;&gt;&gt;&gt;&gt; Stashed changes
