@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="/style/StyleSheet.css">
 
     <script>
         var machPasswords = false;
@@ -69,8 +69,9 @@
                     succMsg(msg, false);
                     setTimeout(function () {
                         localStorage.setItem("user", JSON.stringify(customer));
-                        location.href = "showAll.html"
-                    }, 1000);
+                        location.href = "showAll.html";
+                        $("#done").attr("onclick", "addProjection()");
+                    }, 1300);
                     
                 },
                 error: function (xhr, textStatus, errorThrown) {
@@ -108,7 +109,7 @@
                         <td> <input type="password" id="password" required /></td>
                     </tr>
                     <tr>
-                        <td>וידוא סיסמא:</td>
+                        <td>אימות סיסמא:</td>
                         <td>
                             <input type="password" id="confirm_password" required />
                         </td>
