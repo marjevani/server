@@ -37,6 +37,9 @@ namespace WebApplication1.Controllers
 
             List<PlayTime> closestTime = db.PlayTimes.OrderBy(t => t.play).ToList();
 
+            if (closestTime.Count == 0)
+                return true;
+
             PlayTime close = closestTime[0];
             long min = Math.Abs((close.play - projectionTime).Ticks);
             foreach(PlayTime x in closestTime)

@@ -17,7 +17,6 @@
         <EntityTypeShape EntityType="movieDBModel.Customer" Width="1.5" PointX="0.75" PointY="0.875" />
         <AssociationConnector Association="movieDBModel.FK__CustomerB__custo__24927208" />
         <AssociationConnector Association="movieDBModel.FK__CustomerB__playT__48CFD27E" />
-        <EntityTypeShape EntityType="movieDBModel.sysdiagram" Width="1.5" PointX="7.8117762579637473" PointY="7.9870357401608656" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

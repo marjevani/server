@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Yuval\Desktop\project\server\ClassLibrary\ClassLibrary\Model1.edmx'. 
+﻿// T4 code generation is enabled for model '\\Mac\Dropbox\לימודים\מהנדס אלקטרוניקה רופין\שנה ג\סמסטר קיץ\פיתוח אינטרנט ואפליקציות - צד שרת\Project\ClassLibrary\ClassLibrary\Model1.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
