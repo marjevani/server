@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/style/StyleSheet.css">
+    <script src="../Scripts/DaysHeader.js" type="text/javascript"></script>
+
 
     <script>
         var user = JSON.parse(localStorage.getItem("user"));
@@ -85,6 +87,13 @@
             });
         }
 
+        function logout() {
+            localStorage.clear();
+            location.href = 'showAll.html';
+        }
+
+
+        /* build UI */
         function addProjection() {
             if (numOfProj < max_projection) {
                 if (numOfProj == 0) {
@@ -96,7 +105,7 @@
                 var dateTime = document.createElement("input");
                 dateTime.type = "datetime-local";
                 dateTime.required = true;
-                dateTime.value = (new Date()).toJSON().slice(0, 17) + "00";
+                dateTime.value = convertUTCDateToLocalDate(new Date());
                 dateTime.min = dateTime.value;
                 dateTime.id = "projection" + numOfProj;
 
@@ -118,11 +127,6 @@
                 }
                 reader.readAsDataURL(input.files[0]);
             }
-        }
-
-        function logout() {
-            localStorage.clear();
-            location.href = 'showAll.html';
         }
 
         function bulidForm() {
