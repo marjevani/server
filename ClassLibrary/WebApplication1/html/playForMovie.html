@@ -59,7 +59,7 @@
                 contentType: "application/json; charset=utf-8",
                 type: "GET",
                 success: function (data) {
-                    var $h4 = $("<h4>").text("  הקרנות זמינות עבור הסרט: " + JSON.parse(localStorage.getItem("movie_name"))).attr("class", "w3-tag w3-large  w3-round w3-green w3-border w3-border-white size");
+                    var $h4 = $("<h4>").text("  הקרנות זמינות עבור הסרט: " + JSON.parse(localStorage.getItem("movie_name"))).attr({ "class": "w3-tag w3-large  w3-round w3-green w3-border w3-border-white size" });
                     $("#tdHeader").append($("<br>"));
                     $("#tdHeader").append($h4);
                     for (i in data) {
@@ -174,12 +174,12 @@
 
     <table id="bigTbl" align="center">
         <tr>
-            <td colspan="5" id="tdHeader"></td>
+            <td colspan="5" ><div align="center" id="tdHeader"></div></td>
         </tr>
 
         <tr class="gallery">
             <td colspan="5">
-                <div class="w3-text-blue" id="availableTbl"></div>
+                <div class="w3-text-blue" id="availableTbl" align="center"></div>
             </td>
     </table>
 

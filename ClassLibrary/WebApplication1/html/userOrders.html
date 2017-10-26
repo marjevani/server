@@ -49,8 +49,8 @@
                         }
 
                         for (i in data) {
-                            var $li = $("<li>").attr({ "class": "w3-bar w3-white  w3-round-xlarge ", "data-id": data[i].id });
-                            var $cnl = $("<span>").text("x").attr("class", "w3-bar-item w3-button w3-white w3-xlarge w3-left").click(function () { deleteOrder(this) });
+                            var $li = $("<li>").attr({ "class": "w3-bar w3-gray  w3-round-xlarge ", "data-id": data[i].id });
+                            var $cnl = $("<span>").text("x").attr("class", "w3-bar-item w3-button w3-gray w3-xlarge w3-left").click(function () { deleteOrder(this) });
                             var $pic = $("<img>").attr({ "src": "/images/" + data[i].PlayTime.Movie.img, "movie-number-pic": i + 1, "class": "w3-bar-item w3-right" });
                             var $div = $("<div>").attr({ "class": "w3-bar-item w3-right internalDiv" })
 

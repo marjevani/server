@@ -128,10 +128,12 @@
         function bulidForm() {
             var $trOut, $trIn, $td, $pic, $tbl1, $tbl2, $select;
             //head
+            $d = $("<div>").attr("align", "center");
             $h4 = $("<h4>").text("הוספת סרט חדש").attr("class", "w3-large  w3-round w3-green w3-border w3-border-white");
             $td = $("<td>").attr("colspan", "5");
             $trOut = $("<tr>");
-            $td.append($h4);
+            $d.append($h4);
+            $td.append($d);
             $trOut.append($td);
             $("#bigTbl").append($trOut);
             //img
